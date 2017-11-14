@@ -6,8 +6,8 @@
             "request": "launch",
             "cwd": "${workspaceRoot}",
             "name": "PlatformIO Debugger",
-            "target": "c:/Users/Antal v Ravensteijn/Documents/School/HBO-ICTESA1b/BOMBERMAN/BombermanProject/171114-103337-uno/.pioenvs/uno/firmware.elf",
-            "gdbpath": "C:/Users/Antal v Ravensteijn/.platformio/penv/Scripts/piodebuggdb",
+            "target": "e:/School/KBS ESA/Bomberman/BombermanProject/171114-103337-uno/.pioenvs/uno/firmware.elf",
+            "gdbpath": "C:/.platformio/penv/Scripts/piodebuggdb",
             "autorun": [ "source .pioinit" ]
         }
     ]
