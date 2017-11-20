@@ -14,10 +14,11 @@ public:
     void addSecond();
     void beelschermInit();
     void clear();
-    void readFromSDCard();
+    void readFromSDCard(char *file);
    
   private:
     void draw();
+    uint8_t OpenBMPFile(char *file, int16_t x, int16_t y);
     int x;
     int y;
     int r;
