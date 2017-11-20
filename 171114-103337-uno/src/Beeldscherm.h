@@ -14,6 +14,8 @@ public:
     void addSecond();
     void beelschermInit();
     void clear();
+    void readFromSDCard();
+   
   private:
     void draw();
     int x;

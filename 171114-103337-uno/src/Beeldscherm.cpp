@@ -5,6 +5,16 @@
 #include <DS1307.h>
 #include <wiring_private.h>
 #include <stdlib.h>
+#include <SD.h>
+#include <SPI.h>
+#include <TFT.h>            // Arduino TFT library
+#include <Wire.h>
+#include <SPI.h>
+#include <digitalWriteFast.h>
+#include <GraphicsLib.h>
+#include <MI0283QT2.h>
+#include <BMPheader.h>
+#define SD_CS   8
 
 #include "Beeldscherm.h"
 
@@ -52,6 +62,7 @@ void Beeldscherm::left() {
   this->draw();
 }
 
+
 //zelfde functie als left, alleen voor right
 void Beeldscherm::right() {
   this->clear();
@@ -90,3 +101,5 @@ void Beeldscherm::addSecond() {
   this->seconds++;
   this->lcd.drawInteger(2, 2, this->seconds, DEC, RGB(255,0,0), RGB(255,255,255), 1);
 }
+
+
