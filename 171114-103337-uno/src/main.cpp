@@ -40,6 +40,7 @@ void init_timer () {
 int main()
 {
 	init();
+	// Test comment voor push
 
 	//beelscherm en de nunchuck initen en de timer
 	bs.beelschermInit();
