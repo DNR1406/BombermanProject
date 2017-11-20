@@ -1,0 +1,9 @@
+In dit bestand staat over elk bestand in deze map wat er in staat, waar het over gaat. 
+Als je even niet meer weet waar een bestand voor is, kijk dan even hier, als je een nieuw bestand aanmaakt, voeg hem dan even toe.
+
+Main.cpp                main programma.
+ArduinoNunchuck.h       Defines voor de nunchuck.cpp.
+ArduinoNunchuck.cpp     De functies om de gegevens van de nunchuck op te halen.
+Beeldscherm.h           defines voor Beeldscherm.cpp.
+Beeldscherm.cpp         De functies voor het Beeldscherm.
+
