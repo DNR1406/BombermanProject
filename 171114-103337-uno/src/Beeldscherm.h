@@ -1,4 +1,5 @@
 #include <MI0283QT9.h>
+#include <stdint.h>
 
 #ifndef Beeldscherm_H
 #define Beeldscherm_H
