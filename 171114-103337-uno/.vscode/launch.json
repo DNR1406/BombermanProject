@@ -1,7 +1,6 @@
 {
     "version": "0.2.0",
     "configurations": [
-        
         {
             "type": "gdb",
             "request": "launch",
@@ -9,8 +8,6 @@
             "name": "PlatformIO Debugger",
             "target": "c:/Users/Delan/Documents/BombermanProject/BombermanProject/171114-103337-uno/.pioenvs/uno/firmware.elf",
             "gdbpath": "C:/Users/Delan/.platformio/penv/Scripts/piodebuggdb",
-            "target": "/mnt/Files/School/Semester 4/Project/BombermanProject/171114-103337-uno/.pioenvs/uno/firmware.elf",
-            "gdbpath": "/home/arno/.platformio/penv/bin/piodebuggdb",
             "autorun": [ "source .pioinit" ]
         }
     ]
