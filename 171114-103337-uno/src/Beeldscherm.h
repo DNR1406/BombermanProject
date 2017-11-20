@@ -15,6 +15,7 @@ public:
     void beelschermInit();
     void clear();
     void readFromSDCard(char *file);
+    void drawStartscreenButtons();
    
   private:
     void draw();
