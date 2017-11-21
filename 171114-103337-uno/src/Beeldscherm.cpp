@@ -4,13 +4,13 @@
 #include <MI0283QT9.h>
 #include <DS1307.h>
 #include <wiring_private.h>
-#include <stdlib.h>
+#include <stdint.h>
+#include <Arduino.h>
 #include <SD.h>
-#include <TFT.h>            
+#include <TFT.h> // Arduino TFT library
 #include <Wire.h>
 #include <digitalWriteFast.h>
 #include <GraphicsLib.h>
-#include <MI0283QT2.h>
 #include <BMPheader.h>
 #include <stdint.h>
 #define SD_CS   8
@@ -168,6 +168,23 @@ uint8_t Beeldscherm::OpenBMPFile(char *file, int16_t x, int16_t y)
 
     myFile.close();
   }
+  
+}
+void Beeldscherm::drawStartscreenButtons() {
+  // Draws start button
+  lcd.fillRoundRect(95,125,120,30,5,RGB(  0,  100,100));
+  lcd.drawRoundRect(95,125,120,30,5,RGB(  0,  0,  0));
+  lcd.drawText(117, 133, "START", RGB(255,0,0), RGB(0,100,100), 2);
+  
+  // Draws options button
+  lcd.fillRoundRect(95,160,120,30,5,RGB(  0,  100,100));
+  lcd.drawRoundRect(95,160,120,30,5,RGB(  0,  0,  0));
+  lcd.drawText(100, 168, "OPTIONS", RGB(255,0,0), RGB(0,100,100), 2); 
+
+  // Draws credits button
+  lcd.fillRoundRect(95,195,120,30,5,RGB(  0,  100,100));
+  lcd.drawRoundRect(95,195,120,30,5,RGB(  0,  0,  0));
+  lcd.drawText(100, 203, "CREDITS", RGB(255,0,0), RGB(0,100,100), 2); 
   
 }
 
