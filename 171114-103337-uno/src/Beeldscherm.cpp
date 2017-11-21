@@ -193,8 +193,8 @@ void  Beeldscherm::checkButtonPresses() {
   if (lcd.touchZ()) {
     if ( (lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 195 && lcd.touchY() < 225)) {
       lcd.fillScreen(RGB(255, 255, 255));
-    readFromSDCard("credits.bmp");
-  }
+      readFromSDCard("credits.bmp");
+  } 
   }
   
 }
