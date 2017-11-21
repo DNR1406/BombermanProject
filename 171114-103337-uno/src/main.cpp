@@ -40,8 +40,9 @@ void init_timer () {
 int main()
 {
 	init();
-	bs.readFromSDCard("credits.bmp");
+	bs.readFromSDCard("logo.bmp");
 	bs.drawStartscreenButtons();
+	bs.checkButtonPresses();
 	//beelscherm en de nunchuck initen en de timer
 	// bs.beelschermInit();
 	// nunchuk.init();

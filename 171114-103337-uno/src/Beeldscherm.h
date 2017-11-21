@@ -17,6 +17,7 @@ public:
     void clear();
     void readFromSDCard(char *file);
     void drawStartscreenButtons();
+    void checkButtonPresses();
    
   private:
     void draw();
