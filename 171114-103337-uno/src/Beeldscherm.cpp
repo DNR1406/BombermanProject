@@ -191,6 +191,8 @@ void Beeldscherm::drawStartscreenButtons() {
 void  Beeldscherm::checkButtonPresses() {
   if ( (lcd.touchX() >= 95 && lcd.touchX() <= 215) && (lcd.touchY() >= 195 && lcd.touchY() <= 225)) {
     readFromSDCard("credits.bmp");
+  } else {
+    lcd.drawText(100, 203, "NOT WORKING", RGB(255,0,0), RGB(0,100,100), 2); 
   }
 }
 
