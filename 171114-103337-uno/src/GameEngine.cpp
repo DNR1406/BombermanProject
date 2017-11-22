@@ -21,6 +21,6 @@ void GameEngine::selectLevel() {
 }
 
 // functie om score van speler te incrementeren
-void GameEngine::setScore() {
+void GameEngine::incrementScore() {
 
 }

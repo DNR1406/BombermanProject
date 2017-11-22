@@ -9,11 +9,11 @@ public:
     GameEngine();
     void startGame();
     void selectLevel();
-    void setScore();
+    void incrementScore();
     void addPlayer();
    
   private:
-    
+    int score;
     MI0283QT9 lcd;
 };
 
