@@ -8,6 +8,51 @@ defines.h               bestand om alle defines in te stoppen, defines voor alle
 ArduinoNunchuck.h       Defines voor de nunchuck.cpp.
 ArduinoNunchuck.cpp     De functies om de gegevens van de nunchuck op te halen.
 ~
-Beeldscherm.h           defines voor Beeldscherm.cpp.
-Beeldscherm.cpp         De functies voor het Beeldscherm.
+Screen.h           		defines voor Screen.cpp.
+Screen.cpp         		De functies voor het scherm.
+~
+Bomb.h 					defines voor Bomb.cpp
+Bomb.cpp				Functies om bom te tekenen en locatie te geven op het scherm
+~
+Map.h 					defines voor Map.cpp
+Map.cpp					De functies die de map tekenen en de locaties van alle objecten worden in deze klasse gemaakt
+~
+GameEngine.h			defines voor GameEngine.h 
+GameEngine.cpp			Alle functies die het spel bepalen komen hierin te staan (levels, players, highscores e.d.)
+~
+Settings.h 				defines voor Settings.cpp
+Settings.cpp   			Alle functies voor de spelinstellingen komen in deze klasse, (geluid etc.)
+~
+Player.h 				defines voor Player.cpp
+Player.cpp 				Alle functies die bij een speler horen komen in deze klasse (levens, xlocatie, ylocatie enz.)
 
+
+
+	//beelscherm en de nunchuck initen en de timer
+	// bs.beelschermInit();
+	// nunchuk.init();
+	// init_timer();
+
+	// //oneindige loop
+	// for(;;) {
+	// 	//kijk of er iets veranderd is
+	// 	nunchuk.update(); //refresh nunchuk parameters
+
+	// 	//als de zknop ingedrukt is veranderd de kleur
+	// 	if(nunchuk.zButton){ // reset scherm mbv Z knop
+	// 			bs.changeColor();
+	// 		}
+
+	// 	//omhoog & naar beneden
+	// 	if(nunchuk.analogY > 155){
+	// 		bs.up();
+	// 	} else if(nunchuk.analogY < 100){
+	// 		bs.down();
+	// 	}
+	// 	//Links & rechts
+	// 	if(nunchuk.analogX > 155){
+	// 		bs.right();
+	// 	}else if(nunchuk.analogX < 100){
+	// 		bs.left();
+	// 	}
+	// } 

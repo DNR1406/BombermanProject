@@ -7,11 +7,11 @@
 #include <avr/interrupt.h>
 #include <stdint.h>
 
-#include "Beeldscherm.h"
+#include "Screen.h"
 #include "ArduinoNunchuk.h"
 
 //Instancis voor de nunchuk en het beelscherm
-Beeldscherm bs = Beeldscherm();
+Screen screen = Screen();
 ArduinoNunchuk nunchuk = ArduinoNunchuk();
 
 //teller voor timer
@@ -23,7 +23,7 @@ ISR(TIMER2_OVF_vect)
     teller++;
     if ( teller >= 60 )            //    bij elke 60e interrupt ...
     {
-        bs.addSecond();
+        screen.addSecond();
         teller = 0;
     }
 }
@@ -40,36 +40,10 @@ void init_timer () {
 int main()
 {
 	init();
-	bs.readFromSDCard("logo.bmp");
-	bs.drawStartscreenButtons();
-	bs.checkButtonPresses();
-	//beelscherm en de nunchuck initen en de timer
-	// bs.beelschermInit();
-	// nunchuk.init();
-	// init_timer();
+	screen.screenInit();
+	screen.readFromSDCard("logo.bmp");
+	screen.drawStartscreenButtons();
+	screen.checkButtonPresses();
 
-	// //oneindige loop
-	// for(;;) {
-	// 	//kijk of er iets veranderd is
-	// 	nunchuk.update(); //refresh nunchuk parameters
-
-	// 	//als de zknop ingedrukt is veranderd de kleur
-	// 	if(nunchuk.zButton){ // reset scherm mbv Z knop
-	// 			bs.changeColor();
-	// 		}
-
-	// 	//omhoog & naar beneden
-	// 	if(nunchuk.analogY > 155){
-	// 		bs.up();
-	// 	} else if(nunchuk.analogY < 100){
-	// 		bs.down();
-	// 	}
-	// 	//Links & rechts
-	// 	if(nunchuk.analogX > 155){
-	// 		bs.right();
-	// 	}else if(nunchuk.analogX < 100){
-	// 		bs.left();
-	// 	}
-	// } 
 	return 0;
 }
