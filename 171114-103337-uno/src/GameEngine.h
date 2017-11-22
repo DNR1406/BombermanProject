@@ -11,10 +11,22 @@ public:
     void selectLevel();
     void incrementScore();
     void addPlayer();
+    void readFromSDCard(char *file);
+    void drawStartscreenButtons();
+    void checkButtonPresses();
+    void gameInit();
+    void drawBackButton();
+    void showOptions();
+    void showCredits();
+    uint8_t OpenBMPFile(char *file, int16_t x, int16_t y);
+    uint8_t readCalData(void);
+    void writeCalData(void);
+
    
   private:
     int score;
     MI0283QT9 lcd;
+    
 };
 
 

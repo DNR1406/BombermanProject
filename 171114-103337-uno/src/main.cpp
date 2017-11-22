@@ -9,41 +9,41 @@
 
 #include "Screen.h"
 #include "ArduinoNunchuk.h"
+#include "GameEngine.h"
 
 //Instancis voor de nunchuk en het beelscherm
-Screen screen = Screen();
+// Screen screen = Screen();
 ArduinoNunchuk nunchuk = ArduinoNunchuk();
+GameEngine gameEngine = GameEngine();
 
 //teller voor timer
 volatile uint8_t teller = 0;
 
 //interupt functie
-ISR(TIMER2_OVF_vect)
-{                                //    macro met interrupt vector
-    teller++;
-    if ( teller >= 60 )            //    bij elke 60e interrupt ...
-    {
-        screen.addSecond();
-        teller = 0;
-    }
-}
+// ISR(TIMER2_OVF_vect)
+// {                                //    macro met interrupt vector
+//     teller++;
+//     if ( teller >= 60 )            //    bij elke 60e interrupt ...
+//     {
+//         screen.addSecond();
+//         teller = 0;
+//     }
+// }
 
 //functie om timer te initen
-void init_timer () {
-      TCCR2B |= (1 << CS22) | (1 << CS21) | (1 << CS20); //
-      TIMSK2 |= (1<<TOIE2);
-      TCNT2 = 0;
-      sei();                        //    enable interrupts!
-}
-
+// void init_timer () {
+//       TCCR2B |= (1 << CS22) | (1 << CS21) | (1 << CS20); //
+//       TIMSK2 |= (1<<TOIE2);
+//       TCNT2 = 0;
+//       sei();                        //    enable interrupts!
+// }
 
 int main()
 {
-	init();
-	screen.screenInit();
-	screen.readFromSDCard("logo.bmp");
-	screen.drawStartscreenButtons();
-	screen.checkButtonPresses();
+    init();
+    gameEngine.gameInit();
+    gameEngine.readFromSDCard("logo.bmp");
+    gameEngine.checkButtonPresses();
 
-	return 0;
+    return 0;
 }

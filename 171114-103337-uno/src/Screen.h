@@ -15,13 +15,9 @@ public:
     void addSecond();
     void screenInit();
     void clear();
-    void readFromSDCard(char *file);
-    void drawStartscreenButtons();
-    void checkButtonPresses();
    
   private:
     void draw();
-    uint8_t OpenBMPFile(char *file, int16_t x, int16_t y);
     int x;
     int y;
     int r;
