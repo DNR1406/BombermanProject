@@ -28,6 +28,7 @@ void GameEngine::gameInit()
 // start Scherm functie
 void GameEngine::startGame()
 {
+    
 }
 
 // functie om speler toe te voegen
