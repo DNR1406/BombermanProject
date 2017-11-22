@@ -23,7 +23,6 @@ void Communication::setBombPlayer1(int x, int y) {
     this->bombPlayer2 = new Bomb(x, y);
 }
 
-
 void Communication::getBombPlayer2(Bomb *bomb) {
    *bomb = *this->bombPlayer2;
 }
