@@ -6,3 +6,9 @@ Gebruik debug variable zo:
 printf("Debug");
 #endif
 */
+
+typedef struct location {
+   int x, y;
+} location;
+
+
