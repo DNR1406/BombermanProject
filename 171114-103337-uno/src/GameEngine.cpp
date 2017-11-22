@@ -98,7 +98,23 @@ uint8_t GameEngine::OpenBMPFile(char *file, int16_t x, int16_t y)
         myFile.close();
     }
 }
+int GameEngine::pressCredits()
+{
+    if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 195 && lcd.touchY() < 225))
+        return 1;
+}
 
+int GameEngine::pressOptions()
+{
+    if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 160 && lcd.touchY() < 190))
+        return 1;
+}
+
+int GameEngine::pressStart()
+{
+    if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 125 && lcd.touchY() < 155))
+        return 1;
+}
 void GameEngine::readFromSDCard(char *file)
 {
     int x, i;
@@ -162,30 +178,14 @@ void GameEngine::checkBackButton()
         lcd.touchRead();
         if (lcd.touchZ())
         {
-            if ((lcd.touchX() > 0 && lcd.touchX() < 50) && (lcd.touchY() > 0 && lcd.touchY() < 50)) {
+            if ((lcd.touchX() > 0 && lcd.touchX() < 50) && (lcd.touchY() > 0 && lcd.touchY() < 50))
+            {
                 OpenBMPFile("logo.bmp", 0, 0);
                 drawStartscreenButtons();
                 back = 0;
             }
         }
     }
-}
-int GameEngine::pressCredits()
-{
-    if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 195 && lcd.touchY() < 225))
-        return 1;
-}
-
-int GameEngine::pressOptions()
-{
-    if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 160 && lcd.touchY() < 190))
-        return 1;
-}
-
-int GameEngine::pressStart()
-{
-    if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 125 && lcd.touchY() < 155))
-        return 1;
 }
 
 void GameEngine::showCredits()
