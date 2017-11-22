@@ -16,8 +16,8 @@ public:
     void checkButtonPresses();
     void gameInit();
     void drawBackButton();
-    void showOptions();
-    void showCredits();
+    int pressOptions();
+    int pressCredits();
     uint8_t OpenBMPFile(char *file, int16_t x, int16_t y);
     uint8_t readCalData(void);
     void writeCalData(void);
