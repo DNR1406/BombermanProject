@@ -134,25 +134,44 @@ void GameEngine::checkButtonPresses()
         lcd.touchRead();
         if (lcd.touchZ())
         {
+
             // Credits openen
-            if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 195 && lcd.touchY() < 225)) {
+            if (showCredits())
+            {
                 OpenBMPFile("credits.bmp", 0, 0);
                 pressed = 0;
                 // Opties openen
-            } else if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 160 && lcd.touchY() < 190)) {
+            }
+            else if (showOptions())
+            {
                 OpenBMPFile("options.bmp", 0, 0);
                 pressed = 0;
+            }
+            else if (pressStart())
+            {
+                // Game starten
             }
         }
     }
 }
-void GameEngine::showCredits() {
-    
+int GameEngine::pressCredits()
+{
+    if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 195 && lcd.touchY() < 225))
+        return 1;
 }
 
-void GameEngine::showOptions() {
-
+int GameEngine::pressOptions()
+{
+    if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 160 && lcd.touchY() < 190))
+        return 1;
 }
+
+int GameEngine::pressStart()
+{
+    if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 125 && lcd.touchY() < 155)
+        return 1;
+}
+
 void GameEngine::drawStartscreenButtons()
 {
     // Draws start button
@@ -171,7 +190,8 @@ void GameEngine::drawStartscreenButtons()
     lcd.drawText(100, 203, "CREDITS", RGB(255, 0, 0), RGB(0, 100, 100), 2);
 }
 
-void GameEngine::drawBackButton() {
+void GameEngine::drawBackButton()
+{
     OpenBMPFile("backarrow.bmp", 0, 0);
 }
 
