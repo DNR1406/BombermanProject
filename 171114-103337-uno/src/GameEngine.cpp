@@ -116,7 +116,6 @@ void GameEngine::readFromSDCard(char *file)
             lcd.touchStartCal(); //calibrate touchpanel
             writeCalData();      //write data to EEPROM
         }
-        lcd.fillScreen(RGB(0, 0, 0));
         OpenBMPFile(file, 0, 0);
         drawStartscreenButtons();
     }
