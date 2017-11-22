@@ -1,4 +1,5 @@
 #include <MI0283QT9.h>
+#include <stdint.h>
 
 #ifndef Beeldscherm_H
 #define Beeldscherm_H
@@ -14,8 +15,13 @@ public:
     void addSecond();
     void beelschermInit();
     void clear();
+    void readFromSDCard(char *file);
+    void drawStartscreenButtons();
+    void checkButtonPresses();
+   
   private:
     void draw();
+    uint8_t OpenBMPFile(char *file, int16_t x, int16_t y);
     int x;
     int y;
     int r;

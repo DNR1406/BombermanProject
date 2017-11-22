@@ -40,35 +40,36 @@ void init_timer () {
 int main()
 {
 	init();
-	// Test comment voor push
-
+	bs.readFromSDCard("logo.bmp");
+	bs.drawStartscreenButtons();
+	bs.checkButtonPresses();
 	//beelscherm en de nunchuck initen en de timer
-	bs.beelschermInit();
-	nunchuk.init();
-	init_timer();
+	// bs.beelschermInit();
+	// nunchuk.init();
+	// init_timer();
 
-	//oneindige loop
-	for(;;) {
-		//kijk of er iets veranderd is
-		nunchuk.update(); //refresh nunchuk parameters
+	// //oneindige loop
+	// for(;;) {
+	// 	//kijk of er iets veranderd is
+	// 	nunchuk.update(); //refresh nunchuk parameters
 
-		//als de zknop ingedrukt is veranderd de kleur
-		if(nunchuk.zButton){ // reset scherm mbv Z knop
-				bs.changeColor();
-			}
+	// 	//als de zknop ingedrukt is veranderd de kleur
+	// 	if(nunchuk.zButton){ // reset scherm mbv Z knop
+	// 			bs.changeColor();
+	// 		}
 
-		//omhoog & naar beneden
-		if(nunchuk.analogY > 155){
-			bs.up();
-		} else if(nunchuk.analogY < 100){
-			bs.down();
-		}
-		//Links & rechts
-		if(nunchuk.analogX > 155){
-			bs.right();
-		}else if(nunchuk.analogX < 100){
-			bs.left();
-		}
-	} 
+	// 	//omhoog & naar beneden
+	// 	if(nunchuk.analogY > 155){
+	// 		bs.up();
+	// 	} else if(nunchuk.analogY < 100){
+	// 		bs.down();
+	// 	}
+	// 	//Links & rechts
+	// 	if(nunchuk.analogX > 155){
+	// 		bs.right();
+	// 	}else if(nunchuk.analogX < 100){
+	// 		bs.left();
+	// 	}
+	// } 
 	return 0;
 }
