@@ -99,23 +99,7 @@ uint8_t GameEngine::OpenBMPFile(char *file, int16_t x, int16_t y)
         myFile.close();
     }
 }
-int GameEngine::pressCredits()
-{
-    if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 195 && lcd.touchY() < 225))
-        return 1;
-}
 
-int GameEngine::pressOptions()
-{
-    if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 160 && lcd.touchY() < 190))
-        return 1;
-}
-
-int GameEngine::pressStart()
-{
-    if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 125 && lcd.touchY() < 155))
-        return 1;
-}
 void GameEngine::readFromSDCard(char *file)
 {
     int x, i;
@@ -151,19 +135,21 @@ void GameEngine::checkButtonPresses()
         lcd.touchRead();
         if (lcd.touchZ())
         {
-
-            // Credits openen
+            // Check if the button area from Credits is touched
             if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 180 && lcd.touchY() < 210))
             {
+                // Open credits and open checkbackButton
                 showCredits();
                 checkBackButton();
-                // Opties openen
             }
+            // Check if the button area from Option is touched
             else if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 140 && lcd.touchY() < 170))
             {
+                // Open Options and open checkbackButton
                 showOptions();
                 checkBackButton();
             }
+            // Check if the button area from Start is touched
             else if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 100 && lcd.touchY() < 130))
             {
                 // Game starten
@@ -193,10 +179,10 @@ void GameEngine::showCredits()
 {
     lcd.fillScreen(RGB(160, 182, 219));
     lcd.drawText(100, 20, "CREDITS", RGB(0, 0, 0), RGB(160, 182, 219), 2);
-    lcd.drawText(30, 60, "Arno van de Munt", RGB(0, 0, 0), RGB(160, 182, 219), 1);
-    lcd.drawText(30, 100, "Antal van Ravensteijn", RGB(0, 0, 0), RGB(160, 182, 219), 1);
-    lcd.drawText(30, 140, "Delano Remy", RGB(0, 0, 0), RGB(160, 182, 219), 1);
-    lcd.drawText(30, 180, "Matthijs Koudijs", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+    lcd.drawText(30, 60, "Arno van de Munt (Waarborger)", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+    lcd.drawText(30, 100, "Antal van Ravensteijn (Presentator)", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+    lcd.drawText(30, 140, "Delano Remy (Notaris)", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+    lcd.drawText(30, 180, "Matthijs Koudijs (Scrum Master)", RGB(0, 0, 0), RGB(160, 182, 219), 1);
     lcd.drawText(10, 10, "Home", RGB(255, 0, 0), RGB(160, 182, 219), 1);
 }
 
