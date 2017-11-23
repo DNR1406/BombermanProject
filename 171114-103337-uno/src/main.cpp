@@ -40,7 +40,9 @@ int main()
 {
     init();
     gameEngine.gameInit();
-    gameEngine.readFromSDCard("logo.bmp");
+    gameEngine.calibrateScreen();
+    // gameEngine.readFromSDCard("logo.bmp");
+    gameEngine.drawStartscreenButtons();
     gameEngine.checkButtonPresses();
 
     return 0;

@@ -24,12 +24,12 @@ GameEngine::GameEngine()
 void GameEngine::gameInit()
 {
     this->lcd.begin();
+    lcd.fillScreen(RGB(160, 182, 219));
 }
 
 // start Scherm functie
 void GameEngine::startGame()
 {
-    
 }
 
 // functie om speler toe te voegen
@@ -101,25 +101,21 @@ uint8_t GameEngine::OpenBMPFile(char *file, int16_t x, int16_t y)
     }
 }
 
+void GameEngine::calibrateScreen()
+{
+    // lcd.touchRead();
+    if (lcd.touchZ() || readCalData()) //calibration data in EEPROM?
+    {
+        writeCalData(); //write data to EEPROM
+    }
+}
+
 void GameEngine::readFromSDCard(char *file)
 {
-    int x, i;
-
-    //init Display
-    // lcd.begin();
-
-    //init SD-Card
+    //init SD-Card and calibrate touchscreen
     if (SD.begin(4))
     {
-        lcd.fillScreen(RGB(0, 0, 0));
-        lcd.touchRead();
-        if (lcd.touchZ() || readCalData()) //calibration data in EEPROM?
-        {
-            lcd.touchStartCal(); //calibrate touchpanel
-            writeCalData();      //write data to EEPROM
-        }
         OpenBMPFile(file, 0, 0);
-        drawStartscreenButtons();
     }
     else
     {
@@ -135,19 +131,20 @@ void GameEngine::checkButtonPresses()
         lcd.touchRead();
         if (lcd.touchZ())
         {
-
-            // Credits openen
+            // Check if the button area from Credits is touched
             if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 180 && lcd.touchY() < 210))
             {
+                // Open credits and open checkHomeButton
                 showCredits();
-                checkBackButton();
-                
-            } // Opties openen
+                checkHomeButton();
+            }
+            // Check if the button area from Option is touched
             else if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 140 && lcd.touchY() < 170))
             {
+                // Open Options and open checkHomeButton
                 showOptions();
-                checkBackButton();
             }
+            // Check if the button area from Start is touched
             else if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 100 && lcd.touchY() < 130))
             {
                 // Game starten
@@ -155,7 +152,7 @@ void GameEngine::checkButtonPresses()
         }
     }
 }
-void GameEngine::checkBackButton()
+void GameEngine::checkHomeButton()
 {
     int back = 1;
     while (back)
@@ -165,8 +162,28 @@ void GameEngine::checkBackButton()
         {
             if ((lcd.touchX() > 0 && lcd.touchX() < 50) && (lcd.touchY() > 0 && lcd.touchY() < 50))
             {
-                OpenBMPFile("logo.bmp", 0, 0);
+                lcd.fillScreen(RGB(160, 182, 219));
+                // OpenBMPFile("logo.bmp", 0, 0);
                 drawStartscreenButtons();
+                checkButtonPresses();
+                back = 0;
+            }
+        }
+    }
+}
+
+void GameEngine::checkOptionsButton()
+{
+    int back = 1;
+    while (back)
+    {
+        lcd.touchRead();
+        if (lcd.touchZ())
+        {
+            if ((lcd.touchX() > 0 && lcd.touchX() < 50) && (lcd.touchY() > 0 && lcd.touchY() < 50))
+            {
+                showOptions();
+                checkButtonPresses();
                 back = 0;
             }
         }
@@ -177,10 +194,10 @@ void GameEngine::showCredits()
 {
     lcd.fillScreen(RGB(160, 182, 219));
     lcd.drawText(100, 20, "CREDITS", RGB(0, 0, 0), RGB(160, 182, 219), 2);
-    lcd.drawText(30, 60, "Arno van de Munt", RGB(0, 0, 0), RGB(160, 182, 219), 1);
-    lcd.drawText(30, 100, "Antal van Ravensteijn", RGB(0, 0, 0), RGB(160, 182, 219), 1);
-    lcd.drawText(30, 140, "Delano Remy", RGB(0, 0, 0), RGB(160, 182, 219), 1);
-    lcd.drawText(30, 180, "Matthijs Koudijs", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+    lcd.drawText(30, 60, "Arno van de Munt (Waarborger)", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+    lcd.drawText(30, 100, "Antal van Ravensteijn (Presentator)", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+    lcd.drawText(30, 140, "Delano Remy (Notaris)", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+    lcd.drawText(30, 180, "Matthijs Koudijs (Scrum Master)", RGB(0, 0, 0), RGB(160, 182, 219), 1);
     lcd.drawText(10, 10, "Home", RGB(255, 0, 0), RGB(160, 182, 219), 1);
 }
 
@@ -188,8 +205,48 @@ void GameEngine::showOptions()
 {
     lcd.fillScreen(RGB(160, 182, 219));
     lcd.drawText(100, 20, "OPTIONS", RGB(0, 0, 0), RGB(160, 182, 219), 2);
-    lcd.drawText(10, 10, "Home", RGB(255, 0, 0), RGB(160, 182, 219), 1);
+    lcd.drawText(10, 10, "HOME", RGB(255, 0, 0), RGB(160, 182, 219), 1);
     options.createOptionsButtons();
+    int pressed = 1;
+    while (pressed)
+    {
+        lcd.touchRead();
+        if (lcd.touchZ())
+        {
+            if ((lcd.touchX() > 0 && lcd.touchX() < 50) && (lcd.touchY() > 0 && lcd.touchY() < 50))
+            {
+                lcd.fillScreen(RGB(160, 182, 219));
+                drawStartscreenButtons();
+                pressed = 0;
+            }
+            // Check if the button area from Brightness is touched
+            else if ((lcd.touchX() > 40 && lcd.touchX() < 250) && (lcd.touchY() > 100 && lcd.touchY() < 130))
+            {
+                options.changeBrightness();
+
+                // lcd.fillScreen(RGB(255, 0, 0));
+                // lcd.drawText(10, 10, "OPTIONS", RGB(255, 0, 0), RGB(160, 182, 219), 1);
+                // // functie brightness
+                // options.changeBrightness();
+                checkOptionsButton();
+            }
+            // Check if the button area from Volume is touched
+            else if ((lcd.touchX() > 40 && lcd.touchX() < 250) && (lcd.touchY() > 140 && lcd.touchY() < 170))
+            {
+                lcd.fillScreen(RGB(0, 255, 0));
+                lcd.drawText(10, 10, "OPTIONS", RGB(255, 0, 0), RGB(160, 182, 219), 1);
+                // functie volume
+                checkOptionsButton();
+            }
+            // Check if the button area from Reset Highscore is touched
+            else if ((lcd.touchX() > 40 && lcd.touchX() < 250) && (lcd.touchY() > 180 && lcd.touchY() < 210))
+            {
+                lcd.fillScreen(RGB(0, 0, 255));
+                lcd.drawText(10, 10, "OPTIONS", RGB(255, 0, 0), RGB(160, 182, 219), 1);
+                checkOptionsButton();
+            }
+        }
+    }
 }
 
 void GameEngine::drawStartscreenButtons()

@@ -3,12 +3,14 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-Options::Options() {
-
+GameEngine homeScreen = GameEngine();
+Options::Options()
+{
 }
 
-void Options::createOptionsButtons() {
-     // Draws Brightness button
+void Options::createOptionsButtons()
+{
+    // Draws Brightness button
     lcd.fillRoundRect(40, 100, 250, 30, 5, RGB(0, 100, 100));
     lcd.drawRoundRect(40, 100, 250, 30, 5, RGB(0, 0, 0));
     lcd.drawText(85, 108, "BRIGHTNESS", RGB(255, 0, 0), RGB(0, 100, 100), 2);
@@ -25,13 +27,21 @@ void Options::createOptionsButtons() {
 }
 
 
-void Options::changeBrightness() {
+
+void Options::changeBrightness()
+{
+    
+    lcd.fillScreen(RGB(160, 182, 219));
+    lcd.drawText(10, 10, "OPTIONS", RGB(255,0,0), RGB(160, 182, 219), 1);
+
+
     int sensorWaarde;
     int counter = 1;
-     DDRC = 0b11111110;
+    DDRC = 0b11111110;
 
-     while(counter) {
+    while (counter)
+    {
         sensorWaarde = analogRead(DDC0);
         counter = 0;
-     }
+    }
 }
