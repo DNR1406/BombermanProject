@@ -1,4 +1,4 @@
-#include "Bomb.h"
+#include "include.h"
 
 Bomb::Bomb(int x, int y) {
 

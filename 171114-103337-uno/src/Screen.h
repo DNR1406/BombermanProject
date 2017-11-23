@@ -1,8 +1,10 @@
+#ifndef Screen_H
+#define Screen_H
+
 #include <MI0283QT9.h>
 #include <stdint.h>
 
-#ifndef Screen_H
-#define Screen_H
+#include "include.h"
 
 class Screen {
 public:

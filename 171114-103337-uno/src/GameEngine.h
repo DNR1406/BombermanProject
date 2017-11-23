@@ -1,8 +1,10 @@
+#ifndef GameEngine_H
+#define GameEngine_H
+
 #include <MI0283QT9.h>
 #include <stdint.h>
 
-#ifndef GameEngine_H
-#define GameEngine_H
+#include "include.h"
 
 class GameEngine {
 public:
@@ -16,8 +18,13 @@ public:
     void checkButtonPresses();
     void gameInit();
     void drawBackButton();
+    void checkBackButton();
     int pressOptions();
     int pressCredits();
+    int pressStart();
+    int pressBack();
+    void showCredits();
+    void showOptions();
     uint8_t OpenBMPFile(char *file, int16_t x, int16_t y);
     uint8_t readCalData(void);
     void writeCalData(void);

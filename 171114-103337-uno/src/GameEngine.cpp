@@ -1,4 +1,3 @@
-#include "GameEngine.h"
 #include <EEPROM.h>
 #include <SD.h>
 #include <SPI.h>
@@ -14,6 +13,8 @@
 #include <digitalWriteFast.h>
 #include <BMPheader.h>
 #include <stdint.h>
+
+#include "include.h"
 
 //Constructor
 GameEngine::GameEngine()
@@ -99,7 +100,23 @@ uint8_t GameEngine::OpenBMPFile(char *file, int16_t x, int16_t y)
         myFile.close();
     }
 }
+int GameEngine::pressCredits()
+{
+    if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 195 && lcd.touchY() < 225))
+        return 1;
+}
 
+int GameEngine::pressOptions()
+{
+    if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 160 && lcd.touchY() < 190))
+        return 1;
+}
+
+int GameEngine::pressStart()
+{
+    if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 125 && lcd.touchY() < 155))
+        return 1;
+}
 void GameEngine::readFromSDCard(char *file)
 {
     int x, i;
@@ -136,63 +153,76 @@ void GameEngine::checkButtonPresses()
         {
 
             // Credits openen
-            if (showCredits())
+            if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 180 && lcd.touchY() < 210))
             {
-                OpenBMPFile("credits.bmp", 0, 0);
-                pressed = 0;
+                showCredits();
+                checkBackButton();
                 // Opties openen
             }
-            else if (showOptions())
+            else if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 140 && lcd.touchY() < 170))
             {
-                OpenBMPFile("options.bmp", 0, 0);
-                pressed = 0;
+                showOptions();
+                checkBackButton();
             }
-            else if (pressStart())
+            else if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 100 && lcd.touchY() < 130))
             {
                 // Game starten
             }
         }
     }
 }
-int GameEngine::pressCredits()
+void GameEngine::checkBackButton()
 {
-    if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 195 && lcd.touchY() < 225))
-        return 1;
+    int back = 1;
+    while (back)
+    {
+        lcd.touchRead();
+        if (lcd.touchZ())
+        {
+            if ((lcd.touchX() > 0 && lcd.touchX() < 50) && (lcd.touchY() > 0 && lcd.touchY() < 50))
+            {
+                OpenBMPFile("logo.bmp", 0, 0);
+                drawStartscreenButtons();
+                back = 0;
+            }
+        }
+    }
 }
 
-int GameEngine::pressOptions()
+void GameEngine::showCredits()
 {
-    if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 160 && lcd.touchY() < 190))
-        return 1;
+    lcd.fillScreen(RGB(160, 182, 219));
+    lcd.drawText(100, 20, "CREDITS", RGB(0, 0, 0), RGB(160, 182, 219), 2);
+    lcd.drawText(30, 60, "Arno van de Munt", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+    lcd.drawText(30, 100, "Antal van Ravensteijn", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+    lcd.drawText(30, 140, "Delano Remy", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+    lcd.drawText(30, 180, "Matthijs Koudijs", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+    lcd.drawText(10, 10, "Home", RGB(255, 0, 0), RGB(160, 182, 219), 1);
 }
 
-int GameEngine::pressStart()
+void GameEngine::showOptions()
 {
-    if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 125 && lcd.touchY() < 155)
-        return 1;
+    lcd.fillScreen(RGB(160, 182, 219));
+    lcd.drawText(100, 20, "OPTIONS", RGB(0, 0, 0), RGB(160, 182, 219), 2);
+    lcd.drawText(10, 10, "Home", RGB(255, 0, 0), RGB(160, 182, 219), 1);
 }
 
 void GameEngine::drawStartscreenButtons()
 {
     // Draws start button
-    lcd.fillRoundRect(95, 125, 120, 30, 5, RGB(0, 100, 100));
-    lcd.drawRoundRect(95, 125, 120, 30, 5, RGB(0, 0, 0));
-    lcd.drawText(117, 133, "START", RGB(255, 0, 0), RGB(0, 100, 100), 2);
+    lcd.fillRoundRect(95, 100, 120, 30, 5, RGB(0, 100, 100));
+    lcd.drawRoundRect(95, 100, 120, 30, 5, RGB(0, 0, 0));
+    lcd.drawText(117, 108, "START", RGB(255, 0, 0), RGB(0, 100, 100), 2);
 
     // Draws options button
-    lcd.fillRoundRect(95, 160, 120, 30, 5, RGB(0, 100, 100));
-    lcd.drawRoundRect(95, 160, 120, 30, 5, RGB(0, 0, 0));
-    lcd.drawText(100, 168, "OPTIONS", RGB(255, 0, 0), RGB(0, 100, 100), 2);
+    lcd.fillRoundRect(95, 140, 120, 30, 5, RGB(0, 100, 100));
+    lcd.drawRoundRect(95, 140, 120, 30, 5, RGB(0, 0, 0));
+    lcd.drawText(100, 147, "OPTIONS", RGB(255, 0, 0), RGB(0, 100, 100), 2);
 
     // Draws credits button
-    lcd.fillRoundRect(95, 195, 120, 30, 5, RGB(0, 100, 100));
-    lcd.drawRoundRect(95, 195, 120, 30, 5, RGB(0, 0, 0));
-    lcd.drawText(100, 203, "CREDITS", RGB(255, 0, 0), RGB(0, 100, 100), 2);
-}
-
-void GameEngine::drawBackButton()
-{
-    OpenBMPFile("backarrow.bmp", 0, 0);
+    lcd.fillRoundRect(95, 180, 120, 30, 5, RGB(0, 100, 100));
+    lcd.drawRoundRect(95, 180, 120, 30, 5, RGB(0, 0, 0));
+    lcd.drawText(100, 187, "CREDITS", RGB(255, 0, 0), RGB(0, 100, 100), 2);
 }
 
 void GameEngine::writeCalData(void)
