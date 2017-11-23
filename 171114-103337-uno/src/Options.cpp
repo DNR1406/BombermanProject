@@ -30,6 +30,11 @@ void Options::createOptionsButtons()
 
 void Options::changeBrightness()
 {
+    
+    lcd.fillScreen(RGB(160, 182, 219));
+    lcd.drawText(10, 10, "OPTIONS", RGB(255,0,0), RGB(160, 182, 219), 1);
+
+
     int sensorWaarde;
     int counter = 1;
     DDRC = 0b11111110;

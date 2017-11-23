@@ -222,10 +222,12 @@ void GameEngine::showOptions()
             // Check if the button area from Brightness is touched
             else if ((lcd.touchX() > 40 && lcd.touchX() < 250) && (lcd.touchY() > 100 && lcd.touchY() < 130))
             {
-                lcd.fillScreen(RGB(255, 0, 0));
-                lcd.drawText(10, 10, "OPTIONS", RGB(255, 0, 0), RGB(160, 182, 219), 1);
-                // functie brightness
                 options.changeBrightness();
+
+                // lcd.fillScreen(RGB(255, 0, 0));
+                // lcd.drawText(10, 10, "OPTIONS", RGB(255, 0, 0), RGB(160, 182, 219), 1);
+                // // functie brightness
+                // options.changeBrightness();
                 checkOptionsButton();
             }
             // Check if the button area from Volume is touched
