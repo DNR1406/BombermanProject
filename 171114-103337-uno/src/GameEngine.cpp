@@ -197,7 +197,6 @@ void GameEngine::showOptions()
     lcd.drawText(100, 20, "OPTIONS", RGB(0, 0, 0), RGB(160, 182, 219), 2);
     lcd.drawText(10, 10, "Home", RGB(255, 0, 0), RGB(160, 182, 219), 1);
     options.createOptionsButtons();
-    options.checkBrightnessButton();
 }
 
 void GameEngine::drawStartscreenButtons()

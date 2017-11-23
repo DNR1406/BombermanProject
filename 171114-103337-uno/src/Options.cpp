@@ -24,22 +24,6 @@ void Options::createOptionsButtons() {
     lcd.drawText(45, 187, "RESET HIGHSCORE", RGB(255, 0, 0), RGB(0, 100, 100), 2);
 }
 
-void Options::checkBrightnessButton() {
-    int back = 1;
-    while (back)
-    {
-        lcd.touchRead();
-        if (lcd.touchZ())
-        {
-            if ((lcd.touchX() > 40 && lcd.touchX() < 250) && (lcd.touchY() > 100 && lcd.touchY() < 130))
-            {
-                lcd.fillScreen(RGB(200, 100, 100));
-                lcd.drawText(100, 20, "BRIGHTNESS", RGB(0, 0, 0), RGB(160, 182, 219), 2);  back = 0;
-            }
-        }
-    }
-}
-
 
 void Options::changeBrightness() {
     int sensorWaarde;
