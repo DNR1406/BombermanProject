@@ -1,4 +1,3 @@
-#include "GameEngine.h"
 #include <EEPROM.h>
 #include <SD.h>
 #include <SPI.h>
@@ -14,6 +13,8 @@
 #include <digitalWriteFast.h>
 #include <BMPheader.h>
 #include <stdint.h>
+
+#include "include.h"
 
 //Constructor
 GameEngine::GameEngine()

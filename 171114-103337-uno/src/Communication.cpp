@@ -1,6 +1,7 @@
-#include "Communication.h"
 #include <stdlib.h>
-#include "Bomb.h"
+
+#include "include.h"
+
 
 Communication::Communication()
 {

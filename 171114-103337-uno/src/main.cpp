@@ -7,9 +7,7 @@
 #include <avr/interrupt.h>
 #include <stdint.h>
 
-#include "Screen.h"
-#include "ArduinoNunchuk.h"
-#include "GameEngine.h"
+#include "include.h"
 
 //Instancis voor de nunchuk en het beelscherm
 // Screen screen = Screen();

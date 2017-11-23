@@ -1,8 +1,7 @@
 #ifndef Communication_H
 #define Communication_H
 
-#include "Bomb.h"
-
+#include "include.h"
 
 class Communication
 {

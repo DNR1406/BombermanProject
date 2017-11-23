@@ -1,3 +1,6 @@
+#ifndef include_H
+#define include_H
+
 /*---------------------------------------------------------------------------
 If you use a define, put it here: */
 #define DEBUG 1
@@ -8,6 +11,9 @@ If you use a define, put it here: */
     printf("Debug");
     #endif
     */
+
+#define ADDRESS 0x52
+#define SD_CS   8
 
 
 /*---------------------------------------------------------------------------
@@ -30,3 +36,4 @@ typedef struct location {
 
 
 
+#endif
