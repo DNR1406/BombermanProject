@@ -1,8 +1,10 @@
+#ifndef GameEngine_H
+#define GameEngine_H
+
 #include <MI0283QT9.h>
 #include <stdint.h>
 
-#ifndef GameEngine_H
-#define GameEngine_H
+#include "include.h"
 
 class GameEngine {
 public:

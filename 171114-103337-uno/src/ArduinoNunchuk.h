@@ -1,6 +1,9 @@
 #ifndef ArduinoNunchuk_H
 #define ArduinoNunchuk_H
 
+#include "include.h"
+
+
 class ArduinoNunchuk
 {
   public:
