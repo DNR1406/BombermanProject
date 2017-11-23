@@ -15,8 +15,8 @@
 #include <stdint.h>
 
 #include "include.h"
-
 //Constructor
+Options options = Options();
 GameEngine::GameEngine()
 {
 }
@@ -29,6 +29,7 @@ void GameEngine::gameInit()
 // start Scherm functie
 void GameEngine::startGame()
 {
+    
 }
 
 // functie om speler toe te voegen
@@ -117,7 +118,6 @@ void GameEngine::readFromSDCard(char *file)
             lcd.touchStartCal(); //calibrate touchpanel
             writeCalData();      //write data to EEPROM
         }
-        lcd.fillScreen(RGB(0, 0, 0));
         OpenBMPFile(file, 0, 0);
         drawStartscreenButtons();
     }
@@ -141,8 +141,13 @@ void GameEngine::checkButtonPresses()
                 // Open credits and open checkbackButton
                 showCredits();
                 checkBackButton();
+<<<<<<< HEAD
             }
             // Check if the button area from Option is touched
+=======
+                
+            } // Opties openen
+>>>>>>> f673cb70bfccf3a606ed1dccf7279efeb0d075f2
             else if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 140 && lcd.touchY() < 170))
             {
                 // Open Options and open checkbackButton
@@ -191,6 +196,8 @@ void GameEngine::showOptions()
     lcd.fillScreen(RGB(160, 182, 219));
     lcd.drawText(100, 20, "OPTIONS", RGB(0, 0, 0), RGB(160, 182, 219), 2);
     lcd.drawText(10, 10, "Home", RGB(255, 0, 0), RGB(160, 182, 219), 1);
+    options.createOptionsButtons();
+    options.checkBrightnessButton();
 }
 
 void GameEngine::drawStartscreenButtons()
