@@ -18,9 +18,6 @@ public:
     void gameInit();
     void drawBackButton();
     void checkBackButton();
-    int pressOptions();
-    int pressCredits();
-    int pressStart();
     int pressBack();
     void showCredits();
     void showOptions();

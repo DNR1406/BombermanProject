@@ -15,8 +15,8 @@
 #include <stdint.h>
 
 #include "include.h"
-
 //Constructor
+Options options = Options();
 GameEngine::GameEngine()
 {
 }
@@ -100,23 +100,7 @@ uint8_t GameEngine::OpenBMPFile(char *file, int16_t x, int16_t y)
         myFile.close();
     }
 }
-int GameEngine::pressCredits()
-{
-    if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 195 && lcd.touchY() < 225))
-        return 1;
-}
 
-int GameEngine::pressOptions()
-{
-    if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 160 && lcd.touchY() < 190))
-        return 1;
-}
-
-int GameEngine::pressStart()
-{
-    if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 125 && lcd.touchY() < 155))
-        return 1;
-}
 void GameEngine::readFromSDCard(char *file)
 {
     int x, i;
@@ -157,8 +141,8 @@ void GameEngine::checkButtonPresses()
             {
                 showCredits();
                 checkBackButton();
-                // Opties openen
-            }
+                
+            } // Opties openen
             else if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 140 && lcd.touchY() < 170))
             {
                 showOptions();
@@ -205,6 +189,8 @@ void GameEngine::showOptions()
     lcd.fillScreen(RGB(160, 182, 219));
     lcd.drawText(100, 20, "OPTIONS", RGB(0, 0, 0), RGB(160, 182, 219), 2);
     lcd.drawText(10, 10, "Home", RGB(255, 0, 0), RGB(160, 182, 219), 1);
+    options.createOptionsButtons();
+    options.checkBrightnessButton();
 }
 
 void GameEngine::drawStartscreenButtons()
