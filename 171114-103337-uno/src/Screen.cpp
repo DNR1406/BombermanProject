@@ -11,7 +11,7 @@
 #include <digitalWriteFast.h>
 #include <BMPheader.h>
 #include <stdint.h>
-#define SD_CS   8
+
 
 #include "include.h"
 
