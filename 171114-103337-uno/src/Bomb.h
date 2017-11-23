@@ -1,7 +1,7 @@
+#include "include.h"
+
 #ifndef Bomb_H
 #define Bomb_H
-
-#include "include.h"
 
 class Bomb
 {
