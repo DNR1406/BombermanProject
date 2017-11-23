@@ -16,6 +16,7 @@ class Options
 
   private:
   MI0283QT9 lcd;
+  int val;
 };
 
 #endif

@@ -25,6 +25,14 @@ GameEngine::GameEngine()
 void GameEngine::gameInit()
 {
     this->lcd.begin();
+    int val = analogRead(DDC0);
+    val = map(val, 0, 1023, 0, 100);
+    if (val < 10)
+    {
+        val = 10;
+    }
+
+    lcd.led(val);
     lcd.fillScreen(RGB(160, 182, 219));
 }
 
@@ -241,28 +249,23 @@ void GameEngine::showOptions()
             else if ((lcd.touchX() > 40 && lcd.touchX() < 250) && (lcd.touchY() > 100 && lcd.touchY() < 130))
             {
                 options.changeBrightness();
-<<<<<<< HEAD
-
-                // lcd.fillScreen(RGB(255, 0, 0));
-                // lcd.drawText(10, 10, "OPTIONS", RGB(255, 0, 0), RGB(160, 182, 219), 1);
-                // // functie brightness
-=======
->>>>>>> 01ff15f7d76a208e03f8871cfb0b53b962551273
-                checkOptionsButton();
+                showOptions();
             }
             // Check if the button area from Volume is touched
             else if ((lcd.touchX() > 40 && lcd.touchX() < 250) && (lcd.touchY() > 140 && lcd.touchY() < 170))
             {
-                lcd.fillScreen(RGB(0, 255, 0));
-                lcd.drawText(10, 10, "VOLUME", RGB(255, 0, 0), RGB(160, 182, 219), 1);
+                lcd.fillScreen(RGB(160, 182, 219));
+                lcd.drawText(10, 10, "OPTIONS", RGB(255, 0, 0), RGB(160, 182, 219), 1);
+                lcd.drawText(100, 20, "VOLUME", RGB(0, 0, 0), RGB(160, 182, 219), 2);
                 // functie volume
                 checkOptionsButton();
             }
             // Check if the button area from Reset Highscore is touched
             else if ((lcd.touchX() > 40 && lcd.touchX() < 250) && (lcd.touchY() > 180 && lcd.touchY() < 210))
             {
-                lcd.fillScreen(RGB(0, 0, 255));
-                lcd.drawText(10, 10, "HIGHSCORE", RGB(255, 0, 0), RGB(160, 182, 219), 1);
+                lcd.fillScreen(RGB(160, 182, 219));
+                lcd.drawText(10, 10, "OPTIONS", RGB(255, 0, 0), RGB(160, 182, 219), 1);
+                lcd.drawText(40, 20, "RESET HIGHSCORE", RGB(0, 0, 0), RGB(160, 182, 219), 2);
                 checkOptionsButton();
             }
         }
