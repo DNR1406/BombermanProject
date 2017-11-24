@@ -1,8 +1,7 @@
+#include "include.h"
+
 #ifndef Communication_H
 #define Communication_H
-
-#include "Bomb.h"
-
 
 class Communication
 {
@@ -12,6 +11,7 @@ class Communication
     void getPositionPlayer2(int *x, int *y);
     void setBombPlayer1(int x, int y);
     void getBombPlayer2(Bomb *bomb);
+    void sendLocation();
 
   private:
     void removeBombPlayer1();

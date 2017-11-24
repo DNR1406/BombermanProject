@@ -1,5 +1,8 @@
+#include "include.h"
+
 #ifndef ArduinoNunchuk_H
 #define ArduinoNunchuk_H
+
 
 class ArduinoNunchuk
 {

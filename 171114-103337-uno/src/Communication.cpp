@@ -1,10 +1,12 @@
-#include "Communication.h"
 #include <stdlib.h>
-#include "Bomb.h"
+#include <Arduino.h>
+
+#include "include.h"
+
 
 Communication::Communication()
 {
-    //timer instellen
+    Serial.begin(9600);
 }
 
 void Communication::setLocationPlayer1(int x, int y)
@@ -23,7 +25,6 @@ void Communication::setBombPlayer1(int x, int y) {
     this->bombPlayer2 = new Bomb(x, y);
 }
 
-
 void Communication::getBombPlayer2(Bomb *bomb) {
    *bomb = *this->bombPlayer2;
 }
@@ -34,4 +35,8 @@ void Communication::removeBombPlayer1() {
 
 void Communication::removeBombPlayer2() {
     this->bombPlayer2 = NULL;
+}
+
+void Communication::sendLocation() {
+    Serial.print(this->xPlayer1, this->yPlayer1);
 }

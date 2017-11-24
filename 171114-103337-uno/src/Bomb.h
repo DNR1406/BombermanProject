@@ -1,3 +1,5 @@
+#include "include.h"
+
 #ifndef Bomb_H
 #define Bomb_H
 

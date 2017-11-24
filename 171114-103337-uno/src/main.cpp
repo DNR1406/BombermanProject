@@ -7,14 +7,12 @@
 #include <avr/interrupt.h>
 #include <stdint.h>
 
-#include "Screen.h"
-#include "ArduinoNunchuk.h"
-#include "GameEngine.h"
+#include "include.h"
 
 //Instancis voor de nunchuk en het beelscherm
 // Screen screen = Screen();
 ArduinoNunchuk nunchuk = ArduinoNunchuk();
-GameEngine gameEngine = GameEngine();
+Navigation navigation = Navigation();
 
 //teller voor timer
 volatile uint8_t teller = 0;
@@ -41,9 +39,11 @@ volatile uint8_t teller = 0;
 int main()
 {
     init();
-    gameEngine.gameInit();
-    gameEngine.readFromSDCard("logo.bmp");
-    gameEngine.checkButtonPresses();
+    navigation.screenInit();
+    navigation.calibrateScreen();
+    // gameEngine.readFromSDCard("logo.bmp");
+    navigation.drawStartscreenButtons();
+    navigation.checkButtonPresses();
 
     return 0;
 }

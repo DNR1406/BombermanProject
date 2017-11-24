@@ -1,6 +1,8 @@
 #include <MI0283QT9.h>
 #include <stdint.h>
 
+#include "include.h"
+
 #ifndef Screen_H
 #define Screen_H
 
