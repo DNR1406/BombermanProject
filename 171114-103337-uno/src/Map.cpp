@@ -35,15 +35,16 @@ void Map::drawGrid()
     // The next block of code is about drawing the squares in the grid.
     // The squares should be static
 
-    // Identifying the beginning x point and beginning y point of the screen.
+    // Identifying the beginning x point 
     int x1 = 111;
-    int y1 = 28;
 
     // Going thru the horizontal grids. We have 4 of them. Per 4 horizontal points
     // We draw 4 vertical squares the increment of the y1 and x1 are both 54 because 
     // Of one square being 26 by 26 squares, so we need to skip 54
     for (int i = 0; i < 4; i++)
     {
+        // Identifying the beginning y point 
+        int y1 = 28;
         for (int j = 0; j < 4; j++)
         {
             lcd.fillRect(x1, y1, 26, 26, RGB(0, 0, 0));
