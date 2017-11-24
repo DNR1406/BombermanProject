@@ -37,13 +37,19 @@ void Options::changeBrightness()
 {
     // Background and back to options button
     lcd.fillScreen(RGB(160, 182, 219));
-    lcd.drawText(10, 10, "OPTIONS", RGB(255, 0, 0), RGB(160, 182, 219), 1);
+    lcd.drawText(80, 20, "BRIGHTNESS", RGB(0, 0, 0), RGB(160, 182, 219), 2);
+    
+    lcd.drawText(20, 100, "Turn potentiometer knob to change the ", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+    lcd.drawText(20, 110, "brightness of the screen.", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+    lcd.drawText(20, 120, "After you're done, press the screen", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+    lcd.drawText(20, 130, "to go back.", RGB(0, 0, 0), RGB(160, 182, 219), 1);
 
     int sensorWaarde;
     int counter = 1;
     DDRC = 0b11111110;
     while (counter)
     {
+<<<<<<< HEAD
         lcd.touchRead();
         if (lcd.touchZ())
         {
@@ -54,8 +60,23 @@ void Options::changeBrightness()
                 counter = 0;
             }
         }
+=======
+>>>>>>> 76be74722dc612efbc6f5a82c1cb0b018ed27a72
         int val = analogRead(DDC0);
         val = map(val, 0, 1023, 0, 100);
+        if (val < 10){
+            val = 10;
+        }
+
         lcd.led(val);
+<<<<<<< HEAD
+=======
+        lcd.touchRead();
+        if (lcd.touchZ())
+        {
+            counter = 0;
+        }
+        
+>>>>>>> 76be74722dc612efbc6f5a82c1cb0b018ed27a72
     }
 }
