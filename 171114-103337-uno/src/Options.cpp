@@ -42,10 +42,20 @@ void Options::changeBrightness()
     int sensorWaarde;
     int counter = 1;
     DDRC = 0b11111110;
-
     while (counter)
     {
-        sensorWaarde = analogRead(DDC0);
-        counter = 0;
+        lcd.touchRead();
+        if (lcd.touchZ())
+        {
+            if ((lcd.touchX() > 0 && lcd.touchX() < 50) && (lcd.touchY() > 0 && lcd.touchY() < 50))
+            {
+                homeScreen.showOptions();
+                homeScreen.checkOptionsButton();
+                counter = 0;
+            }
+        }
+        int val = analogRead(DDC0);
+        val = map(val, 0, 1023, 0, 100);
+        lcd.led(val);
     }
 }
