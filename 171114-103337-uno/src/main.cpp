@@ -12,7 +12,7 @@
 //Instancis voor de nunchuk en het beelscherm
 // Screen screen = Screen();
 ArduinoNunchuk nunchuk = ArduinoNunchuk();
-GameEngine gameEngine = GameEngine();
+Navigation navigation = Navigation();
 
 //teller voor timer
 volatile uint8_t teller = 0;
@@ -39,11 +39,11 @@ volatile uint8_t teller = 0;
 int main()
 {
     init();
-    gameEngine.gameInit();
-    gameEngine.calibrateScreen();
+    navigation.screenInit();
+    navigation.calibrateScreen();
     // gameEngine.readFromSDCard("logo.bmp");
-    gameEngine.drawStartscreenButtons();
-    gameEngine.checkButtonPresses();
+    navigation.drawStartscreenButtons();
+    navigation.checkButtonPresses();
 
     return 0;
 }
