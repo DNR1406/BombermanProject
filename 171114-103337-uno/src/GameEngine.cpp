@@ -28,6 +28,8 @@ void GameEngine::gameInit()
 // start Scherm functie
 void GameEngine::startGame()
 {
+    selectLevel();
+
 }
 
 // functie om speler toe te voegen
@@ -38,6 +40,7 @@ void GameEngine::addPlayer()
 // functie om level te selecteren
 void GameEngine::selectLevel()
 {
+    lcd.fillScreen(RGB());
 }
 
 // functie om score van speler te incrementeren
@@ -149,7 +152,7 @@ void GameEngine::checkButtonPresses()
             }
             else if (pressStart())
             {
-                // Game starten
+                startGame();
             }
         }
     }
