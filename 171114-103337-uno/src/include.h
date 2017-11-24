@@ -26,6 +26,7 @@ If you create a header file, put it here: */
 #include "Player.h"
 #include "Screen.h"
 #include "Options.h"
+#include <MI0283QT9.h>
 
 
 /*---------------------------------------------------------------------------

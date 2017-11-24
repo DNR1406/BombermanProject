@@ -6,18 +6,8 @@
             "request": "launch",
             "cwd": "${workspaceRoot}",
             "name": "PlatformIO Debugger",
-<<<<<<< HEAD
             "target": "c:/Users/Delan/Documents/School/KBSBomberman/BombermanProject/171114-103337-uno/.pioenvs/uno/firmware.elf",
             "gdbpath": "C:/Users/Delan/.platformio/penv/Scripts/piodebuggdb",
-=======
-<<<<<<< HEAD
-            "target": "/mnt/Files/School/Semester 4/Project/BombermanProject/171114-103337-uno/.pioenvs/uno/firmware.elf",
-            "gdbpath": "/home/arno/.platformio/penv/bin/piodebuggdb",
-=======
-            "target": "c:/Users/Antal v Ravensteijn/Documents/School/HBO-ICTESA1b/KBS/BombermanProject/171114-103337-uno/.pioenvs/uno/firmware.elf",
-            "gdbpath": "C:/Users/Antal v Ravensteijn/.platformio/penv/Scripts/piodebuggdb",
->>>>>>> 788a948a1c133a387dadec9181e67b62085b88d3
->>>>>>> 01ff15f7d76a208e03f8871cfb0b53b962551273
             "autorun": [ "source .pioinit" ]
         }
     ]

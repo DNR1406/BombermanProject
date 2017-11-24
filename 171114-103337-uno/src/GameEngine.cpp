@@ -17,6 +17,7 @@
 #include "include.h"
 //Constructor
 Options options = Options();
+Map grid = Map();
 GameEngine::GameEngine()
 {
 }
@@ -39,6 +40,7 @@ void GameEngine::gameInit()
 // start Scherm functie
 void GameEngine::startGame()
 {
+    grid.drawGrid();
 }
 
 // functie om speler toe te voegen
@@ -146,6 +148,7 @@ void GameEngine::checkButtonPresses()
             if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 100 && lcd.touchY() < 130))
             {
                 // Game starten
+                startGame();
             }
 
             // Check if the button area from Option is touched
