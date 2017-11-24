@@ -38,7 +38,7 @@ void Options::changeBrightness()
     // Background and back to options button
     lcd.fillScreen(RGB(160, 182, 219));
     lcd.drawText(80, 20, "BRIGHTNESS", RGB(0, 0, 0), RGB(160, 182, 219), 2);
-    
+
     lcd.drawText(20, 100, "Turn potentiometer knob to change the ", RGB(0, 0, 0), RGB(160, 182, 219), 1);
     lcd.drawText(20, 110, "brightness of the screen.", RGB(0, 0, 0), RGB(160, 182, 219), 1);
     lcd.drawText(20, 120, "After you're done, press the screen", RGB(0, 0, 0), RGB(160, 182, 219), 1);
@@ -51,7 +51,8 @@ void Options::changeBrightness()
     {
         int val = analogRead(DDC0);
         val = map(val, 0, 1023, 0, 100);
-        if (val < 10){
+        if (val < 10)
+        {
             val = 10;
         }
 
@@ -61,6 +62,5 @@ void Options::changeBrightness()
         {
             counter = 0;
         }
-        
     }
 }
