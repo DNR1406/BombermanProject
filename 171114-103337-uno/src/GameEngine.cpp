@@ -2,7 +2,7 @@
 
 #include "include.h"
 //Constructor
-Map grid = Map();
+Map background = Map();
 GameEngine::GameEngine()
 {
 }
@@ -11,7 +11,7 @@ GameEngine::GameEngine()
 // start Scherm functie
 void GameEngine::startGame()
 {
-    grid.drawGrid();
+    background.drawGrid();
 }
 
 // functie om speler toe te voegen

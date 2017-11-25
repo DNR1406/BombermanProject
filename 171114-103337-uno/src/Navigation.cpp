@@ -1,10 +1,11 @@
 #include "include.h"
 #include <EEPROM.h>
 #include <Arduino.h>
+#include <MI0283QT9.h>
 Options options = Options();
 GameEngine gameEngine = GameEngine();
-Navigation::Navigation() {
-
+Navigation::Navigation()
+{
 }
 
 void Navigation::screenInit()
@@ -18,18 +19,43 @@ void Navigation::screenInit()
     }
 
     lcd.led(val);
-    lcd.fillScreen(RGB(160, 182, 219));
+
+    calibrateScreen();
+    drawStartscreenButtons();
 }
 
 void Navigation::calibrateScreen()
 {
-    // lcd.touchRead();
+    lcd.touchRead();
     if (lcd.touchZ() || readCalData()) //calibration data in EEPROM?
     {
         writeCalData(); //write data to EEPROM
     }
 }
 
+// Check if the home button (which is only in "Settings" and "Credits") is pressed
+void Navigation::checkHomeButton()
+{
+    int back = 1;
+    while (back)
+    {
+        lcd.touchRead();
+        if (lcd.touchZ())
+        {
+            // Check if area is touched for going back to home screen
+            if ((lcd.touchX() > 0 && lcd.touchX() < 50) && (lcd.touchY() > 0 && lcd.touchY() < 50))
+            {
+                // Get out of the while loop
+                back = 0;
+
+                // Draw start screen
+                drawStartscreenButtons();
+            }
+        }
+    }
+}
+
+// Check if any buttons -which were created in drawStartscreenButtons()- are being touched
 void Navigation::checkButtonPresses()
 {
     int pressed = 1;
@@ -49,7 +75,7 @@ void Navigation::checkButtonPresses()
             else if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 140 && lcd.touchY() < 170))
             {
                 // Open Options and open checkHomeButton
-                showOptions();
+                options.createOptionsButtons();
             }
 
             // Check if the button area from Credits is touched
@@ -57,50 +83,6 @@ void Navigation::checkButtonPresses()
             {
                 // Open credits and open checkHomeButton
                 showCredits();
-            }
-        }
-    }
-}
-
-// Check if the home button (which is only in "Settings" and "Credits") is pressed
-void Navigation::checkHomeButton()
-{
-    int back = 1;
-    while (back)
-    {
-        lcd.touchRead();
-        if (lcd.touchZ())
-        {
-            // Check if area is touched for going back to home screen
-            if ((lcd.touchX() > 0 && lcd.touchX() < 50) && (lcd.touchY() > 0 && lcd.touchY() < 50))
-            {
-                // Draw start screen
-                drawStartscreenButtons();
-
-                // Get out of the while loop
-                back = 0;
-            }
-        }
-    }
-}
-
-// Going back to options menu, this is needed when in brightness or volume page
-void Navigation::checkOptionsButton()
-{
-    int back = 1;
-    while (back)
-    {
-        lcd.touchRead();
-        if (lcd.touchZ())
-        {
-            // Check if area is touched for going back to options screen
-            if ((lcd.touchX() > 0 && lcd.touchX() < 50) && (lcd.touchY() > 0 && lcd.touchY() < 50))
-            {
-                // Show the options menu
-                showOptions();
-
-                // Get out of the while loop
-                back = 0;
             }
         }
     }
@@ -119,55 +101,6 @@ void Navigation::showCredits()
 
     // Check if the home button is pushed
     checkHomeButton();
-}
-
-// Showing the options menu and checking if buttons are being pressed
-void Navigation::showOptions()
-{
-    // Fill screen with the buttons "Brightness, Volume, and Reset Highscore, options title, home back button and background"
-    options.createOptionsButtons();
-
-    int pressed = 1;
-    while (pressed)
-    {
-        lcd.touchRead();
-        if (lcd.touchZ())
-        {
-            // If this button is touched you'll be navigate back to the home screen.
-            if ((lcd.touchX() > 0 && lcd.touchX() < 50) && (lcd.touchY() > 0 && lcd.touchY() < 50))
-            {
-                // Go back to the start menu
-                drawStartscreenButtons();
-
-                // Get out of the while loop
-                pressed = 0;
-            }
-            // Check if the button area from Brightness is touched
-            else if ((lcd.touchX() > 40 && lcd.touchX() < 250) && (lcd.touchY() > 100 && lcd.touchY() < 130))
-            {
-                options.changeBrightness();
-                // checkOptionsButton();
-                showOptions();
-            }
-            // Check if the button area from Volume is touched
-            else if ((lcd.touchX() > 40 && lcd.touchX() < 250) && (lcd.touchY() > 140 && lcd.touchY() < 170))
-            {
-                lcd.fillScreen(RGB(160, 182, 219));
-                lcd.drawText(10, 10, "OPTIONS", RGB(255, 0, 0), RGB(160, 182, 219), 1);
-                lcd.drawText(100, 20, "VOLUME", RGB(0, 0, 0), RGB(160, 182, 219), 2);
-                // functie volume
-                checkOptionsButton();
-            }
-            // Check if the button area from Reset Highscore is touched
-            else if ((lcd.touchX() > 40 && lcd.touchX() < 250) && (lcd.touchY() > 180 && lcd.touchY() < 210))
-            {
-                lcd.fillScreen(RGB(160, 182, 219));
-                lcd.drawText(10, 10, "OPTIONS", RGB(255, 0, 0), RGB(160, 182, 219), 1);
-                lcd.drawText(40, 20, "RESET HIGHSCORE", RGB(0, 0, 0), RGB(160, 182, 219), 2);
-                checkOptionsButton();
-            }
-        }
-    }
 }
 
 void Navigation::drawStartscreenButtons()
