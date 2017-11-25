@@ -10,8 +10,7 @@
 #include "include.h"
 
 //Instancis voor de nunchuk en het beelscherm
-// Screen screen = Screen();
-ArduinoNunchuk nunchuk = ArduinoNunchuk();
+// ArduinoNunchuk nunchuk = ArduinoNunchuk();
 Navigation navigation = Navigation();
 
 //teller voor timer
@@ -40,10 +39,10 @@ int main()
 {
     init();
     navigation.screenInit();
-    navigation.calibrateScreen();
+    // navigation.calibrateScreen();
     // gameEngine.readFromSDCard("logo.bmp");
-    navigation.drawStartscreenButtons();
-    navigation.checkButtonPresses();
+    // navigation.drawStartscreenButtons();
+    // navigation.checkButtonPresses();
 
     return 0;
 }
