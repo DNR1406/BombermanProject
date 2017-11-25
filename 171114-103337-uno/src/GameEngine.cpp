@@ -8,20 +8,22 @@ GameEngine::GameEngine()
 }
 
 
-// start Scherm functie
+// startGame function
 void GameEngine::startGame()
 {
     background.drawGrid();
 }
 
-// functie om speler toe te voegen
+// function to add players to the game
 void GameEngine::addPlayer()
 {
+    // Player(); from player Class
 }
 
 // functie om level te selecteren
 void GameEngine::selectLevel()
 {
+    
 }
 
 // functie om score van speler te incrementeren

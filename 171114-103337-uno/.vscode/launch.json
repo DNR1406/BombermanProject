@@ -6,8 +6,28 @@
             "request": "launch",
             "cwd": "${workspaceRoot}",
             "name": "PlatformIO Debugger",
+<<<<<<< HEAD
+            "target": "e:/School/Bomberman/BombermanProject/171114-103337-uno/.pioenvs/uno/firmware.elf",
+            "gdbpath": "C:/.platformio/penv/Scripts/piodebuggdb",
+=======
+<<<<<<< HEAD
             "target": "c:/Users/Antal v Ravensteijn/Documents/School/HBO-ICTESA1b/KBS/BombermanProject/171114-103337-uno/.pioenvs/uno/firmware.elf",
             "gdbpath": "C:/Users/Antal v Ravensteijn/.platformio/penv/Scripts/piodebuggdb",
+=======
+<<<<<<< HEAD
+            "target": "e:/School/Bomberman/BombermanProject/171114-103337-uno/.pioenvs/uno/firmware.elf",
+            "gdbpath": "C:/.platformio/penv/Scripts/piodebuggdb",
+=======
+<<<<<<< HEAD
+            "target": "c:/Users/Delan/Documents/School/KBSBomberman/BombermanProject/171114-103337-uno/.pioenvs/uno/firmware.elf",
+            "gdbpath": "C:/Users/Delan/.platformio/penv/Scripts/piodebuggdb",
+=======
+            "target": "c:/Users/Antal v Ravensteijn/Documents/School/HBO-ICTESA1b/KBS/BombermanProject/171114-103337-uno/.pioenvs/uno/firmware.elf",
+            "gdbpath": "C:/Users/Antal v Ravensteijn/.platformio/penv/Scripts/piodebuggdb",
+>>>>>>> c3d5e367c1db17f05195bcf3e69c5026e082169f
+>>>>>>> 2fabf1e1885f49aaf22a54a6abe29a0603e7c1ba
+>>>>>>> ad63feefc8d28c601e4056d094b343b7ed8de8b4
+>>>>>>> 40ec153a70668ab0e7984be057d09534b913e7a3
             "autorun": [ "source .pioinit" ]
         }
     ]
