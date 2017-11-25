@@ -11,6 +11,7 @@ GameEngine::GameEngine()
 // startGame function
 void GameEngine::startGame()
 {
+    // draws grid on screen
     grid.drawGrid();
 }
 
