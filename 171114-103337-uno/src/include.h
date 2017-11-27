@@ -26,7 +26,14 @@ If you create a header file, put it here: */
 #include "Player.h"
 #include "Screen.h"
 #include "Options.h"
+<<<<<<< HEAD
 #include "Functions.h"
+=======
+#include <MI0283QT9.h>
+#include "Navigation.h"
+#include "BMPLoader.h"
+
+>>>>>>> 95cc4f7ec78b6447f6c24f1c83777ada7fda6d09
 
 
 /*---------------------------------------------------------------------------

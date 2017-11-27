@@ -13,8 +13,12 @@
 //Instancis voor de nunchuk en het beelscherm
 // Screen screen = Screen();
 ArduinoNunchuk nunchuk = ArduinoNunchuk();
+<<<<<<< HEAD
 GameEngine gameEngine = GameEngine();
 Communication c = Communication(1, 1);
+=======
+Navigation navigation = Navigation();
+>>>>>>> 95cc4f7ec78b6447f6c24f1c83777ada7fda6d09
 
 //variable for counterTimer2
 volatile uint32_t counterTimer2 = 0;
@@ -37,6 +41,7 @@ ISR(TIMER2_COMPA_vect)
 int main()
 {
     init();
+<<<<<<< HEAD
 
 
     gameEngine.gameInit();
@@ -63,6 +68,13 @@ int main()
 
     //     c.setLocationPlayer1(xOwn, yOwn);
     //     c.getLocationPlayer2(&xOponent, &xOponent);
+=======
+    navigation.screenInit();
+    navigation.calibrateScreen();
+    // gameEngine.readFromSDCard("logo.bmp");
+    navigation.drawStartscreenButtons();
+    navigation.checkButtonPresses();
+>>>>>>> 95cc4f7ec78b6447f6c24f1c83777ada7fda6d09
 
     //     xOwn = (xOwn < 9) ? xOwn + 1 : 0;
     //     yOwn = (yOwn < 9) ? yOwn + 1 : 0;
