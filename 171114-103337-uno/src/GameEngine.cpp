@@ -102,12 +102,13 @@ uint8_t GameEngine::OpenBMPFile(char *file, int16_t x, int16_t y)
 }
 
 void GameEngine::calibrateScreen()
-{
-    // lcd.touchRead();
-    if (lcd.touchZ() || readCalData()) //calibration data in EEPROM?
-    {
+ {
+//     lcd.touchRead();
+//     lcd.touchStartCal();
+     if (lcd.touchZ() || readCalData()) //calibration data in EEPROM?
+     {
         writeCalData(); //write data to EEPROM
-    }
+     }
 }
 
 void GameEngine::readFromSDCard(char *file)

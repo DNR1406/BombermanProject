@@ -8,42 +8,78 @@
 #include <stdint.h>
 
 #include "include.h"
+#include <Arduino.h>
 
 //Instancis voor de nunchuk en het beelscherm
 // Screen screen = Screen();
 ArduinoNunchuk nunchuk = ArduinoNunchuk();
 GameEngine gameEngine = GameEngine();
+Communication c = Communication(1, 1);
 
-//teller voor timer
-volatile uint8_t teller = 0;
-
+//variable for counterTimer2
+volatile uint32_t counterTimer2 = 0;
 //interupt functie
-// ISR(TIMER2_OVF_vect)
-// {                                //    macro met interrupt vector
-//     teller++;
-//     if ( teller >= 60 )            //    bij elke 60e interrupt ...
-//     {
-//         screen.addSecond();
-//         teller = 0;
-//     }
-// }
+ISR(TIMER2_COMPA_vect)
+{
+    //     counterTimer2++;
 
-//functie om timer te initen
-// void init_timer () {
-//       TCCR2B |= (1 << CS22) | (1 << CS21) | (1 << CS20); //
-//       TIMSK2 |= (1<<TOIE2);
-//       TCNT2 = 0;
-//       sei();                        //    enable interrupts!
-// }
+    //     if (counterTimer2 == 1000) //Ten times per sec.
+    //     {
+    //         c.receiveLocationPlayer2();
+    //         c.sendLocationPlayer1();
+
+    //         Serial.println("interrupt: " + String(c.xPlayer1));
+    //         PORTB ^= (1 << PB5);
+    //         counterTimer2 = 0;
+    //     }
+}
 
 int main()
 {
     init();
+
+
     gameEngine.gameInit();
     gameEngine.calibrateScreen();
     // gameEngine.readFromSDCard("logo.bmp");
     gameEngine.drawStartscreenButtons();
     gameEngine.checkButtonPresses();
+    // Serial.begin(9600);
 
-    return 0;
+    // DDRB = (1 << PB5);
+
+    // int xOponent = 1, yOponent = 1, xOwn = 1, yOwn = 1;
+
+    // while (1)
+    // {
+    //     if (xOponent == 4)
+    //     {
+    //         PORTB = (1 << PB5);
+    //     }
+    //     else
+    //     {
+    //         PORTB = 0;
+    //     }
+
+    //     c.setLocationPlayer1(xOwn, yOwn);
+    //     c.getLocationPlayer2(&xOponent, &xOponent);
+
+    //     xOwn = (xOwn < 9) ? xOwn + 1 : 0;
+    //     yOwn = (yOwn < 9) ? yOwn + 1 : 0;
+
+
+    //     delay(500);
+
+    //     c.sendReceive();
+    // }
+
+    // return 0;
 }
+
+/*
+    gameEngine.gameInit();
+    gameEngine.calibrateScreen();
+    // gameEngine.readFromSDCard("logo.bmp");
+    gameEngine.drawStartscreenButtons();
+    gameEngine.checkButtonPresses();
+*/
