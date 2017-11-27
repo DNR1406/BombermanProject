@@ -10,6 +10,7 @@ class Options
   public:
     Options();
     void createOptionsButtons();
+    void checkOptionsButtons();
     void changeBrightness();
     void checkBrightnessButton();
     void checkHomeButton();

@@ -39,6 +39,7 @@ volatile uint8_t teller = 0;
 int main()
 {
     init();
+    Serial.begin(9600);
     navigation.screenInit();
     navigation.calibrateScreen();
     // gameEngine.readFromSDCard("logo.bmp");
