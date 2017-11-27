@@ -32,7 +32,6 @@ void GameEngine::incrementScore()
 {
 }
 
-<<<<<<< HEAD
 uint8_t GameEngine::OpenBMPFile(char *file, int16_t x, int16_t y)
 {
     File myFile;
@@ -109,6 +108,3 @@ void GameEngine::readFromSDCard(char *file)
         lcd.drawText(5, 5, "Mislukt", RGB(0, 0, 0), RGB(255, 255, 255), 1);
     }
 }
-=======
->>>>>>> 95cc4f7ec78b6447f6c24f1c83777ada7fda6d09
-
