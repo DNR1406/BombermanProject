@@ -26,14 +26,14 @@ GameEngine::GameEngine()
 void GameEngine::gameInit()
 {
     this->lcd.begin();
-    int val = analogRead(DDC0);
-    val = map(val, 0, 1023, 0, 100);
-    if (val < 10)
-    {
-        val = 10;
-    }
+    // int val = analogRead(DDC0);
+    // val = map(val, 0, 1023, 0, 100);
+    // if (val < 10)
+    // {
+    //     val = 10;
+    // }
 
-    lcd.led(val);
+    // lcd.led(val);
     lcd.fillScreen(RGB(160, 182, 219));
 }
 
@@ -115,11 +115,9 @@ uint8_t GameEngine::OpenBMPFile(char *file, int16_t x, int16_t y)
 // Start touch screen and declare a place for the data
 void GameEngine::calibrateScreen()
 {
-    // lcd.touchRead();
-    if (lcd.touchZ() || readCalData()) //calibration data in EEPROM?
-    {
-        writeCalData(); //write data to EEPROM
-    }
+    lcd.touchRead();
+    lcd.touchStartCal();
+    writeCalData(); //write data to EEPROM
 }
 
 void GameEngine::readFromSDCard(char *file)
