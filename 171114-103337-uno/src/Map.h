@@ -9,7 +9,7 @@ class Map {
 public:
     Map();
     void drawGrid();
-    void drawBarrels(int, int);
+    void drawBarrels(int x, int y);
     void declareBarrels();
  
 
