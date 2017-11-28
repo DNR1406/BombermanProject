@@ -52,4 +52,20 @@ void Map::drawGrid()
         }
         x1 += 52;
     }
-};
+}
+
+void Map::drawBarrels(int x, int y){
+    x = 26 * x + 85;
+    y = 26 * y + 2;
+
+    lcd.fillRect(x,y,26,26,RGB(222,184,135));
+
+
+}
+
+void Map::declareBarrels(){
+    int rx = rand() % 8;
+    int ry = rand() % 8;
+
+    drawBarrels(rx,ry);
+}
