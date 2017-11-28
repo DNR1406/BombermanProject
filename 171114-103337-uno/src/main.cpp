@@ -21,14 +21,10 @@ int main()
     Serial.begin(9600);
     navigation.screenInit();
     navigation.calibrateScreen();
-<<<<<<< HEAD
-    navigation.drawStartscreenButtons();
 
 
 
     // Serial.begin(9600);
-=======
->>>>>>> 9d02f8a774d619946e7f56a49acd695db94de6ac
 
     navigation.drawStartscreenButtons();
 

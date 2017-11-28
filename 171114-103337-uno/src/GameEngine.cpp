@@ -39,7 +39,6 @@ void GameEngine::incrementScore()
 {
 }
 
-<<<<<<< HEAD
 // uint8_t GameEngine::OpenBMPFile(char *file, int16_t x, int16_t y)
 // {
 //     File myFile;
@@ -104,7 +103,7 @@ void GameEngine::incrementScore()
 //      }
 // }
 
-=======
+
 
 // OLD----------------------------------------------------------------------------------------
 
@@ -172,7 +171,6 @@ void GameEngine::incrementScore()
 //      }
 // }
 
->>>>>>> 9d02f8a774d619946e7f56a49acd695db94de6ac
 // void GameEngine::readFromSDCard(char *file)
 // {
 //     //init SD-Card and calibrate touchscreen
