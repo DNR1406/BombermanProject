@@ -23,7 +23,7 @@ void Navigation::screenInit()
 
 void Navigation::calibrateScreen()
 {
-    // lcd.touchRead();
+
     if (lcd.touchZ() || readCalData()) //calibration data in EEPROM?
     {
         writeCalData(); //write data to EEPROM

@@ -15,7 +15,7 @@ public:
     void showOptions();
     void drawStartscreenButtons();
     void writeCalData(void);
-    uint8_t readCalData(void);
+    static uint8_t readCalData(void);
     void calibrateScreen();
 
  

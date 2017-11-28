@@ -20,17 +20,10 @@ Navigation navigation = Navigation();
 int main()
 {
     init();
-<<<<<<< HEAD
     Serial.begin(9600);
     navigation.screenInit();
     navigation.calibrateScreen();
-=======
-    gameEngine.gameInit();
-    gameEngine.calibrateScreen();
->>>>>>> 193d23370c0477f186f5ad5158b5f85cf9f43c32
-    // gameEngine.readFromSDCard("logo.bmp");
-    gameEngine.drawStartscreenButtons();
-    gameEngine.checkButtonPresses();
+    navigation.drawStartscreenButtons();
 
 
 

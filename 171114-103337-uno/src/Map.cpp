@@ -10,20 +10,6 @@ void Map::drawGrid()
     // Delete menu with overwriting the background
     lcd.fillScreen(RGB(160, 182, 219));
 
-    //     // Draw all vertical lines
-    //     for (int i = 0; i <= 9; i++)
-    //     {
-    //         int x = 85 + i * 26;
-    //         lcd.drawLine(x, 0, x, 240, RGB(0, 0, 0));
-    //     }
-
-    // // Draw all horizontal lines
-    //     for (int i = 0; i <= 9; i++)
-    //     {
-    //         int y = 2 + i * 26;
-    //         lcd.drawLine(85, y, 320, y, RGB(0, 0, 0));
-    //     }
-
     // Two left over pixel lines on the top filled with black
     lcd.fillRect(85, 0, 235, 2, RGB(0, 0, 0));
 
@@ -52,4 +38,20 @@ void Map::drawGrid()
         }
         x1 += 52;
     }
-};
+}
+
+void Map::drawBarrels(int x, int y){
+    x = 26 * x + 85;
+    y = 26 * y + 2;
+
+    lcd.fillRect(x,y,26,26,RGB(222,184,135));
+
+
+}
+
+void Map::declareBarrels(){
+    int rx = rand() % 8;
+    int ry = rand() % 8;
+
+    drawBarrels(rx,ry);
+}
