@@ -42,6 +42,10 @@ typedef struct location {
    int x, y;
 } location;
 
+typedef struct barrel {
+    int x,y;
+} barrel;
+
 
 
 
