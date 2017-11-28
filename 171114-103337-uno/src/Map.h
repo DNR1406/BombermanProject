@@ -10,7 +10,7 @@ public:
     Map();
     void drawGrid();
     void drawBarrels(int x, int y);
-    void declareBarrels();
+    void declareBarrels(int amount);
  
 
    

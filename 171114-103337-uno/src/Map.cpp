@@ -21,15 +21,15 @@ void Map::drawGrid()
     // The next block of code is about drawing the squares in the grid.
     // The squares should be static
 
-    // Identifying the beginning x point 
+    // Identifying the beginning x point
     int x1 = 111;
 
     // Going thru the horizontal grids. We have 4 of them. Per 4 horizontal points
-    // We draw 4 vertical squares the increment of the y1 and x1 are both 54 because 
+    // We draw 4 vertical squares the increment of the y1 and x1 are both 54 because
     // Of one square being 26 by 26 squares, so we need to skip 54
     for (int i = 0; i < 4; i++)
     {
-        // Identifying the beginning y point 
+        // Identifying the beginning y point
         int y1 = 28;
         for (int j = 0; j < 4; j++)
         {
@@ -40,18 +40,29 @@ void Map::drawGrid()
     }
 }
 
-void Map::drawBarrels(int x, int y){
+void Map::drawBarrels(int x, int y)
+{
     x = 26 * x + 85;
     y = 26 * y + 2;
 
-    lcd.fillRect(x,y,26,26,RGB(222,184,135));
-
-
+    lcd.fillRect(x, y, 26, 26, RGB(222, 184, 135));
 }
 
-void Map::declareBarrels(){
-    int rx = rand() % 8;
-    int ry = rand() % 8;
+void Map::declareBarrels(int amount)
+{
+    barrel barrels[amount];
 
-    drawBarrels(rx,ry);
+    for (int i = 0; i < amount; i++)
+    {
+        int rx = rand() % 9;
+        int ry = rand() % 9;
+
+        if ((rx % 2 == 1 && ry % 2 == 1)){
+
+        }
+
+        barrels[i] = {rx, ry};
+
+        drawBarrels(rx, ry);
+    }
 }
