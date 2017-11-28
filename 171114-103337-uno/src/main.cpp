@@ -8,42 +8,49 @@
 #include <stdint.h>
 
 #include "include.h"
+#include <Arduino.h>
 
 //Instancis voor de nunchuk en het beelscherm
 // Screen screen = Screen();
 ArduinoNunchuk nunchuk = ArduinoNunchuk();
-GameEngine gameEngine = GameEngine();
-
-//teller voor timer
-volatile uint8_t teller = 0;
-
-//interupt functie
-// ISR(TIMER2_OVF_vect)
-// {                                //    macro met interrupt vector
-//     teller++;
-//     if ( teller >= 60 )            //    bij elke 60e interrupt ...
-//     {
-//         screen.addSecond();
-//         teller = 0;
-//     }
-// }
-
-//functie om timer te initen
-// void init_timer () {
-//       TCCR2B |= (1 << CS22) | (1 << CS21) | (1 << CS20); //
-//       TIMSK2 |= (1<<TOIE2);
-//       TCNT2 = 0;
-//       sei();                        //    enable interrupts!
-// }
+Navigation navigation = Navigation();
 
 int main()
 {
     init();
+    Serial.begin(9600);
+    navigation.screenInit();
+    navigation.calibrateScreen();
+
+    navigation.drawStartscreenButtons();
+
+
+    return 0;
+}
+
+// stuff----------------------------------------------------------------------------------
+/*
     gameEngine.gameInit();
     gameEngine.calibrateScreen();
     // gameEngine.readFromSDCard("logo.bmp");
     gameEngine.drawStartscreenButtons();
     gameEngine.checkButtonPresses();
+*/
 
-    return 0;
-}
+//variable for counterTimer2
+volatile uint32_t counterTimer2 = 0;
+//interupt functie
+//ISR(TIMER2_COMPA_vect)
+//{
+//     counterTimer2++;
+
+//     if (counterTimer2 == 1000) //Ten times per sec.
+//     {
+//         c.receiveLocationPlayer2();
+//         c.sendLocationPlayer1();
+
+//         Serial.println("interrupt: " + String(c.xPlayer1));
+//         PORTB ^= (1 << PB5);
+//         counterTimer2 = 0;
+//     }
+//}
