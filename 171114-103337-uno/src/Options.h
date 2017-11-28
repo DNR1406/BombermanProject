@@ -11,8 +11,6 @@ class Options
     Options();
     void createOptionsButtons();
     void changeBrightness();
-    void checkBrightnessButton();
-    void checkHomeButton();
 
   private:
   MI0283QT9 lcd;

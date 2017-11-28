@@ -15,50 +15,26 @@
 ArduinoNunchuk nunchuk = ArduinoNunchuk();
 Navigation navigation = Navigation();
 
-
-
 int main()
 {
     init();
     Serial.begin(9600);
     navigation.screenInit();
     navigation.calibrateScreen();
+<<<<<<< HEAD
     navigation.drawStartscreenButtons();
 
 
 
     // Serial.begin(9600);
+=======
+>>>>>>> 9d02f8a774d619946e7f56a49acd695db94de6ac
 
-    // DDRB = (1 << PB5);
+    navigation.drawStartscreenButtons();
 
-    // int xOponent = 1, yOponent = 1, xOwn = 1, yOwn = 1;
-
-    // while (1)
-    // {
-    //     if (xOponent == 4)
-    //     {
-    //         PORTB = (1 << PB5);
-    //     }
-    //     else
-    //     {
-    //         PORTB = 0;
-    //     }
-
-    //     c.setLocationPlayer1(xOwn, yOwn);
-    //     c.getLocationPlayer2(&xOponent, &xOponent);
-
-    //     xOwn = (xOwn < 9) ? xOwn + 1 : 0;
-    //     yOwn = (yOwn < 9) ? yOwn + 1 : 0;
-
-
-    //     delay(500);
-
-    //     c.sendReceive();
-    // }
 
     return 0;
 }
-
 
 // stuff----------------------------------------------------------------------------------
 /*
@@ -69,21 +45,20 @@ int main()
     gameEngine.checkButtonPresses();
 */
 
-
 //variable for counterTimer2
 volatile uint32_t counterTimer2 = 0;
 //interupt functie
-    //ISR(TIMER2_COMPA_vect)
-    //{
-    //     counterTimer2++;
+//ISR(TIMER2_COMPA_vect)
+//{
+//     counterTimer2++;
 
-    //     if (counterTimer2 == 1000) //Ten times per sec.
-    //     {
-    //         c.receiveLocationPlayer2();
-    //         c.sendLocationPlayer1();
+//     if (counterTimer2 == 1000) //Ten times per sec.
+//     {
+//         c.receiveLocationPlayer2();
+//         c.sendLocationPlayer1();
 
-    //         Serial.println("interrupt: " + String(c.xPlayer1));
-    //         PORTB ^= (1 << PB5);
-    //         counterTimer2 = 0;
-    //     }
-    //}
+//         Serial.println("interrupt: " + String(c.xPlayer1));
+//         PORTB ^= (1 << PB5);
+//         counterTimer2 = 0;
+//     }
+//}
