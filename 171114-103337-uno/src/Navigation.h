@@ -11,6 +11,7 @@ public:
     void checkButtonPresses();
     void checkHomeButton();
     void checkOptionsButton();
+    void checkOptionsButtons();
     void showCredits();
     void showOptions();
     void drawStartscreenButtons();

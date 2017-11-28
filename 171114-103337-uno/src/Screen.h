@@ -17,6 +17,8 @@ public:
     void addSecond();
     void screenInit();
     void clear();
+
+    //Drawing 
    
   private:
     void draw();
