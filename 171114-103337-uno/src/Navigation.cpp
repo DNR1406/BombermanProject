@@ -49,7 +49,9 @@ void Navigation::checkButtonPresses()
             else if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 140 && lcd.touchY() < 170))
             {
                 // Open Options and open checkHomeButton
-                showOptions();
+                options.createOptionsButtons();
+                // checkHomeButton();
+                // showOptions();
             }
 
             // Check if the button area from Credits is touched
@@ -112,7 +114,7 @@ void Navigation::showCredits()
     lcd.fillScreen(RGB(160, 182, 219));
     lcd.drawText(100, 20, "CREDITS", RGB(0, 0, 0), RGB(160, 182, 219), 2);
     lcd.drawText(30, 60, "Arno van de Munt (Waarborger)", RGB(0, 0, 0), RGB(160, 182, 219), 1);
-    lcd.drawText(30, 100, "Antal van Ravensteijn (Presentator)", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+    lcd.drawText(30, 100, "Antal van Ravensteijn (troll meister)", RGB(0, 0, 0), RGB(160, 182, 219), 1);
     lcd.drawText(30, 140, "Delano Remy (Notaris)", RGB(0, 0, 0), RGB(160, 182, 219), 1);
     lcd.drawText(30, 180, "Matthijs Koudijs (Scrum Master)", RGB(0, 0, 0), RGB(160, 182, 219), 1);
     lcd.drawText(10, 10, "Home", RGB(255, 0, 0), RGB(160, 182, 219), 1);
@@ -124,9 +126,6 @@ void Navigation::showCredits()
 // Showing the options menu and checking if buttons are being pressed
 void Navigation::showOptions()
 {
-    // Fill screen with the buttons "Brightness, Volume, and Reset Highscore, options title, home back button and background"
-    options.createOptionsButtons();
-
     int pressed = 1;
     while (pressed)
     {
