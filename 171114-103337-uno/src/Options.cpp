@@ -1,8 +1,5 @@
 #include "include.h"
 #include "Arduino.h"
-#include <avr/io.h>
-#include <EEPROM.h>
-#include <util/delay.h>
 
 
 

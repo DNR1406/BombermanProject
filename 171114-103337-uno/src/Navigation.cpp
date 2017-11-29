@@ -12,8 +12,8 @@ void Navigation::screenInit()
 
     this->lcd.begin();
     // lcd.touchRead();
-    lcd.touchStartCal();
-    writeCalData();
+    // lcd.touchStartCal();
+    // writeCalData();
     int val = analogRead(DDC0);
     val = map(val, 0, 1023, 0, 100);
     if (val < 10)
@@ -138,6 +138,7 @@ void Navigation::checkOptionsButtons()
                 lcd.fillScreen(RGB(160, 182, 219));
                 lcd.drawText(10, 10, "OPTIONS", RGB(255, 0, 0), RGB(160, 182, 219), 1);
                 lcd.drawText(90, 20, "HIGHSCORE", RGB(0, 0, 0), RGB(160, 182, 219), 2);
+                options.showHighscore();
                 
                 checkOptionsButton();
             }

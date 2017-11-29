@@ -46,14 +46,10 @@ void Map::drawBarrels(int x, int y)
     x = 26 * x + 85;
     y = 26 * y + 2;
 
-<<<<<<< HEAD
-    lcd.fillRect(x, y, 26, 26, RGB(222, 0,0));
-=======
 
 
     // lcd.fillRect(x, y, 26, 26, RGB(255, 0, 0));
     lcd.fillRect(x,y,26,26,RGB(rand() % 255,rand() % 255,rand() % 255));
->>>>>>> b3721ef2f19c043b85cdca324e5b3172b065c62c
 }
 
 void Map::declareBarrels(int amount)
