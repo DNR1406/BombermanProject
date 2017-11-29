@@ -1,8 +1,7 @@
 #include "include.h"
 #include "Arduino.h"
-
-
-
+#include <stdint.h>
+#include <SD.h>
 Options::Options()
 {
 }
@@ -10,7 +9,7 @@ Options::Options()
 // Show the buttons of the Options
 void Options::createOptionsButtons()
 {
-    
+
     // Fill screen with background, title, and back button
     lcd.fillScreen(RGB(160, 182, 219));
     lcd.drawText(100, 20, "OPTIONS", RGB(0, 0, 0), RGB(160, 182, 219), 2);
@@ -49,48 +48,26 @@ void Options::changeBrightness()
     DDRC = 0b11111110;
     while (counter)
     {
+        // Reads val from Potentiometer pin
         int val = analogRead(DDC0);
+        // Maps value from 0 and 1023 to 0 and 100
         val = map(val, 0, 1023, 0, 100);
+        // Value can't get any lower then 10 otherwise it's dark
         if (val < 10)
         {
             val = 10;
         }
-
+        // writes value to display
         lcd.led(val);
         lcd.touchRead();
+        // if screen is pressed return to options screen
         if (lcd.touchZ())
         {
             counter = 0;
         }
     }
 }
-void Options::storeHighscore()
-{
-    File myFile;
-    String a = "42069";
-  // Open serial communications and wait for port to open:
 
-  while (!Serial) {
-    ; // wait for serial port to connect. Needed for native USB port only
-  }
-  if (!SD.begin(4)) {
-    Serial.println("initialization failed!");
 
-  }
 
-  // open the file. note that only one file can be open at a time,
-  // so you have to close this one before opening another.
-  myFile = SD.open("Highscores.txt", FILE_WRITE);
 
-  // if the file opened okay, write to it:
-  if (myFile) {
-    myFile.println(a);
-    // close the file:
-
-    myFile.close();
-    
-  } else {
-    // if the file didn't open, print an error:
-    Serial.println("error opening Highscores.txt");
-  }
-}

@@ -7,6 +7,7 @@
 Map grid = Map();
 ArduinoNunchuk nunchuk = ArduinoNunchuk();
 Screen screen = Screen();
+BMPLoader player = BMPLoader();
 GameEngine::GameEngine()
 {
 }
@@ -17,7 +18,13 @@ void GameEngine::startGame()
 {
     // draws grid on screen
     grid.drawGrid();
-    grid.declareBarrels(58);
+	if (SD.begin(4)) {
+		player.readFromSDCard("player1.bmp");
+		grid.declareBarrels(10);
+	} else {
+		 lcd.drawText(5, 5, "Not working", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+	}
+
 }
 
 // function to add players to the game

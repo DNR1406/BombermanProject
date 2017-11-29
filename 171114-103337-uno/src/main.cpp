@@ -13,39 +13,42 @@
 //Instancis voor de nunchuk en het beelscherm
 // Screen screen = Screen();
 Navigation navigation = Navigation();
+BMPLoader bmpLoader = BMPLoader();
+Options highscore = Options();
 
-
-void testCommunication() {
+void testCommunication()
+{
 
     DDRB |= (1 << PB5);
-    
+
     Communication c = Communication(1, 1);
 
     int x, y, bomb;
     int xO = 0, yO = 0, bombO = 0;
 
-    while(1) {
+    while (1)
+    {
         c.setLocationPlayer1(x, y, bomb);
         c.getLocationPlayer2(&xO, &yO, &bombO);
 
         x++;
-        y++;       
+        y++;
 
-        if(xO == 5 && yO == 6 && bombO == 1) {
+        if (xO == 5 && yO == 6 && bombO == 1)
+        {
             PORTB |= (1 << PB5);
-        } else {
+        }
+        else
+        {
             PORTB &= ~(1 << PB5);
         }
 
         bomb = !bomb;
 
-
         c.sendReceive();
         delay(500);
     }
 }
-
-
 
 int main()
 {
@@ -55,53 +58,14 @@ int main()
     //testCommunication();
 
     navigation.screenInit();
+    // highscore.readHighscoreFile();
     navigation.calibrateScreen();
-
-
-
-    // Serial.begin(9600);
-
-    navigation.drawStartscreenButtons();
-
+    bmpLoader.readFromSDCard("logo.bmp");
+    // navigation.readHighscoreFile();
+    // navigation.drawStartscreenButtons();
 
     return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // stuff----------------------------------------------------------------------------------
 /*

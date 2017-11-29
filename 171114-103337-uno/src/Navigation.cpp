@@ -3,6 +3,9 @@
 #include <Arduino.h>
 Options options = Options();
 GameEngine gameEngine = GameEngine();
+
+File myFile;
+
 Navigation::Navigation()
 {
 }
@@ -14,7 +17,7 @@ void Navigation::screenInit()
     // lcd.touchRead();
     // lcd.touchStartCal();
     // writeCalData();
-    int val = analogRead(DDC0);
+    int val = 100;
     val = map(val, 0, 1023, 0, 100);
     if (val < 10)
     {
@@ -22,22 +25,20 @@ void Navigation::screenInit()
     }
 
     lcd.led(val);
-    lcd.fillScreen(RGB(160, 182, 219));
+    // lcd.fillScreen(RGB(160, 182, 219));
 }
 
 void Navigation::calibrateScreen()
 {
-
-
-
     lcd.touchRead();
-
     if (lcd.touchZ() || readCalData()) //calibration data in EEPROM?
     {
         writeCalData(); //write data to EEPROM
-    } else {
-        lcd.touchRead();
-        lcd.touchStartCal();
+    }
+    else
+    {
+        // lcd.touchStartCal();
+        writeCalData();
     }
 }
 
@@ -78,6 +79,7 @@ void Navigation::checkButtonPresses()
             {
                 // Game starten
                 gameEngine.startGame();
+                checkHomeButton();
             }
 
             // Check if the button area from Option is touched
@@ -115,7 +117,7 @@ void Navigation::checkOptionsButtons()
                 pressed = 0;
 
                 // Go back to the start menu
-                  drawStartscreenButtons();
+                drawStartscreenButtons();
             }
             // Check if the button area from Brightness is touched
             else if ((lcd.touchX() > 40 && lcd.touchX() < 250) && (lcd.touchY() > 100 && lcd.touchY() < 130))
@@ -138,8 +140,9 @@ void Navigation::checkOptionsButtons()
                 lcd.fillScreen(RGB(160, 182, 219));
                 lcd.drawText(10, 10, "OPTIONS", RGB(255, 0, 0), RGB(160, 182, 219), 1);
                 lcd.drawText(90, 20, "HIGHSCORE", RGB(0, 0, 0), RGB(160, 182, 219), 2);
-                options.showHighscore();
+                // readHighscoreFile();
                 
+
                 checkOptionsButton();
             }
         }
@@ -205,12 +208,13 @@ void Navigation::showCredits()
     checkHomeButton();
 }
 
-
 void Navigation::writeCalData(void)
 {
+    // create variables
     uint16_t i, addr = 0;
     uint8_t *ptr;
 
+    // Write calibration data to EEPROM
     EEPROM.write(addr++, 0xAA);
 
     ptr = (uint8_t *)&lcd.tp_matrix;
@@ -224,10 +228,12 @@ void Navigation::writeCalData(void)
 
 uint8_t Navigation::readCalData()
 {
+    // Creates variabeles
     uint16_t i, addr = 0;
     uint8_t *ptr;
     uint8_t c;
 
+    // Reads calibration data from EEPROM
     c = EEPROM.read(addr++);
     if (c == 0xAA)
     {
@@ -240,4 +246,62 @@ uint8_t Navigation::readCalData()
     }
 
     return 1;
+}
+
+void Navigation::readHighscoreFile()
+{
+    int x;
+    String a = "speler: DEL 42069";
+
+    //init SD-Card
+    Serial.println("Init SD-Card...");
+    x = lcd.drawText(5, 5, "Init SD-Card...", RGB(0, 0, 0), RGB(255, 255, 255), 1);
+    if (!SD.begin(4)) //cs-pin=4
+    {
+        Serial.println("failed");
+        lcd.drawText(x, 5, "failed", RGB(0, 0, 0), RGB(255, 255, 255), 1);
+        while (1)
+            ;
+    }
+
+    //open file for writing
+    Serial.println("Open File...");
+    x = lcd.drawText(5, 5, "Open File...", RGB(0, 0, 0), RGB(255, 255, 255), 1);
+    myFile = SD.open("TEST.txt", FILE_WRITE);
+    if (myFile)
+    {
+        Serial.println("Writing...");
+        lcd.drawText(5, 5, "Writing...", RGB(0, 0, 0), RGB(255, 255, 255), 1);
+        myFile.println(a);
+        myFile.close();
+    }
+    else
+    {
+        Serial.println("error");
+        lcd.drawText(x, 5, "error", RGB(0, 0, 0), RGB(255, 255, 255), 1);
+    }
+
+    //open file for reading
+    Serial.println("Open File...");
+    x = lcd.drawText(5, 5, "Open File...", RGB(0, 0, 0), RGB(255, 255, 255), 1);
+    myFile = SD.open("TEST.txt");
+    if (myFile)
+    {
+        Serial.println("Reading...");
+        lcd.drawText(x, 5, "Reading...", RGB(0, 0, 0), RGB(255, 255, 255), 1);
+        lcd.setCursor(0, 20);
+        while (myFile.available())
+        {
+            uint8_t c;
+            c = myFile.read();
+            Serial.write(c);
+            lcd.print((char)c);
+        }
+        myFile.close();
+    }
+    else
+    {
+        Serial.println("error");
+        lcd.drawText(x, 5, "error", RGB(0, 0, 0), RGB(255, 255, 255), 1);
+    }
 }
