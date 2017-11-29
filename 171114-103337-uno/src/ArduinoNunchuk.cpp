@@ -3,7 +3,9 @@
 
 #include "include.h"
 
-
+ArduinoNunchuk::ArduinoNunchuk() {
+  
+}
 
 void ArduinoNunchuk::init()
 {

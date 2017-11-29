@@ -14,7 +14,7 @@ void Map::drawGrid()
     lcd.fillRect(85, 0, 235, 2, RGB(0, 0, 0));
 
     // Three left over pixel rows in the down side of the grid
-    lcd.fillRect(85, 237, 235, 3, RGB(0, 0, 0));
+    lcd.fillRect(85, 236, 235, 4, RGB(0, 0, 0));
 
     lcd.fillRect(0, 0, 85, 240, RGB(0, 0, 0));
 
@@ -45,7 +45,7 @@ void Map::drawBarrels(int x, int y)
     x = 26 * x + 85;
     y = 26 * y + 2;
 
-    lcd.fillRect(x, y, 26, 26, RGB(222, 184, 135));
+    lcd.fillRect(x, y, 26, 26, RGB(222, 0,0));
 }
 
 void Map::declareBarrels(int amount)

@@ -12,7 +12,6 @@
 
 //Instancis voor de nunchuk en het beelscherm
 // Screen screen = Screen();
-ArduinoNunchuk nunchuk = ArduinoNunchuk();
 Navigation navigation = Navigation();
 
 int main()
