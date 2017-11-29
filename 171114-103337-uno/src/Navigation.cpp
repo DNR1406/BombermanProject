@@ -10,12 +10,6 @@ Navigation::Navigation() {
 void Navigation::screenInit()
 {
     this->lcd.begin();
-<<<<<<< HEAD
-    // lcd.touchRead();
-    // lcd.touchStartCal();
-    // writeCalData();
-=======
->>>>>>> 1355b674054016428a8a48162c285f47825859f2
     int val = analogRead(DDC0);
     val = map(val, 0, 1023, 0, 100);
     if (val < 10)
@@ -33,10 +27,6 @@ void Navigation::calibrateScreen()
 
 
     lcd.touchRead();
-<<<<<<< HEAD
-=======
-
->>>>>>> 1355b674054016428a8a48162c285f47825859f2
     if (lcd.touchZ() || readCalData()) //calibration data in EEPROM?
     {
         writeCalData(); //write data to EEPROM
