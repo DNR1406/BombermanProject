@@ -5,6 +5,7 @@
 #include <util/delay.h>
 
 
+
 Options::Options()
 {
 }
@@ -65,4 +66,34 @@ void Options::changeBrightness()
             counter = 0;
         }
     }
+}
+void Options::storeHighscore()
+{
+    File myFile;
+    String a = "42069";
+  // Open serial communications and wait for port to open:
+
+  while (!Serial) {
+    ; // wait for serial port to connect. Needed for native USB port only
+  }
+  if (!SD.begin(4)) {
+    Serial.println("initialization failed!");
+
+  }
+
+  // open the file. note that only one file can be open at a time,
+  // so you have to close this one before opening another.
+  myFile = SD.open("Highscores.txt", FILE_WRITE);
+
+  // if the file opened okay, write to it:
+  if (myFile) {
+    myFile.println(a);
+    // close the file:
+
+    myFile.close();
+    
+  } else {
+    // if the file didn't open, print an error:
+    Serial.println("error opening Highscores.txt");
+  }
 }

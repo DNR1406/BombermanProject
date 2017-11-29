@@ -18,32 +18,14 @@ Navigation navigation = Navigation();
 
 void testCommunication() {
 
-    DDRB |= (1 << PB5);
+  Communication c = Communication(1, 1);
+
+    int positions[58];
     
-    Communication c = Communication(1, 1);
+    c.receiveMap(positions);
+    Serial.println("ontvangen");
 
-    int x, y, bomb;
-    int xO = 0, yO = 0, bombO = 0;
-
-    while(1) {
-        c.setLocationPlayer1(x, y, bomb);
-        c.getLocationPlayer2(&xO, &yO, &bombO);
-
-        x++;
-        y++;       
-
-        if(xO == 5 && yO == 6 && bombO == 1) {
-            PORTB |= (1 << PB5);
-        } else {
-            PORTB &= ~(1 << PB5);
-        }
-
-        bomb = !bomb;
-
-
-        c.sendReceive();
-        delay(500);
-    }
+    c.sendMap(positions);
 }
 
 
@@ -67,66 +49,3 @@ int main()
 
     return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// stuff----------------------------------------------------------------------------------
-/*
-    gameEngine.gameInit();
-    gameEngine.calibrateScreen();
-    // gameEngine.readFromSDCard("logo.bmp");
-    gameEngine.drawStartscreenButtons();
-    gameEngine.checkButtonPresses();
-*/
-
-//variable for counterTimer2
-volatile uint32_t counterTimer2 = 0;
-//interupt functie
-//ISR(TIMER2_COMPA_vect)
-//{
-//     counterTimer2++;
-
-//     if (counterTimer2 == 1000) //Ten times per sec.
-//     {
-//         c.receiveLocationPlayer2();
-//         c.sendLocationPlayer1();
-
-//         Serial.println("interrupt: " + String(c.xPlayer1));
-//         PORTB ^= (1 << PB5);
-//         counterTimer2 = 0;
-//     }
-//}

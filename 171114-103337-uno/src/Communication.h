@@ -5,6 +5,8 @@
 #ifndef Communication_H
 #define Communication_H
 
+
+
 class Communication
 {
 public:
@@ -14,14 +16,14 @@ public:
   void setLocationPlayer1(int x, int y, int bomb);
 
   //player2
-  void getLocationPlayer2(int *x, int *y);
   void getLocationPlayer2(int *x, int *y, int *bomb);
 
   //other
   void sendReceive();
-  //int sendMap(...);
-  //int receiveMap(...);
-  
+
+  void sendMap(int positions[58]);
+  void receiveMap(int *positions);
+
 private:
   //player1
   void sendLocationPlayer1();
@@ -29,7 +31,7 @@ private:
 
   //player2
   void receiveLocationPlayer2();
-  int xPlayer2, yPlayer2; 
+  int xPlayer2, yPlayer2;
 
   //bomb
   int bombPlayer1, bombPlayer2;
