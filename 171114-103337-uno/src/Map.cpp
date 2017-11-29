@@ -52,7 +52,7 @@ void Map::drawBarrels(int x, int y)
     // lcd.fillRect(x, y, 26, 26, RGB(rand() % 255, rand() % 255, rand() % 255));
 }
 
-void Map::declareBarrels(int amount)
+void Map::declareBarrels(int amount, int *positions)
 {
     int barrelNumber = 0;
     for (int y = 0; y < 9; y++)
@@ -102,5 +102,10 @@ void Map::declareBarrels(int amount)
                 }
             }
         }
+    }
+
+
+    for(int i = 0; i < 58; i ++) {
+        positions[i] = this->barrels[i].barrel;
     }
 }
