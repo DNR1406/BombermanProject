@@ -16,93 +16,37 @@ ArduinoNunchuk nunchuk = ArduinoNunchuk();
 Navigation navigation = Navigation();
 
 
-void testCommunication() {
 
-    DDRB |= (1 << PB5);
-    
+void testCommunication()
+{
     Communication c = Communication(1, 1);
 
-    int x, y, bomb;
-    int xO = 0, yO = 0, bombO = 0;
+    int positions[58];
+    
+    c.receiveMap(positions);
+    Serial.println("ontvangen");
 
-    while(1) {
-        c.setLocationPlayer1(x, y, bomb);
-        c.getLocationPlayer2(&xO, &yO, &bombO);
-
-        x++;
-        y++;       
-
-        if(xO == 5 && yO == 6 && bombO == 1) {
-            PORTB |= (1 << PB5);
-        } else {
-            PORTB &= ~(1 << PB5);
-        }
-
-        bomb = !bomb;
-
-
-        c.sendReceive();
-        delay(500);
-    }
+    c.sendMap(positions);
 }
-
-
 
 int main()
 {
     init();
     Serial.begin(9600);
+    Serial.println("start");
 
-    //testCommunication();
+    testCommunication();
+    Serial.println("klaar");
 
     navigation.screenInit();
     navigation.calibrateScreen();
 
-
-
-    // Serial.begin(9600);
 
     navigation.drawStartscreenButtons();
 
 
     return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // stuff----------------------------------------------------------------------------------
 /*
@@ -114,7 +58,7 @@ int main()
 */
 
 //variable for counterTimer2
-volatile uint32_t counterTimer2 = 0;
+//volatile uint32_t counterTimer2 = 0;
 //interupt functie
 //ISR(TIMER2_COMPA_vect)
 //{

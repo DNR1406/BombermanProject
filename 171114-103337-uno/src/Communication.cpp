@@ -42,7 +42,6 @@ void Communication::getLocationPlayer2(int *x, int *y, int *bomb)
     *bomb = this->bombPlayer2;
 }
 
-
 void Communication::receiveLocationPlayer2()
 {
     if (Serial.available())
@@ -69,37 +68,27 @@ void Communication::sendReceive()
     this->sendLocationPlayer1();
 }
 
+void Communication::sendMap(int positions[58])
+{
+    for (int i = 0; i < 58; i++)
+    {
+        Serial.println(String(positions[i]));
+    }
+}
 
+void Communication::receiveMap(int *positions)
+{
+    int finished = 1, i = 0;
+    while (finished)
+    {
+        while (Serial.available())
+        {
+            positions[i] = Serial.read() - 48;
+            i++;
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// ------------------------------------------------------------------------------------
-
-//  String incomming = Serial.readString();
-//         int x = incomming[0] - '0';
-//         int y = incomming[1] - '0';
-
-//         if( x > 0) {
-//             this->xPlayer2 = x;
-//         }
-
-//         if(y > 0) {
-//             this->yPlayer2 = x;
-//         }
+        if(i == 58) { 
+            finished = 0;
+        }
+    }
+}
