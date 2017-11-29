@@ -5,6 +5,8 @@
 
 //Constructor
 Map grid = Map();
+Communication c =  Communication(1, 1);
+
 GameEngine::GameEngine()
 {
 }
@@ -13,9 +15,18 @@ GameEngine::GameEngine()
 // startGame function
 void GameEngine::startGame()
 {
+    int positions[58] = { 0 };
     // draws grid on screen
     grid.drawGrid();
-    grid.declareBarrels(20);
+    grid.declareBarrels(20, positions);
+
+
+    // for(int i = 0; i < 58; i++) {
+    //     Serial.println(positions[i]);
+    // }
+
+    c.sendMap(positions);
+    
 }
 
 // function to add players to the game
