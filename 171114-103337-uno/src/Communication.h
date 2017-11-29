@@ -14,8 +14,8 @@ public:
   void setLocationPlayer1(int x, int y, int bomb);
 
   //player2
-  int getLocationPlayer2(int *x, int *y);
-  int getLocationPlayer2(int *x, int *y, int *bomb);
+  void getLocationPlayer2(int *x, int *y);
+  void getLocationPlayer2(int *x, int *y, int *bomb);
 
   //other
   void sendReceive();
@@ -30,6 +30,9 @@ private:
   //player2
   void receiveLocationPlayer2();
   int xPlayer2, yPlayer2; 
+
+  //bomb
+  int bombPlayer1, bombPlayer2;
 };
 
 #endif

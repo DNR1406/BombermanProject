@@ -17,8 +17,12 @@ void GameEngine::startGame()
 {
     // draws grid on screen
     grid.drawGrid();
+<<<<<<< HEAD
     grid.declareBarrels(40);
     // checkPlayerActions();
+=======
+    grid.declareBarrels(58);
+>>>>>>> b3721ef2f19c043b85cdca324e5b3172b065c62c
 }
 
 // function to add players to the game
