@@ -12,8 +12,8 @@ void Navigation::screenInit()
 
     this->lcd.begin();
     // lcd.touchRead();
-    lcd.touchStartCal();
-    writeCalData();
+    // lcd.touchStartCal();
+    // writeCalData();
     int val = analogRead(DDC0);
     val = map(val, 0, 1023, 0, 100);
     if (val < 10)
@@ -27,22 +27,16 @@ void Navigation::screenInit()
 
 void Navigation::calibrateScreen()
 {
-<<<<<<< HEAD
-    lcd.touchRead();
-        lcd.touchStartCal();
-=======
 
 
 
     lcd.touchRead();
->>>>>>> f56dc7db7d415fe0f77562e4ba70a6cbd1ac0264
-
     if (lcd.touchZ() || readCalData()) //calibration data in EEPROM?
     {
         writeCalData(); //write data to EEPROM
     } else {
-        lcd.touchRead();
-        lcd.touchStartCal();
+        // lcd.touchStartCal();
+        writeCalData();
     }
 }
 

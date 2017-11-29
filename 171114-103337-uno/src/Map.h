@@ -2,6 +2,12 @@
 #include <stdint.h>
 #include "include.h"
 
+
+typedef struct barrel {
+    int x,y, barrel = 0;
+} barrel;
+
+
 #ifndef Map_H
 #define Map_H
 
@@ -11,11 +17,13 @@ public:
     void drawGrid();
     void drawBarrels(int x, int y);
     void declareBarrels(int amount);
+    // void sendBarrels(barrel barrels[]);
  
 
    
   private:
   MI0283QT9 lcd;
+  barrel barrels[58];
 
    
 };
