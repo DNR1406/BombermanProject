@@ -16,10 +16,9 @@ ArduinoNunchuk nunchuk = ArduinoNunchuk();
 Navigation navigation = Navigation();
 
 
+void testCommunication() {
 
-void testCommunication()
-{
-    Communication c = Communication(1, 1);
+  Communication c = Communication(1, 1);
 
     int positions[58];
     
@@ -29,48 +28,24 @@ void testCommunication()
     c.sendMap(positions);
 }
 
+
+
 int main()
 {
     init();
     Serial.begin(9600);
-    Serial.println("start");
 
-    testCommunication();
-    Serial.println("klaar");
+    //testCommunication();
 
     navigation.screenInit();
     navigation.calibrateScreen();
 
+
+
+    // Serial.begin(9600);
 
     navigation.drawStartscreenButtons();
 
 
     return 0;
 }
-
-// stuff----------------------------------------------------------------------------------
-/*
-    gameEngine.gameInit();
-    gameEngine.calibrateScreen();
-    // gameEngine.readFromSDCard("logo.bmp");
-    gameEngine.drawStartscreenButtons();
-    gameEngine.checkButtonPresses();
-*/
-
-//variable for counterTimer2
-//volatile uint32_t counterTimer2 = 0;
-//interupt functie
-//ISR(TIMER2_COMPA_vect)
-//{
-//     counterTimer2++;
-
-//     if (counterTimer2 == 1000) //Ten times per sec.
-//     {
-//         c.receiveLocationPlayer2();
-//         c.sendLocationPlayer1();
-
-//         Serial.println("interrupt: " + String(c.xPlayer1));
-//         PORTB ^= (1 << PB5);
-//         counterTimer2 = 0;
-//     }
-//}
