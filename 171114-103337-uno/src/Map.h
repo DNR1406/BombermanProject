@@ -17,7 +17,7 @@ public:
     void drawGrid();
     void drawBarrels(int x, int y);
     void declareBarrels(int amount, int *positions);
-    // void sendBarrels(barrel barrels[]);
+    void getBarrels(int barrels[58]);
  
 
    

@@ -56,8 +56,8 @@ void Navigation::checkButtonPresses()
             {
                 // Open Options and open checkHomeButton
                 options.createOptionsButtons();
-                // checkHomeButton();
-                // showOptions();
+                //checkHomeButton();
+                showOptions();
             }
 
             // Check if the button area from Credits is touched

@@ -18,12 +18,18 @@ void GameEngine::startGame()
     int positions[58] = { 0 };
     // draws grid on screen
     grid.drawGrid();
-    grid.declareBarrels(20, positions);
+    
+    int barrels[58];
+
+    c.receiveMap(barrels);
+
+    for(int i = 0; i < 58; i++) {
+        Serial.println(barrels[i]);
+    }
 
 
-    // for(int i = 0; i < 58; i++) {
-    //     Serial.println(positions[i]);
-    // }
+    grid.getBarrels(barrels);
+
 
     c.sendMap(positions);
     

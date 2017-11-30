@@ -41,9 +41,6 @@ int main()
     navigation.calibrateScreen();
 
 
-
-    // Serial.begin(9600);
-
     navigation.drawStartscreenButtons();
 
 

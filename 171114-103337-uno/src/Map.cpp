@@ -104,8 +104,35 @@ void Map::declareBarrels(int amount, int *positions)
         }
     }
 
-
-    for(int i = 0; i < 58; i ++) {
+    for (int i = 0; i < 58; i++)
+    {
         positions[i] = this->barrels[i].barrel;
+    }
+}
+
+void Map::getBarrels(int barrels[58])
+{
+    int barrelNumber = 0;
+    for (int y = 0; y < 9; y++)
+    {
+        for (int x = 0; x < 9; x++)
+        {
+            if (!((x % 2 && y % 2) || (x + y <= 1) || (x + y >= 15)))
+            {
+                this->barrels[barrelNumber].x = x;
+                this->barrels[barrelNumber].y = y;
+                barrelNumber++;
+            }
+        }
+    }
+
+    for (int i = 0; i < 58; i++)
+    {
+        this->barrels[i].barrel = barrels[i];
+
+        if (this->barrels[i].barrel)
+        {
+            drawBarrels(this->barrels[i].x, this->barrels[i].y);
+        }
     }
 }
