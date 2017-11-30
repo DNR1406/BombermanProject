@@ -3,6 +3,11 @@
 #include <Arduino.h>
 Options options = Options();
 GameEngine gameEngine = GameEngine();
+
+File myFile;
+
+Navigation::Navigation()
+{
 Navigation::Navigation() {
 
 }
@@ -10,6 +15,10 @@ Navigation::Navigation() {
 void Navigation::screenInit()
 {
     this->lcd.begin();
+    // lcd.touchRead();
+    // lcd.touchStartCal();
+    // writeCalData();
+    int val = 100;
     int val = analogRead(DDC0);
     val = map(val, 0, 1023, 0, 100);
     if (val < 10)
@@ -18,18 +27,18 @@ void Navigation::screenInit()
     }
 
     lcd.led(val);
-    lcd.fillScreen(RGB(160, 182, 219));
+    // lcd.fillScreen(RGB(160, 182, 219));
 }
 
 void Navigation::calibrateScreen()
 {
-
-
-
     lcd.touchRead();
     if (lcd.touchZ() || readCalData()) //calibration data in EEPROM?
     {
         writeCalData(); //write data to EEPROM
+    }
+    else
+    {
     } else {
         // lcd.touchStartCal();
         writeCalData();
@@ -49,6 +58,7 @@ void Navigation::checkButtonPresses()
             {
                 // Game starten
                 gameEngine.startGame();
+                checkHomeButton();
             }
 
             // Check if the button area from Option is touched
@@ -65,6 +75,53 @@ void Navigation::checkButtonPresses()
             {
                 // Open credits and open checkHomeButton
                 showCredits();
+            }
+        }
+    }
+}
+
+void Navigation::checkOptionsButtons()
+{
+    int pressed = 1;
+    while (pressed)
+    {
+        lcd.touchRead();
+        if (lcd.touchZ())
+        {
+            // If this button is touched you'll be navigate back to the home screen.
+            if ((lcd.touchX() > 0 && lcd.touchX() < 50) && (lcd.touchY() > 0 && lcd.touchY() < 50))
+            {
+                // Get out of the while loop
+                pressed = 0;
+
+                // Go back to the start menu
+                drawStartscreenButtons();
+            }
+            // Check if the button area from Brightness is touched
+            else if ((lcd.touchX() > 40 && lcd.touchX() < 250) && (lcd.touchY() > 100 && lcd.touchY() < 130))
+            {
+                options.changeBrightness();
+                options.createOptionsButtons();
+            }
+            // Check if the button area from Volume is touched
+            else if ((lcd.touchX() > 40 && lcd.touchX() < 250) && (lcd.touchY() > 140 && lcd.touchY() < 170))
+            {
+                lcd.fillScreen(RGB(160, 182, 219));
+                lcd.drawText(10, 10, "OPTIONS", RGB(255, 0, 0), RGB(160, 182, 219), 1);
+                lcd.drawText(100, 20, "VOLUME", RGB(0, 0, 0), RGB(160, 182, 219), 2);
+                // functie volume
+                checkOptionsButton();
+            }
+            // Check if the button area from Reset Highscore is touched
+            else if ((lcd.touchX() > 40 && lcd.touchX() < 250) && (lcd.touchY() > 180 && lcd.touchY() < 210))
+            {
+                lcd.fillScreen(RGB(160, 182, 219));
+                lcd.drawText(10, 10, "OPTIONS", RGB(255, 0, 0), RGB(160, 182, 219), 1);
+                lcd.drawText(90, 20, "HIGHSCORE", RGB(0, 0, 0), RGB(160, 182, 219), 2);
+                // readHighscoreFile();
+                
+
+                checkOptionsButton();
             }
         }
     }
@@ -201,9 +258,11 @@ void Navigation::drawStartscreenButtons()
 
 void Navigation::writeCalData(void)
 {
+    // create variables
     uint16_t i, addr = 0;
     uint8_t *ptr;
 
+    // Write calibration data to EEPROM
     EEPROM.write(addr++, 0xAA);
 
     ptr = (uint8_t *)&lcd.tp_matrix;
@@ -217,10 +276,12 @@ void Navigation::writeCalData(void)
 
 uint8_t Navigation::readCalData()
 {
+    // Creates variabeles
     uint16_t i, addr = 0;
     uint8_t *ptr;
     uint8_t c;
 
+    // Reads calibration data from EEPROM
     c = EEPROM.read(addr++);
     if (c == 0xAA)
     {
@@ -233,4 +294,63 @@ uint8_t Navigation::readCalData()
     }
 
     return 1;
+}
+
+void Navigation::readHighscoreFile()
+{
+    int x;
+    String a = "speler: DEL 42069";
+
+    //init SD-Card
+    Serial.println("Init SD-Card...");
+    x = lcd.drawText(5, 5, "Init SD-Card...", RGB(0, 0, 0), RGB(255, 255, 255), 1);
+    if (!SD.begin(4)) //cs-pin=4
+    {
+        Serial.println("failed");
+        lcd.drawText(x, 5, "failed", RGB(0, 0, 0), RGB(255, 255, 255), 1);
+        while (1)
+            ;
+    }
+
+    //open file for writing
+    Serial.println("Open File...");
+    x = lcd.drawText(5, 5, "Open File...", RGB(0, 0, 0), RGB(255, 255, 255), 1);
+    myFile = SD.open("TEST.txt", FILE_WRITE);
+    if (myFile)
+    {
+        Serial.println("Writing...");
+        lcd.drawText(5, 5, "Writing...", RGB(0, 0, 0), RGB(255, 255, 255), 1);
+        myFile.println(a);
+        myFile.close();
+    }
+    else
+    {
+        Serial.println("error");
+        lcd.drawText(x, 5, "error", RGB(0, 0, 0), RGB(255, 255, 255), 1);
+    }
+
+    //open file for reading
+    Serial.println("Open File...");
+    x = lcd.drawText(5, 5, "Open File...", RGB(0, 0, 0), RGB(255, 255, 255), 1);
+    myFile = SD.open("TEST.txt");
+    if (myFile)
+    {
+        Serial.println("Reading...");
+        lcd.drawText(x, 5, "Reading...", RGB(0, 0, 0), RGB(255, 255, 255), 1);
+        lcd.setCursor(0, 20);
+        while (myFile.available())
+        {
+            uint8_t c;
+            c = myFile.read();
+            Serial.write(c);
+            lcd.print((char)c);
+        }
+        myFile.close();
+    }
+    else
+    {
+        Serial.println("error");
+        lcd.drawText(x, 5, "error", RGB(0, 0, 0), RGB(255, 255, 255), 1);
+    }
+}
 }

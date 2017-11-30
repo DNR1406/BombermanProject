@@ -13,13 +13,16 @@ void Map::drawGrid()
     // Delete menu with overwriting the background
     lcd.fillScreen(RGB(160, 182, 219));
 
+    lcd.drawText(5, 5, "Home", RGB(255, 0, 0), RGB(160, 182, 219), 1);
+
     // Two left over pixel lines on the top filled with black
-    lcd.fillRect(85, 0, 235, 2, RGB(0, 0, 0));
+    lcd.fillRect(0, 0, 320, 2, RGB(0, 0, 0));
 
     // Three left over pixel rows in the down side of the grid
-    lcd.fillRect(85, 237, 235, 3, RGB(0, 0, 0));
+    lcd.fillRect(0, 236, 320, 4, RGB(0, 0, 0));
+    lcd.fillRect(82,0,3,240,RGB(0,0,0));
 
-    lcd.fillRect(0, 0, 85, 240, RGB(0, 0, 0));
+    // lcd.fillRect(0, 0, 85, 240, RGB(0, 0, 0));
 
     // The next block of code is about drawing the squares in the grid.
     // The squares should be static
@@ -69,6 +72,8 @@ void Map::declareBarrels(int amount, int *positions)
     }
 
     amount += 2;
+    srand(time(NULL));
+    barrel barrels[amount];
 
     time_t t;
 

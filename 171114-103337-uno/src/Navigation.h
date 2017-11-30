@@ -15,6 +15,7 @@ public:
     void showCredits();
     void showOptions();
     void drawStartscreenButtons();
+    void readHighscoreFile();
     void writeCalData(void);
     uint8_t readCalData(void);
     void calibrateScreen();

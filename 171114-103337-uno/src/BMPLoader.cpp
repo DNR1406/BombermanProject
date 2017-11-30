@@ -10,7 +10,7 @@ BMPLoader::BMPLoader() {
 uint8_t BMPLoader::OpenBMPFile(char *file, int16_t x, int16_t y)
 {
     File myFile;
-    uint8_t buf[40]; //read buf (min. size = sizeof(BMP_DIPHeader))
+    uint8_t buf[20]; //read buf (min. size = sizeof(BMP_DIPHeader))
     BMP_Header *bmp_hd;
     BMP_DIPHeader *bmp_dip;
     int16_t width, height, w, h;
@@ -66,7 +66,7 @@ void BMPLoader::readFromSDCard(char *file)
     //init SD-Card and calibrate touchscreen
     if (SD.begin(4))
     {
-        OpenBMPFile(file, 0, 0);
+        OpenBMPFile(file, 0,0);
     }
     else
     {

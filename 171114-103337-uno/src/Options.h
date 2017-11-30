@@ -14,6 +14,7 @@ class Options
     void changeBrightness();
     void storeHighscore();
     void showHighscore();
+    void readHighscoreFile();
 
   private:
   MI0283QT9 lcd;
