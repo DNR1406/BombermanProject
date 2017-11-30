@@ -8,16 +8,18 @@ File myFile;
 
 Navigation::Navigation()
 {
+Navigation::Navigation() {
+
 }
 
 void Navigation::screenInit()
 {
-
     this->lcd.begin();
     // lcd.touchRead();
     // lcd.touchStartCal();
     // writeCalData();
     int val = 100;
+    int val = analogRead(DDC0);
     val = map(val, 0, 1023, 0, 100);
     if (val < 10)
     {
@@ -37,33 +39,10 @@ void Navigation::calibrateScreen()
     }
     else
     {
+    } else {
         // lcd.touchStartCal();
         writeCalData();
     }
-}
-
-void Navigation::drawStartscreenButtons()
-{
-    // Background set
-    lcd.fillScreen(RGB(160, 182, 219));
-
-    // Draws start button
-    lcd.fillRoundRect(95, 100, 120, 30, 5, RGB(0, 100, 100));
-    lcd.drawRoundRect(95, 100, 120, 30, 5, RGB(0, 0, 0));
-    lcd.drawText(117, 108, "START", RGB(255, 0, 0), RGB(0, 100, 100), 2);
-
-    // Draws options button
-    lcd.fillRoundRect(95, 140, 120, 30, 5, RGB(0, 100, 100));
-    lcd.drawRoundRect(95, 140, 120, 30, 5, RGB(0, 0, 0));
-    lcd.drawText(100, 147, "OPTIONS", RGB(255, 0, 0), RGB(0, 100, 100), 2);
-
-    // Draws credits button
-    lcd.fillRoundRect(95, 180, 120, 30, 5, RGB(0, 100, 100));
-    lcd.drawRoundRect(95, 180, 120, 30, 5, RGB(0, 0, 0));
-    lcd.drawText(100, 187, "CREDITS", RGB(255, 0, 0), RGB(0, 100, 100), 2);
-
-    // Check if any buttons are pressed
-    checkButtonPresses();
 }
 
 void Navigation::checkButtonPresses()
@@ -87,7 +66,6 @@ void Navigation::checkButtonPresses()
             {
                 // Open Options and open checkHomeButton
                 options.createOptionsButtons();
-                checkOptionsButtons();
                 // checkHomeButton();
                 // showOptions();
             }
@@ -184,7 +162,7 @@ void Navigation::checkOptionsButton()
             if ((lcd.touchX() > 0 && lcd.touchX() < 50) && (lcd.touchY() > 0 && lcd.touchY() < 50))
             {
                 // Show the options menu
-                options.createOptionsButtons();
+                showOptions();
 
                 // Get out of the while loop
                 back = 0;
@@ -206,6 +184,76 @@ void Navigation::showCredits()
 
     // Check if the home button is pushed
     checkHomeButton();
+}
+
+// Showing the options menu and checking if buttons are being pressed
+void Navigation::showOptions()
+{
+    int pressed = 1;
+    while (pressed)
+    {
+        lcd.touchRead();
+        if (lcd.touchZ())
+        {
+            // If this button is touched you'll be navigate back to the home screen.
+            if ((lcd.touchX() > 0 && lcd.touchX() < 50) && (lcd.touchY() > 0 && lcd.touchY() < 50))
+            {
+                // Go back to the start menu
+                drawStartscreenButtons();
+
+                // Get out of the while loop
+                pressed = 0;
+            }
+            // Check if the button area from Brightness is touched
+            else if ((lcd.touchX() > 40 && lcd.touchX() < 250) && (lcd.touchY() > 100 && lcd.touchY() < 130))
+            {
+                options.changeBrightness();
+                // checkOptionsButton();
+                showOptions();
+            }
+            // Check if the button area from Volume is touched
+            else if ((lcd.touchX() > 40 && lcd.touchX() < 250) && (lcd.touchY() > 140 && lcd.touchY() < 170))
+            {
+                lcd.fillScreen(RGB(160, 182, 219));
+                lcd.drawText(10, 10, "OPTIONS", RGB(255, 0, 0), RGB(160, 182, 219), 1);
+                lcd.drawText(100, 20, "VOLUME", RGB(0, 0, 0), RGB(160, 182, 219), 2);
+                // functie volume
+                checkOptionsButton();
+            }
+            // Check if the button area from Reset Highscore is touched
+            else if ((lcd.touchX() > 40 && lcd.touchX() < 250) && (lcd.touchY() > 180 && lcd.touchY() < 210))
+            {
+                lcd.fillScreen(RGB(160, 182, 219));
+                lcd.drawText(10, 10, "OPTIONS", RGB(255, 0, 0), RGB(160, 182, 219), 1);
+                lcd.drawText(40, 20, "RESET HIGHSCORE", RGB(0, 0, 0), RGB(160, 182, 219), 2);
+                checkOptionsButton();
+            }
+        }
+    }
+}
+
+void Navigation::drawStartscreenButtons()
+{
+    // Background set
+    lcd.fillScreen(RGB(160, 182, 219));
+
+    // Draws start button
+    lcd.fillRoundRect(95, 100, 120, 30, 5, RGB(0, 100, 100));
+    lcd.drawRoundRect(95, 100, 120, 30, 5, RGB(0, 0, 0));
+    lcd.drawText(117, 108, "START", RGB(255, 0, 0), RGB(0, 100, 100), 2);
+
+    // Draws options button
+    lcd.fillRoundRect(95, 140, 120, 30, 5, RGB(0, 100, 100));
+    lcd.drawRoundRect(95, 140, 120, 30, 5, RGB(0, 0, 0));
+    lcd.drawText(100, 147, "OPTIONS", RGB(255, 0, 0), RGB(0, 100, 100), 2);
+
+    // Draws credits button
+    lcd.fillRoundRect(95, 180, 120, 30, 5, RGB(0, 100, 100));
+    lcd.drawRoundRect(95, 180, 120, 30, 5, RGB(0, 0, 0));
+    lcd.drawText(100, 187, "CREDITS", RGB(255, 0, 0), RGB(0, 100, 100), 2);
+
+    // Check if any buttons are pressed
+    checkButtonPresses();
 }
 
 void Navigation::writeCalData(void)
@@ -304,4 +352,5 @@ void Navigation::readHighscoreFile()
         Serial.println("error");
         lcd.drawText(x, 5, "error", RGB(0, 0, 0), RGB(255, 255, 255), 1);
     }
+}
 }

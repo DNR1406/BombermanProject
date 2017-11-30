@@ -5,26 +5,28 @@
 
 //Constructor
 Map grid = Map();
-ArduinoNunchuk nunchuk = ArduinoNunchuk();
 Screen screen = Screen();
 BMPLoader player = BMPLoader();
+Communication c =  Communication(1, 1);
 GameEngine::GameEngine()
 {
-}
 
 
 // startGame function
 void GameEngine::startGame()
 {
+    int positions[58] = { 0 };
     // draws grid on screen
     grid.drawGrid();
-	if (SD.begin(4)) {
-		player.readFromSDCard("player1.bmp");
-		grid.declareBarrels(10);
-	} else {
-		 lcd.drawText(5, 5, "Not working", RGB(0, 0, 0), RGB(160, 182, 219), 1);
-	}
+    grid.declareBarrels(20, positions);
 
+
+    // for(int i = 0; i < 58; i++) {
+    //     Serial.println(positions[i]);
+    // }
+
+    c.sendMap(positions);
+    
 }
 
 // function to add players to the game

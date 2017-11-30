@@ -28,7 +28,7 @@ If you create a header file, put it here: */
 #include "Options.h"
 #include <SPI.h>
 #include <SD.h>
-#include <arduino.h>
+#include <Arduino.h>
 #include "Functions.h"
 #include "BMPLoader.h"
 
@@ -44,9 +44,6 @@ typedef struct location {
    int x, y;
 } location;
 
-typedef struct barrel {
-    int x,y;
-} barrel;
 
 
 

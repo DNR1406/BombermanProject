@@ -19,6 +19,7 @@ Options highscore = Options();
 void testCommunication()
 {
 
+<<<<<<< HEAD
     DDRB |= (1 << PB5);
 
     Communication c = Communication(1, 1);
@@ -48,6 +49,16 @@ void testCommunication()
         c.sendReceive();
         delay(500);
     }
+=======
+  Communication c = Communication(1, 1);
+
+    int positions[58];
+    
+    c.receiveMap(positions);
+    Serial.println("ontvangen");
+
+    c.sendMap(positions);
+>>>>>>> df7f83ee9ccb812d288b1a44e55623c6f9d63b7c
 }
 
 int main()
@@ -66,6 +77,7 @@ int main()
 
     return 0;
 }
+<<<<<<< HEAD
 
 // stuff----------------------------------------------------------------------------------
 /*
@@ -93,3 +105,5 @@ volatile uint32_t counterTimer2 = 0;
 //         counterTimer2 = 0;
 //     }
 //}
+=======
+>>>>>>> df7f83ee9ccb812d288b1a44e55623c6f9d63b7c
