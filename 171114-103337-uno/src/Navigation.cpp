@@ -3,34 +3,33 @@
 #include <Arduino.h>
 Options options = Options();
 GameEngine gameEngine = GameEngine();
-Navigation::Navigation() {
-
+Navigation::Navigation()
+{
 }
 
 void Navigation::screenInit()
 {
     this->lcd.begin();
-    int val = analogRead(DDC0);
-    val = map(val, 0, 1023, 0, 100);
-    if (val < 10)
-    {
-        val = 10;
-    }
+    // int val = analogRead(DDC0);
+    // val = map(val, 0, 1023, 0, 100);
+    // if (val < 10)
+    // {
+    //     val = 10;
+    // }
 
-    lcd.led(val);
+    lcd.led(100);
     lcd.fillScreen(RGB(160, 182, 219));
 }
 
 void Navigation::calibrateScreen()
 {
-
-
-
     lcd.touchRead();
     if (lcd.touchZ() || readCalData()) //calibration data in EEPROM?
     {
         writeCalData(); //write data to EEPROM
-    } else {
+    }
+    else
+    {
         // lcd.touchStartCal();
         writeCalData();
     }
@@ -54,10 +53,9 @@ void Navigation::checkButtonPresses()
             // Check if the button area from Option is touched
             else if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 140 && lcd.touchY() < 170))
             {
-                // Open Options and open checkHomeButton
+                // Open Options and
                 options.createOptionsButtons();
-                // checkHomeButton();
-                // showOptions();
+                checkOptionsButtons();
             }
 
             // Check if the button area from Credits is touched
@@ -93,7 +91,7 @@ void Navigation::checkHomeButton()
 }
 
 // Going back to options menu, this is needed when in brightness or volume page
-void Navigation::checkOptionsButton()
+void Navigation::checkOptionsBackButton()
 {
     int back = 1;
     while (back)
@@ -105,7 +103,8 @@ void Navigation::checkOptionsButton()
             if ((lcd.touchX() > 0 && lcd.touchX() < 50) && (lcd.touchY() > 0 && lcd.touchY() < 50))
             {
                 // Show the options menu
-                showOptions();
+                options.createOptionsButtons();
+                checkOptionsButtons();
 
                 // Get out of the while loop
                 back = 0;
@@ -130,7 +129,7 @@ void Navigation::showCredits()
 }
 
 // Showing the options menu and checking if buttons are being pressed
-void Navigation::showOptions()
+void Navigation::checkOptionsButtons()
 {
     int pressed = 1;
     while (pressed)
@@ -151,8 +150,9 @@ void Navigation::showOptions()
             else if ((lcd.touchX() > 40 && lcd.touchX() < 250) && (lcd.touchY() > 100 && lcd.touchY() < 130))
             {
                 options.changeBrightness();
-                // checkOptionsButton();
-                showOptions();
+
+                options.createOptionsButtons();
+                checkOptionsButtons();
             }
             // Check if the button area from Volume is touched
             else if ((lcd.touchX() > 40 && lcd.touchX() < 250) && (lcd.touchY() > 140 && lcd.touchY() < 170))
@@ -161,7 +161,7 @@ void Navigation::showOptions()
                 lcd.drawText(10, 10, "OPTIONS", RGB(255, 0, 0), RGB(160, 182, 219), 1);
                 lcd.drawText(100, 20, "VOLUME", RGB(0, 0, 0), RGB(160, 182, 219), 2);
                 // functie volume
-                checkOptionsButton();
+                checkOptionsBackButton();
             }
             // Check if the button area from Reset Highscore is touched
             else if ((lcd.touchX() > 40 && lcd.touchX() < 250) && (lcd.touchY() > 180 && lcd.touchY() < 210))
@@ -169,7 +169,7 @@ void Navigation::showOptions()
                 lcd.fillScreen(RGB(160, 182, 219));
                 lcd.drawText(10, 10, "OPTIONS", RGB(255, 0, 0), RGB(160, 182, 219), 1);
                 lcd.drawText(40, 20, "RESET HIGHSCORE", RGB(0, 0, 0), RGB(160, 182, 219), 2);
-                checkOptionsButton();
+                checkOptionsBackButton();
             }
         }
     }
