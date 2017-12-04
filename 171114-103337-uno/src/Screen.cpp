@@ -18,82 +18,82 @@
 //constructor
 Screen::Screen() {
   //begin waardes, secs, x, y
-  this->seconds = 0;
-  this->x = 160;
-  this->y = 120;
+  seconds = 0;
+  x = 160;
+  y = 120;
   //rgb van kleur
-  this->r = 0;
-  this->g = 200;
-  this->b = 0;
+  r = 0;
+  g = 200;
+  b = 0;
 }
 
 //functie om de stip in het midden te zetten en het beelscherm te kleuren
 void Screen::screenInit() {
-  this->lcd.begin();
+  lcd.begin();
 }
 
 //de stip wit maken, dus weg halen
 void Screen::clear() {
 
-  this->lcd.drawCircle(this->x, this->y,6,RGB(  255, 255,  255));
-  this->lcd.fillCircle(this->x, this->y,6,RGB(  255, 255,  255));
+  lcd.drawCircle(x, y,6,RGB(  255, 255,  255));
+  lcd.fillCircle(x, y,6,RGB(  255, 255,  255));
 }
 
 //nieuwe stip kleuren
 void Screen::draw() {
-  this->lcd.drawCircle(this->x, this->y,6,RGB(  this->r, this->g,  this->b));
-  this->lcd.fillCircle(this->x, this->y,6,RGB(  this->r, this->g,  this->b));
+  lcd.drawCircle(x, y,6,RGB(  r, g,  b));
+  lcd.fillCircle(x, y,6,RGB(  r, g,  b));
 }
 
 //naar Links
 void Screen::left() {
   //oude stip weg
-  this->clear();
+  clear();
   //x tien vanaf
-  if(this->x > 0)
-    this->x -= 10;
+  if(x > 0)
+    x -= 10;
   //nieuwe stip kleuren
-  this->draw();
+  draw();
 }
 
 
 //zelfde functie als left, alleen voor right
 void Screen::right() {
-  this->clear();
-  if(this->x < 320)
-    this->x += 10;
-  this->draw();
+  clear();
+  if(x < 320)
+    x += 10;
+  draw();
 }
 
 //zelfde functie als left, alleen voor down
 void Screen::down() {
-  this->clear();
-  if(this->y > 0)
-    this->y += 10;
-  this->draw();
+  clear();
+  if(y > 0)
+    y += 10;
+  draw();
 }
 
 //zelfde functie als left, alleen voor up
 void Screen::up() {
-  this->clear();
-  if(this->y < 240)
-    this->y -= 10;
-  this->draw();
+  clear();
+  if(y < 240)
+    y -= 10;
+  draw();
 }
 
 //kleur veranderen met random functie
 void Screen::changeColor() {
-  this->clear();
-  this->r = rand() % 255;
-  this->g = rand() % 255;
-  this->b = rand() % 255;
+  clear();
+  r = rand() % 255;
+  g = rand() % 255;
+  b = rand() % 255;
   draw();
 }
 
 //seconde toevoegen, deze functie wordt aangeropen bij de timerinteruptfunctie
 void Screen::addSecond() {
-  this->seconds++;
-  this->lcd.drawInteger(2, 2, this->seconds, DEC, RGB(255,0,0), RGB(255,255,255), 1);
+  seconds++;
+  lcd.drawInteger(2, 2, seconds, DEC, RGB(255,0,0), RGB(255,255,255), 1);
 }
 
 

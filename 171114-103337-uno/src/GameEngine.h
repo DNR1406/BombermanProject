@@ -13,6 +13,7 @@ public:
   void selectLevel();
   void incrementScore();
   void addPlayer();
+  void checkPlayerActions();
   uint8_t GameEngine::OpenBMPFile(char *file, int16_t x, int16_t y);
   void GameEngine::calibrateScreen();
   void GameEngine::readFromSDCard(char *file);

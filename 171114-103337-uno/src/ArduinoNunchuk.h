@@ -14,7 +14,7 @@ class ArduinoNunchuk
     int accelZ;
     int zButton;
     int cButton;
-
+    ArduinoNunchuk();
     void init();
     void update();
 

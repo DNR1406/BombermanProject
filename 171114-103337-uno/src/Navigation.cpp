@@ -48,6 +48,8 @@ void Navigation::checkButtonPresses()
             {
                 // Game starten
                 gameEngine.startGame();
+                lcd.fillRect(0,0,50,50,RGB(0,0,255));
+                checkHomeButton();
             }
 
             // Check if the button area from Option is touched
