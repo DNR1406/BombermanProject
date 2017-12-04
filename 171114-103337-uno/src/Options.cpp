@@ -1,10 +1,9 @@
+
 #include "include.h"
 #include "Arduino.h"
 #include <avr/io.h>
 #include <EEPROM.h>
 #include <util/delay.h>
-
-
 
 Options::Options()
 {
@@ -13,7 +12,7 @@ Options::Options()
 // Show the buttons of the Options
 void Options::createOptionsButtons()
 {
-    
+
     // Fill screen with background, title, and back button
     lcd.fillScreen(RGB(160, 182, 219));
     lcd.drawText(100, 20, "OPTIONS", RGB(0, 0, 0), RGB(160, 182, 219), 2);
@@ -66,34 +65,4 @@ void Options::changeBrightness()
             counter = 0;
         }
     }
-}
-void Options::storeHighscore()
-{
-    File myFile;
-    String a = "42069";
-  // Open serial communications and wait for port to open:
-
-  while (!Serial) {
-    ; // wait for serial port to connect. Needed for native USB port only
-  }
-  if (!SD.begin(4)) {
-    Serial.println("initialization failed!");
-
-  }
-
-  // open the file. note that only one file can be open at a time,
-  // so you have to close this one before opening another.
-  myFile = SD.open("Highscores.txt", FILE_WRITE);
-
-  // if the file opened okay, write to it:
-  if (myFile) {
-    myFile.println(a);
-    // close the file:
-
-    myFile.close();
-    
-  } else {
-    // if the file didn't open, print an error:
-    Serial.println("error opening Highscores.txt");
-  }
 }

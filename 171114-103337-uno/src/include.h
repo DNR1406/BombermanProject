@@ -27,10 +27,8 @@ If you create a header file, put it here: */
 #include "Screen.h"
 #include "Options.h"
 #include <SPI.h>
-#include <SD.h>
 #include <Arduino.h>
 #include "Functions.h"
-#include "BMPLoader.h"
 
 
 #include <MI0283QT9.h>
