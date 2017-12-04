@@ -13,7 +13,6 @@
 
 //Instancis voor de nunchuk en het beelscherm
 // Screen screen = Screen();
-ArduinoNunchuk nunchuk = ArduinoNunchuk();
 Navigation navigation = Navigation();
 
 void testCommunication()
@@ -32,10 +31,9 @@ void testCommunication()
 int main()
 {
     init();
-
     const byte rxPin = 0;
     const byte txPin = 1;
-
+    
     // set up a new serial object
     SoftwareSerial mySerial(rxPin, txPin);
 

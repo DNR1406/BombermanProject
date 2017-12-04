@@ -3,35 +3,34 @@
 #include <Arduino.h>
 Options options = Options();
 GameEngine gameEngine = GameEngine();
-Navigation::Navigation() {
 
+File myFile;
+
+Navigation::Navigation()
+{
 }
 
 void Navigation::screenInit()
 {
-    this->lcd.begin();
-    int val = analogRead(DDC0);
-    val = map(val, 0, 1023, 0, 100);
-    if (val < 10)
-    {
-        val = 10;
-    }
-
-    lcd.led(val);
+    lcd.begin();
     lcd.fillScreen(RGB(160, 182, 219));
+    // lcd.touchRead();
+    // lcd.touchStartCal();
+    // writeCalData();
+
+    lcd.led(100);
 }
 
 void Navigation::calibrateScreen()
 {
-
-
-
     lcd.touchRead();
     if (lcd.touchZ() || readCalData()) //calibration data in EEPROM?
     {
         writeCalData(); //write data to EEPROM
-    } else {
-        // lcd.touchStartCal();
+    }
+    else
+    {
+        lcd.touchStartCal();
         writeCalData();
     }
 }
@@ -49,6 +48,7 @@ void Navigation::checkButtonPresses()
             {
                 // Game starten
                 gameEngine.startGame();
+                checkHomeButton();
             }
 
             // Check if the button area from Option is touched
@@ -70,23 +70,73 @@ void Navigation::checkButtonPresses()
     }
 }
 
+void Navigation::checkOptionsButtons()
+{
+    int pressed = 1;
+    while (pressed)
+    {
+        lcd.touchRead();
+        if (lcd.touchZ())
+        {
+            // If this button is touched you'll be navigate back to the home screen.
+            if ((lcd.touchX() > 0 && lcd.touchX() < 50) && (lcd.touchY() > 0 && lcd.touchY() < 50))
+            {
+                // Get out of the while loop
+                pressed = 0;
+
+                // Go back to the start menu
+                drawStartscreenButtons();
+            }
+            // Check if the button area from Brightness is touched
+            else if ((lcd.touchX() > 40 && lcd.touchX() < 250) && (lcd.touchY() > 100 && lcd.touchY() < 130))
+            {
+                options.changeBrightness();
+                options.createOptionsButtons();
+            }
+            // Check if the button area from Volume is touched
+            else if ((lcd.touchX() > 40 && lcd.touchX() < 250) && (lcd.touchY() > 140 && lcd.touchY() < 170))
+            {
+                lcd.fillScreen(RGB(160, 182, 219));
+                lcd.drawText(10, 10, "OPTIONS", RGB(255, 0, 0), RGB(160, 182, 219), 1);
+                lcd.drawText(100, 20, "VOLUME", RGB(0, 0, 0), RGB(160, 182, 219), 2);
+                // functie volume
+                checkOptionsButton();
+            }
+            // Check if the button area from Reset Highscore is touched
+            else if ((lcd.touchX() > 40 && lcd.touchX() < 250) && (lcd.touchY() > 180 && lcd.touchY() < 210))
+            {
+                lcd.fillScreen(RGB(160, 182, 219));
+                lcd.drawText(10, 10, "OPTIONS", RGB(255, 0, 0), RGB(160, 182, 219), 1);
+                lcd.drawText(90, 20, "HIGHSCORE", RGB(0, 0, 0), RGB(160, 182, 219), 2);
+                // readHighscoreFile();
+
+                checkOptionsButton();
+            }
+        }
+    }
+}
+
 // Check if the home button (which is only in "Settings" and "Credits") is pressed
 void Navigation::checkHomeButton()
 {
     int back = 1;
     while (back)
     {
-        lcd.touchRead();
-        if (lcd.touchZ())
+        int back = 1;
+        while (back)
         {
-            // Check if area is touched for going back to home screen
-            if ((lcd.touchX() > 0 && lcd.touchX() < 50) && (lcd.touchY() > 0 && lcd.touchY() < 50))
+            lcd.touchRead();
+            if (lcd.touchZ())
             {
-                // Draw start screen
-                drawStartscreenButtons();
+                // Check if area is touched for going back to home screen
+                if ((lcd.touchX() > 0 && lcd.touchX() < 50) && (lcd.touchY() > 0 && lcd.touchY() < 50))
+                {
+                    // Draw start screen
+                    drawStartscreenButtons();
 
-                // Get out of the while loop
-                back = 0;
+                    // Get out of the while loop
+                    back = 0;
+                }
             }
         }
     }
@@ -201,9 +251,11 @@ void Navigation::drawStartscreenButtons()
 
 void Navigation::writeCalData(void)
 {
+    // create variables
     uint16_t i, addr = 0;
     uint8_t *ptr;
 
+    // Write calibration data to EEPROM
     EEPROM.write(addr++, 0xAA);
 
     ptr = (uint8_t *)&lcd.tp_matrix;
@@ -217,10 +269,12 @@ void Navigation::writeCalData(void)
 
 uint8_t Navigation::readCalData()
 {
+    // Creates variabeles
     uint16_t i, addr = 0;
     uint8_t *ptr;
     uint8_t c;
 
+    // Reads calibration data from EEPROM
     c = EEPROM.read(addr++);
     if (c == 0xAA)
     {
@@ -234,3 +288,4 @@ uint8_t Navigation::readCalData()
 
     return 1;
 }
+
