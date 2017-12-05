@@ -29,6 +29,7 @@ If you create a header file, put it here: */
 #include <SPI.h>
 #include <Arduino.h>
 #include "Functions.h"
+#include "CommunictaionIR.h"
 
 
 #include <MI0283QT9.h>
