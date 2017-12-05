@@ -7,6 +7,7 @@
 #include <avr/interrupt.h>
 #include <stdint.h>
 #include <SoftwareSerial.h>
+#include <avr/interrupt.h>
 
 #include "include.h"
 #include <Arduino.h>
@@ -44,18 +45,10 @@ Navigation navigation = Navigation();
 //         }
 
 //         bomb = !bomb;
+int buffer[210];
+volatile int bitToSend;
 
-//         c.sendReceive();
-//         delay(500);
-//     }
-
-//     int positions[58];
-
-//     c.receiveMap(positions);
-//     Serial.println("ontvangen");
-
-//     c.sendMap(positions);
-// }
+Navigation navigation = Navigation();
 
 int main()
 {
@@ -66,23 +59,25 @@ int main()
     navigation.drawStartscreenButtons();
        // Check if any buttons are pressed
     navigation.checkButtonPresses();
+
+    communicationIR *commu = new communicationIR(36);
+
+    while (1)
+        ;
+
     return 0;
 }
 
-//variable for counterTimer2
-// volatile uint32_t counterTimer2 = 0;
-//interupt functie
-//ISR(TIMER2_COMPA_vect)
-//{
-//     counterTimer2++;
+// variable for counterTimer2
+volatile uint32_t counterTimer2 = 0;
+// interupt functie
+ISR(TIMER2_COMPA_vect)
+{
+    counterTimer2++;
 
-//     if (counterTimer2 == 1000) //Ten times per sec.
-//     {
-//         c.receiveLocationPlayer2();
-//         c.sendLocationPlayer1();
-
-//         Serial.println("interrupt: " + String(c.xPlayer1));
-//         PORTB ^= (1 << PB5);
-//         counterTimer2 = 0;
-//     }
-//}
+    if (counterTimer2 == 1000) //Ten times per sec.
+    {
+        PORTB ^= (1 << PB5);
+        counterTimer2 = 0;
+    }
+}
