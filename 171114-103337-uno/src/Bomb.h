@@ -6,8 +6,8 @@
 class Bomb
 {
  public:
- Bomb(int x, int y);
  Bomb();
+ Bomb(int x, int y);
 };
 
 #endif

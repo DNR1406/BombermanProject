@@ -24,13 +24,13 @@ void Navigation::screenInit()
 void Navigation::calibrateScreen()
 {
     lcd.touchRead();
+    // lcd.touchStartCal();
     if (lcd.touchZ() || readCalData()) //calibration data in EEPROM?
     {
         writeCalData(); //write data to EEPROM
     }
     else
     {
-        // lcd.touchStartCal();
         writeCalData();
     }
 }
@@ -196,9 +196,6 @@ void Navigation::drawStartscreenButtons()
     lcd.fillRoundRect(95, 180, 120, 30, 5, RGB(0, 100, 100));
     lcd.drawRoundRect(95, 180, 120, 30, 5, RGB(0, 0, 0));
     lcd.drawText(100, 187, "CREDITS", RGB(255, 0, 0), RGB(0, 100, 100), 2);
-
-    // Check if any buttons are pressed
-    checkButtonPresses();
 }
 
 void Navigation::writeCalData(void)

@@ -62,6 +62,8 @@ int main()
     navigation.screenInit();
     navigation.calibrateScreen();
     navigation.drawStartscreenButtons();
+       // Check if any buttons are pressed
+    navigation.checkButtonPresses();
     return 0;
 }
 
