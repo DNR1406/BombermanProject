@@ -11,7 +11,8 @@ Map::Map()
 void Map::drawGrid()
 {
     // Delete menu with overwriting the background
-    lcd.fillScreen(RGB(160, 182, 219));
+    lcd.fillRect(0, 0, 83, 240, RGB(160, 182, 219));
+    lcd.fillRect(86, 2, 234, 237, RGB(30, 107, 7));
 
     lcd.drawText(5, 5, "Home", RGB(255, 0, 0), RGB(160, 182, 219), 1);
 
@@ -20,8 +21,7 @@ void Map::drawGrid()
 
     // Three left over pixel rows in the down side of the grid
     lcd.fillRect(0, 236, 320, 4, RGB(0, 0, 0));
-    lcd.fillRect(83,0,3,240,RGB(0,0,0));
-
+    lcd.fillRect(83, 0, 3, 240, RGB(0, 0, 0));
 
     // The next block of code is about drawing the squares in the grid.
     // The squares should be static
@@ -50,18 +50,24 @@ void Map::drawBarrels(int x, int y)
     x = 26 * x + 86;
     y = 26 * y + 2;
 
-    lcd.fillRect(x, y, 26, 26, RGB(255, 255, 0));
+    lcd.fillRect(x, y, 26, 26, RGB(115, 115, 115));
     // lcd.fillRect(x, y, 26, 26, RGB(rand() % 255, rand() % 255, rand() % 255));
 }
 
 void Map::declareBarrels(int amount, int *positions)
 {
+    positions[amount] = {}; // reset
+    if (amount > 55)
+    {
+        amount = 55;
+    }
+
     int barrelNumber = 0;
     for (int y = 0; y < 9; y++)
     {
         for (int x = 0; x < 9; x++)
         {
-            if (!((x % 2 && y % 2) || (x + y <= 1) || (x + y >= 15)))
+            if (!((x % 2 && y % 2) || (x + y <= 2) || (x + y >= 14)))
             {
                 this->barrels[barrelNumber].x = x;
                 this->barrels[barrelNumber].y = y;
@@ -70,7 +76,6 @@ void Map::declareBarrels(int amount, int *positions)
         }
     }
 
-    amount += 2;
     srand(time(NULL));
     barrel barrels[amount];
 
@@ -84,7 +89,7 @@ void Map::declareBarrels(int amount, int *positions)
         int ry = rand() % 9;
 
         // These placements are already made on the grid, they're solid, and can't be overwrited
-        while ((rx % 2 && ry % 2) || (rx + ry <= 1) || (rx + ry >= 15))
+        while ((rx % 2 && ry % 2) || (rx + ry <= 2) || (rx + ry >= 14))
         {
             rx = rand() % 9;
             ry = rand() % 9;

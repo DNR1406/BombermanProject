@@ -14,6 +14,7 @@
 //Instancis voor de nunchuk en het beelscherm
 // Screen screen = Screen();
 Navigation navigation = Navigation();
+// ArduinoNunchuk nunchuk = ArduinoNunchuk();
 
 // void testCommunication()
 // {
@@ -59,6 +60,7 @@ Navigation navigation = Navigation();
 int main()
 {
     init();
+    Serial.begin(9600);
     navigation.screenInit();
     navigation.calibrateScreen();
     navigation.drawStartscreenButtons();

@@ -14,12 +14,12 @@ public:
   void incrementScore();
   void addPlayer();
   void checkPlayerActions();
-  void GameEngine::calibrateScreen();
 
 
 private:
   int score;
   MI0283QT9 lcd;
+  ArduinoNunchuk* nunchuk;
 };
 
 #endif

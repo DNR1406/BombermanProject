@@ -48,8 +48,8 @@ void Navigation::checkButtonPresses()
             {
                 // Game starten
                 gameEngine.startGame();
-                lcd.fillRect(0,0,50,50,RGB(0,0,255));
-                checkHomeButton();
+                // lcd.fillRect(0,0,50,50,RGB(0,0,255));
+                // checkHomeButton();
             }
 
             // Check if the button area from Option is touched
@@ -63,7 +63,7 @@ void Navigation::checkButtonPresses()
             // Check if the button area from Credits is touched
             else if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 180 && lcd.touchY() < 210))
             {
-                // Open credits and open checkHomeButton
+                // Open credits
                 showCredits();
             }
         }
