@@ -20,8 +20,7 @@ void Map::drawGrid()
 
     // Three left over pixel rows in the down side of the grid
     lcd.fillRect(0, 236, 320, 4, RGB(0, 0, 0));
-    lcd.fillRect(83,0,3,240,RGB(0,0,0));
-
+    lcd.fillRect(83, 0, 3, 240, RGB(0, 0, 0));
 
     // The next block of code is about drawing the squares in the grid.
     // The squares should be static
@@ -98,6 +97,7 @@ void Map::declareBarrels(int amount, int *positions)
                 if (this->barrels[j].barrel) //Als je nog geen barrel hebt.
                 {
                     i--;
+                    lcd.drawText("%d",i);
                 }
                 else
                 {

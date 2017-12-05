@@ -24,15 +24,16 @@ void Navigation::screenInit()
 void Navigation::calibrateScreen()
 {
     lcd.touchRead();
-    if (lcd.touchZ() || readCalData()) //calibration data in EEPROM?
-    {
-        writeCalData(); //write data to EEPROM
-    }
-    else
-    {
-        // lcd.touchStartCal();
-        writeCalData();
-    }
+    lcd.touchStartCal();
+    // if (lcd.touchZ() || readCalData()) //calibration data in EEPROM?
+    // {
+    //     writeCalData(); //write data to EEPROM
+    // }
+    // else
+    // {
+    //     // lcd.touchStartCal();
+    //     writeCalData();
+    // }
 }
 
 void Navigation::checkButtonPresses()
@@ -48,7 +49,7 @@ void Navigation::checkButtonPresses()
             {
                 // Game starten
                 gameEngine.startGame();
-                lcd.fillRect(0,0,50,50,RGB(0,0,255));
+                // lcd.fillRect(0,0,50,50,RGB(0,0,255));
                 checkHomeButton();
             }
 

@@ -16,7 +16,7 @@ void GameEngine::startGame()
     int positions[59] = {};
     // draws grid on screen
     grid.drawGrid();
-    // grid.declareBarrels(59, positions);
+    grid.declareBarrels(40, *positions);
     // int barrels[58];
 
     // c.receiveMap(barrels);

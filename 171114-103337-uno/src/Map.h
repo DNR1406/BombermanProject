@@ -4,7 +4,7 @@
 
 
 typedef struct barrel {
-    int x,y, barrel = 0;
+    int x,y, barrel;
 } barrel;
 
 
@@ -18,7 +18,6 @@ public:
     void drawBarrels(int x, int y);
     void declareBarrels(int amount, int *positions);
     void getBarrels(int barrels[58]);
- 
 
    
   private:
