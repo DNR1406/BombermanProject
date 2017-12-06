@@ -8,10 +8,108 @@ communicationIR::communicationIR(int frequenty)
 
 void communicationIR::fillBuffer(int *buffer, int x, int y, bool bomb)
 {
-    int p = 1;
-    for(int i = 0; i < 228; i ++) {
-        buffer[i] = p;
-        p = !p;
+    int X = 7;
+    int Y = 4;
+    bool bomB = 1;
+
+    int bufferCounter = 0;
+
+    //startbit
+    for (int i = 0; i < 24; i++)
+    {
+        buffer[bufferCounter] = 1;
+        bufferCounter++;
+     
+    }
+
+    //interval startbit
+    for (int i = 0; i < 6; i++)
+    {
+        buffer[bufferCounter] = 0;
+        bufferCounter++;
+       
+    }
+//fill X nibble in buffer
+    for (int i = 3; i >= 0; i--)
+    {
+        if (X >> i)
+        {
+            for (int i = 0; i < 12; i++)
+            {
+                buffer[bufferCounter] = 1;
+                bufferCounter++;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                buffer[bufferCounter] = 1;
+                bufferCounter++;
+            }
+        }
+        for (int i = 0; i < 6; i++)
+        {
+            buffer[bufferCounter] = 0;
+            bufferCounter++;
+        }
+      
+    }
+    //fill y nibble in buffer
+    for (int i = 3; i >= 0; i--)
+    {
+        if (Y >> i)
+        {
+            for (int i = 0; i < 12; i++)
+            {
+                buffer[bufferCounter] = 1;
+                bufferCounter++;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                buffer[bufferCounter] = 1;
+                bufferCounter++;
+            }
+        }
+        for (int i = 0; i < 6; i++)
+        {
+            buffer[bufferCounter] = 0;
+            bufferCounter++;
+        }
+        
+    }
+    //Fill bomb bit in buffer
+    for (int i = 1; i >= 0; i--)
+    {
+        if (bomB >> i)
+        {
+            for (int i = 0; i < 12; i++)
+            {
+                buffer[bufferCounter] = 1;
+                bufferCounter++;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                buffer[bufferCounter] = 1;
+                bufferCounter++;
+            }
+        }
+        for (int i = 0; i < 6; i++)
+        {
+            buffer[bufferCounter] = 0;
+            bufferCounter++;
+        }
+        
+    }
+    for (int i = 0; i < 218; i++)
+    {
+        Serial.println(buffer[i]);
     }
 }
 
