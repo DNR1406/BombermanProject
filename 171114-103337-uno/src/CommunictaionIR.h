@@ -7,12 +7,7 @@ class communicationIR
 {
   public:
     communicationIR(int frequenty);
-    int send();
-
-    int buffer[228];
-    int bitToSend;
-    int amountOfBits;
-
+    void fillBuffer(int *buffer, int x, int y, bool bomb);
   private:
     void startTimers();
 };

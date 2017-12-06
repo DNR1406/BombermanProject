@@ -1,29 +1,18 @@
 #include "include.h"
-#include <AVR/interrupt.h">
+#include <avr/interrupt.h>
 
 communicationIR::communicationIR(int frequenty)
 {
     this->startTimers();
-    this->buffer = {1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-    1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-    1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-    1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-    1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-    1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-    1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-    1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-    1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-    1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-    1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-    1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-    1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-    1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-    1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-    1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-    1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-    1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-    1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-    1, 0}
+}
+
+void communicationIR::fillBuffer(int *buffer, int x, int y, bool bomb)
+{
+    int p = 1;
+    for(int i = 0; i < 228; i ++) {
+        buffer[i] = p;
+        p = !p;
+    }
 }
 
 void communicationIR::startTimers()
@@ -43,4 +32,3 @@ void communicationIR::startTimers()
     //enable interrupts!
     sei();
 }
-

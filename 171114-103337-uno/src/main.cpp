@@ -7,12 +7,11 @@
 #include <avr/interrupt.h>
 #include <stdint.h>
 #include <SoftwareSerial.h>
-#include <avr/interrupt.h>
 
 #include "include.h"
 #include <Arduino.h>
 
-int buffer[210];
+int buffer[228];
 volatile int bitToSend;
 
 Navigation navigation = Navigation();
@@ -22,10 +21,18 @@ int main()
     init();
     Serial.begin(9600);
 
-    communicationIR *commu = new communicationIR(36);
+    DDRB |= (1 << PB5);
+
+    navigation.screenInit();
+    navigation.calibrateScreen();
+    navigation.drawStartscreenButtons();
+
+    // communicationIR *commu = new communicationIR(36);
+    // commu->fillBuffer(buffer, 1, 1, true);
 
     while (1)
-        ;
+    {
+    }
 
     return 0;
 }
@@ -35,11 +42,20 @@ volatile uint32_t counterTimer2 = 0;
 // interupt functie
 ISR(TIMER2_COMPA_vect)
 {
-    counterTimer2++;
 
-    if (counterTimer2 == 1000) //Ten times per sec.
+    if (buffer[bitToSend])
     {
-        PORTB ^= (1 << PB5);
-        counterTimer2 = 0;
+        PORTB |= (1 << PB5);
+    }
+    else
+    {
+        PORTB &= ~(1 << PB5);
+    }
+
+    bitToSend++;
+
+    if (bitToSend == 228)
+    {
+        bitToSend = 0;
     }
 }
