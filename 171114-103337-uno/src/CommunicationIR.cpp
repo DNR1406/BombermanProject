@@ -1,4 +1,5 @@
 #include "include.h"
+<<<<<<< HEAD
 #include <AVR/interrupt.h>
 
 // communicationIR::communicationIR(int frequenty)
@@ -25,6 +26,23 @@
 //     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
 //     1, 0}
 // }
+=======
+#include <avr/interrupt.h>
+
+communicationIR::communicationIR(int frequenty)
+{
+    this->startTimers();
+}
+
+void communicationIR::fillBuffer(int *buffer, int x, int y, bool bomb)
+{
+    int p = 1;
+    for(int i = 0; i < 228; i ++) {
+        buffer[i] = p;
+        p = !p;
+    }
+}
+>>>>>>> 806108a83aa0bba294f249eae28081181f2b025b
 
 void communicationIR::startTimers()
 {
@@ -43,4 +61,3 @@ void communicationIR::startTimers()
     //enable interrupts!
     sei();
 }
-
