@@ -29,11 +29,9 @@ If you create a header file, put it here: */
 #include <SPI.h>
 #include <Arduino.h>
 #include "Functions.h"
-<<<<<<< HEAD
 #include "PlayerMovement.h"
-=======
 #include "CommunictaionIR.h"
->>>>>>> c85800cf15accb9b36b8c4489271d82f642dfb45
+
 
 
 #include <MI0283QT9.h>
