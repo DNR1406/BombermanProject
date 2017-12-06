@@ -1,12 +1,13 @@
 #include <Wire.h>
 #include <util/delay.h>
 
-#include "include.h"
+#include "ArduinoNunchuk.h"
+
+#define ADDRESS 0x52
 
 ArduinoNunchuk::ArduinoNunchuk() {
   
 }
-
 void ArduinoNunchuk::init()
 {
   //start wire liberay
