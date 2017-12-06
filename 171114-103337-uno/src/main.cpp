@@ -48,7 +48,6 @@ Navigation navigation = Navigation();
 int buffer[210];
 volatile int bitToSend;
 
-Navigation navigation = Navigation();
 
 int main()
 {
@@ -60,10 +59,10 @@ int main()
        // Check if any buttons are pressed
     navigation.checkButtonPresses();
 
-    communicationIR *commu = new communicationIR(36);
+    // communicationIR *commu = new communicationIR(36);
 
-    while (1)
-        ;
+    // while (1)
+    //     ;
 
     return 0;
 }
