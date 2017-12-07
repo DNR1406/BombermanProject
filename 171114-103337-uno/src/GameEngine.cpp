@@ -80,14 +80,14 @@ void GameEngine::checkPlayerActions()
         // If player is on 9th (8) row from x they can never move right
         if (player.x == 8)
         {
-            // player.rightMove = false;
+            player.rightMove = false;
         }
 
         // If player is on 2nd (1), 4th (3), 6th (5) or 8th (7) row from y, they can
         // Never move left or right
         if ((player.x % 2) && !(player.y % 2))
         {
-            // player.rightMove = false;
+            player.rightMove = false;
             player.leftMove = false;
         }
 
