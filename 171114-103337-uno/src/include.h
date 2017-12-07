@@ -31,7 +31,10 @@ If you create a header file, put it here: */
 #include "Functions.h"
 #include "PlayerMovement.h"
 #include "CommunictaionIR.h"
+<<<<<<< HEAD
 
+=======
+>>>>>>> 551e466fdb8bfd55b0a365740c9c86354b449ede
 
 
 #include <MI0283QT9.h>
