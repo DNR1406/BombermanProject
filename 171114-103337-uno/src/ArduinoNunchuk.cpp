@@ -1,8 +1,8 @@
 #include <Wire.h>
 #include <util/delay.h>
 
-#include "ArduinoNunchuk.h"
-
+//#include "ArduinoNunchuk.h"
+#include "include.h"
 #define ADDRESS 0x52
 
 ArduinoNunchuk::ArduinoNunchuk() {

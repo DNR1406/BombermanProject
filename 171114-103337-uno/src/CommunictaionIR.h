@@ -9,7 +9,8 @@ class communicationIR
     communicationIR(int frequenty);
     void fillBuffer(int *buffer, int x, int y, bool bomb);
   private:
-    void startTimers();
+    void startTimer2();
+    void startTimer1();
 };
 
 #endif

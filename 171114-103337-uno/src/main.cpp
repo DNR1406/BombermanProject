@@ -11,7 +11,7 @@
 #include "include.h"
 #include <Arduino.h>
 
-int buffer[228];
+int buffer[362];
 volatile int bitToSend;
 
 
@@ -19,31 +19,24 @@ int main()
 {
     init();
     Serial.begin(9600);
-    navigation.screenInit();
-    navigation.calibrateScreen();
-    navigation.drawStartscreenButtons();
+    // navigation.screenInit();
+    // navigation.calibrateScreen();
+    // navigation.drawStartscreenButtons();
        // Check if any buttons are pressed
-    navigation.checkButtonPresses();
+    // navigation.checkButtonPresses();
 
-<<<<<<< HEAD
-    // communicationIR *commu = new communicationIR(36);
-
-    // while (1)
-    //     ;
-=======
     DDRB |= (1 << PB5);
 
-    navigation.screenInit();
-    navigation.calibrateScreen();
-    navigation.drawStartscreenButtons();
+    // navigation.screenInit();
+    // navigation.calibrateScreen();
+    // navigation.drawStartscreenButtons();
 
-    // communicationIR *commu = new communicationIR(36);
-    // commu->fillBuffer(buffer, 1, 1, true);
+    communicationIR *commu = new communicationIR(36);
+    commu->fillBuffer(buffer, 1, 1, true);
 
     while (1)
     {
     }
->>>>>>> 806108a83aa0bba294f249eae28081181f2b025b
 
     return 0;
 }
@@ -53,20 +46,27 @@ volatile uint32_t counterTimer2 = 0;
 // interupt functie
 ISR(TIMER2_COMPA_vect)
 {
+    TCCR1A ^= _BV (COM1A0) ;
+    if (counterTimer2 == 1000)
+    {
 
-    if (buffer[bitToSend])
+    if (!(TCCR1A & _BV (COM1A0)) == 0 && buffer[bitToSend])
     {
         PORTB |= (1 << PB5);
     }
     else
     {
         PORTB &= ~(1 << PB5);
+        
     }
 
     bitToSend++;
 
-    if (bitToSend == 228)
+    if (bitToSend == 326)
     {
         bitToSend = 0;
     }
+    counterTimer2 = 0;
+    }
+    counterTimer2++;
 }
