@@ -233,3 +233,4 @@ uint8_t Navigation::readCalData()
 
     return 1;
 }
+

@@ -4,7 +4,7 @@
 Map grid = Map();
 Screen screen = Screen();
 Communication c = Communication(1, 1);
-PlayerMovement player = PlayerMovement(0,0);
+PlayerMovement player = PlayerMovement(0, 0);
 ArduinoNunchuk nunchuk = ArduinoNunchuk();
 
 GameEngine::GameEngine()
@@ -15,10 +15,10 @@ GameEngine::GameEngine()
 void GameEngine::startGame()
 {
     this->nunchuk = new ArduinoNunchuk();
-    int positions[59] = {};
+    barrel barrelPositions[55] = {};
     // draws grid on screen
     grid.drawGrid();
-    // grid.declareBarrels(55, positions);
+    grid.declareBarrels(30, barrelPositions);
 
     // int barrels[58];
 
@@ -80,14 +80,14 @@ void GameEngine::checkPlayerActions()
         // If player is on 9th (8) row from x they can never move right
         if (player.x == 8)
         {
-            player.rightMove = false;
+            // player.rightMove = false;
         }
 
         // If player is on 2nd (1), 4th (3), 6th (5) or 8th (7) row from y, they can
         // Never move left or right
-        if (!(player.x % 2) && (player.y % 2))
+        if ((player.x % 2) && !(player.y % 2))
         {
-            player.rightMove = false;
+            // player.rightMove = false;
             player.leftMove = false;
         }
 
@@ -102,7 +102,6 @@ void GameEngine::checkPlayerActions()
         {
             player.downMove = false;
         }
-
 
         // Check if state of nunchuk had changed
         nunchuk->update(); //Update nunchuk conditions
@@ -119,7 +118,7 @@ void GameEngine::checkPlayerActions()
             player.up();
         }
         //Move player downwards
-        else if (nunchuk->analogY < 100 && player.downMove) 
+        else if (nunchuk->analogY < 100 && player.downMove)
         {
             player.down();
         }

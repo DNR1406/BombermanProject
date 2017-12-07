@@ -15,11 +15,10 @@ public:
   void addPlayer();
   void checkPlayerActions();
 
-
 private:
   int score;
   MI0283QT9 lcd;
-  ArduinoNunchuk* nunchuk;
+  ArduinoNunchuk *nunchuk;
 };
 
 #endif

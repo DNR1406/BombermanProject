@@ -1,14 +1,16 @@
 #include "include.h"
 #include <time.h>
 #include <stdlib.h>
-#include <Arduino.h>
+#include <avr/io.h>
+#include "wiring_private.h"
+#include "pins_arduino.h"
 
 // Map constructor
 Map::Map()
 {
 }
 
-  void Map::drawGrid()
+void Map::drawGrid()
 {
     // Delete menu with overwriting the background
     lcd.fillRect(0, 0, 83, 240, RGB(160, 182, 219));
@@ -74,21 +76,21 @@ Map::Map()
 
 void Map::drawBarrels(int x, int y)
 {
-    x = 26 * x + 86;
-    y = 26 * y + 2;
+    x = 21 * x + 110;
+    y = 21 * y + 25;
 
-    lcd.fillRect(x, y, 26, 26, RGB(255, 255, 0));
-    // lcd.fillRect(x, y, 26, 26, RGB(rand() % 255, rand() % 255, rand() % 255));
+    lcd.fillRect(x, y, 21, 21, RGB(255, 0, 0));
+    // lcd.drawRect(x, y, 21, 21, RGB(20, 20, 20));
 }
 
-void Map::declareBarrels(int amount, int *positions)
+void Map::declareBarrels(int amount, barrel *barrelPositions)
 {
     int barrelNumber = 0;
     for (int y = 0; y < 9; y++)
     {
         for (int x = 0; x < 9; x++)
         {
-            if (!((x % 2 && y % 2) || (x + y <= 1) || (x + y >= 15)))
+            if (!((x % 2 && y % 2) || (x + y <= 2) || (x + y >= 14)))
             {
                 this->barrels[barrelNumber].x = x;
                 this->barrels[barrelNumber].y = y;
@@ -96,52 +98,41 @@ void Map::declareBarrels(int amount, int *positions)
             }
         }
     }
-
-    amount += 2;
-    srand(time(NULL));
-    barrel barrels[amount];
-
-    time_t t;
-
-    srand((unsigned)time(&t));
 
     for (int i = 0; i < amount; i++)
     {
         int rx = rand() % 9;
         int ry = rand() % 9;
 
-        // These placements are already made on the grid, they're solid, and can't be overwritten
+        // These placements are already made on the grid,
+        // they're solid, and can't declared to barrels
         while ((rx % 2 && ry % 2) || (rx + ry <= 2) || (rx + ry >= 14))
         {
             rx = rand() % 9;
             ry = rand() % 9;
         }
 
-        for (int j = 0; j < amount; j++)
+        for (int j = 0; j <= i; j++)
         {
-            if (this->barrels[j].x == rx && this->barrels[j].y == ry)
+            if (!this->barrels[j].barrel)
             {
-
-                if (this->barrels[j].barrel) //Als je nog geen barrel hebt.
-                {
-                    i--;
-                }
-                else
-                {
-                    this->barrels[j].barrel = 1;
-                    drawBarrels(rx, ry);
-                }
+                this->barrels[i] = {rx, ry, 1};
+                drawBarrels(rx, ry);
+            }
+            else if (this->barrels[j].x == rx && this->barrels[j].y == ry)
+            {
+                i--;
             }
         }
     }
 
     for (int i = 0; i < amount; i++)
     {
-        positions[i] = this->barrels[i].barrel;
+        barrelPositions[i] = this->barrels[i];
     }
 }
 
-void Map::getBarrels(int barrels[59])
+void Map::getBarrels(int barrels[55])
 {
     int barrelNumber = 0;
     for (int y = 0; y < 9; y++)
@@ -157,7 +148,7 @@ void Map::getBarrels(int barrels[59])
         }
     }
 
-    for (int i = 0; i < 59; i++)
+    for (int i = 0; i < 55; i++)
     {
         this->barrels[i].barrel = barrels[i];
 
@@ -176,3 +167,23 @@ void Map::getImmovableObjects(wall *walls)
         walls[i] = this->walls[i];
     }
 }
+
+void Map::init_adc_single_sample()
+{
+	ADMUX |= (1<<MUX0);		// input analog A1 Arduino
+	ADMUX |= (1<<REFS0);	// 5 volt
+	ADCSRA = (1<<ADPS2) | (1<<ADPS1) | (1<<ADPS0); // clock/128
+	ADCSRA |= (1<<ADEN);	// ADC enable
+}
+
+// Single sample of pin A0
+int Map::single_sample()
+{
+	uint16_t result;
+	ADCSRA |= (1<<ADSC);		// Start conversion
+	while(ADCSRA & (1<<ADSC)) ;	// Wait
+	result = ADC;
+	return result;
+}
+
+

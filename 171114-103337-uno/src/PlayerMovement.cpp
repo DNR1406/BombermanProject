@@ -33,12 +33,8 @@ void PlayerMovement::draw()
 //PLayer moves to the left
 void PlayerMovement::left()
 {
-    //oude stip weg
     clear();
-
     this->x--;
-
-    //nieuwe stip kleuren
     draw();
 }
 
@@ -46,9 +42,7 @@ void PlayerMovement::left()
 void PlayerMovement::right()
 {
     clear();
-
     this->x++;
-
     draw();
 }
 
@@ -56,9 +50,7 @@ void PlayerMovement::right()
 void PlayerMovement::down()
 {
     clear();
-
     this->y++;
-
     draw();
 }
 
@@ -66,8 +58,6 @@ void PlayerMovement::down()
 void PlayerMovement::up()
 {
     clear();
-
-    this->y --;
-
+    this->y--;
     draw();
 }
