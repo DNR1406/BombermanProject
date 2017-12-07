@@ -1,6 +1,4 @@
-
 #include "include.h"
-#include "Arduino.h"
 #include <avr/io.h>
 #include <EEPROM.h>
 #include <util/delay.h>
@@ -48,10 +46,10 @@ void Options::changeBrightness()
 
     int sensorWaarde;
     int counter = 1;
-    DDRC = 0b11111110;
+    init_adc_single_sample();
     while (counter)
     {
-        int val = analogRead(DDC0);
+        int val = single_sample();
         val = map(val, 0, 1023, 0, 100);
         if (val < 10)
         {
@@ -66,3 +64,23 @@ void Options::changeBrightness()
         }
     }
 }
+
+// Create single sample for A0 and enables ADC
+void Options::init_adc_single_sample()
+{
+	ADMUX = 0;		// input analog A0 Arduino
+	ADMUX |= (1<<REFS0);	// 5 volt
+	ADCSRA = (1<<ADPS2) | (1<<ADPS1) | (1<<ADPS0); // clock/128
+	ADCSRA |= (1<<ADEN);	// ADC enable
+}
+
+// Single sample of pin A0
+int Options::single_sample()
+{
+	uint16_t result;
+	ADCSRA |= (1<<ADSC);		// Start conversion
+	while(ADCSRA & (1<<ADSC)) ;	// Wait
+	result = ADC;
+	return result;
+}
+

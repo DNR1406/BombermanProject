@@ -18,9 +18,9 @@ void GameEngine::startGame()
     int positions[59] = {};
     // draws grid on screen
     grid.drawGrid();
-    grid.declareBarrels(55, positions);
+    grid.declareBarrels(30, positions);
 
-    // int barrels[58];
+    int barrels[55];
 
     // c.receiveMap(barrels);
     // grid.getBarrels(barrels);
@@ -52,24 +52,17 @@ void GameEngine::checkPlayerActions()
     nunchuk->init();
     // lcd.drawText(100, 20, "WERKEN", RGB(0, 0, 0), RGB(160, 182, 219), 1);
     int lifes = 3;
-    wall *walls = (wall *)(malloc(sizeof(wall[16])));
-    grid.getImmovableObjects(walls);
+    // wall *walls = (wall *)(malloc(sizeof(wall[16])));
+    // grid.getImmovableObjects(walls);
     // for (int i = 0; i < 16; i++)
     // {
     //     Serial.print(walls[i].x);
     //     Serial.print(" ");
     //     Serial.println(walls[i].y);
     // }
-    int i = 0;
-
-
-
     // player.x != walls[i].x && player.y != walls[i].y
-    while ((player.x != walls[i].x -5 && player.y != walls[i].y -5))
+    while (lifes)
     {
-
-       
-
         // Check if state of nunchuk had changed
         nunchuk->update(); //Update nunchuk conditions
 
@@ -82,7 +75,6 @@ void GameEngine::checkPlayerActions()
         // Move player upwards
         else if (nunchuk->analogY > 155)
         {   
-        
             player.up();
         }
         //Move player downwards
@@ -100,9 +92,5 @@ void GameEngine::checkPlayerActions()
         {
             player.left();
         }
-        i++;
-        if (i == 16) {
-            i = 0;
-        } 
     }
 }

@@ -1,7 +1,9 @@
 #include "include.h"
 #include <time.h>
 #include <stdlib.h>
-#include <Arduino.h>
+#include <avr/io.h>
+#include "wiring_private.h"
+#include "pins_arduino.h"
 
 // Map constructor
 Map::Map()
@@ -77,15 +79,16 @@ void Map::drawGrid()
 
 void Map::drawBarrels(int x, int y)
 {
-    x = 21 * x + 86;
-    y = 21 * y + 2;
+    x = 21 * x + 110;
+    y = 21 * y + 25;
 
-    // lcd.fillRect(x, y, 21, 21, RGB(115, 115, 115));
+    lcd.fillRect(x, y, 21, 21, RGB(115, 115, 115));
     // lcd.fillRect(x, y, 26, 26, RGB(rand() % 255, rand() % 255, rand() % 255));
 }
 
 void Map::declareBarrels(int amount, int *positions)
 {
+    init_adc_single_sample();
     positions[amount] = {}; // reset
     if (amount > 55)
     {
@@ -106,13 +109,10 @@ void Map::declareBarrels(int amount, int *positions)
         }
     }
 
-    srand(time(NULL));
+    
     barrel barrels[amount];
 
-    time_t t;
-
-    srand((unsigned)time(&t));
-
+    randomSeed(single_sample());
     for (int i = 0; i < amount; i++)
     {
         int rx = rand() % 9;
@@ -184,3 +184,23 @@ void Map::getImmovableObjects(wall *walls)
         walls[i] = this->walls[i];
     }
 }
+
+void Map::init_adc_single_sample()
+{
+	ADMUX |= (1<<MUX0);		// input analog A1 Arduino
+	ADMUX |= (1<<REFS0);	// 5 volt
+	ADCSRA = (1<<ADPS2) | (1<<ADPS1) | (1<<ADPS0); // clock/128
+	ADCSRA |= (1<<ADEN);	// ADC enable
+}
+
+// Single sample of pin A0
+int Map::single_sample()
+{
+	uint16_t result;
+	ADCSRA |= (1<<ADSC);		// Start conversion
+	while(ADCSRA & (1<<ADSC)) ;	// Wait
+	result = ADC;
+	return result;
+}
+
+
