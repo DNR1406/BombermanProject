@@ -4,7 +4,7 @@
 Map grid = Map();
 Screen screen = Screen();
 Communication c = Communication(1, 1);
-PlayerMovement player = PlayerMovement(121, 36, 0, 0, 205);
+PlayerMovement player = PlayerMovement(121, 36);
 ArduinoNunchuk nunchuk = ArduinoNunchuk();
 
 GameEngine::GameEngine()
@@ -61,9 +61,15 @@ void GameEngine::checkPlayerActions()
     //     Serial.println(walls[i].y);
     // }
     int i = 0;
+
+
+
     // player.x != walls[i].x && player.y != walls[i].y
     while ((player.x != walls[i].x -5 && player.y != walls[i].y -5))
     {
+
+       
+
         // Check if state of nunchuk had changed
         nunchuk->update(); //Update nunchuk conditions
 
@@ -75,7 +81,8 @@ void GameEngine::checkPlayerActions()
 
         // Move player upwards
         else if (nunchuk->analogY > 155)
-        {
+        {   
+        
             player.up();
         }
         //Move player downwards

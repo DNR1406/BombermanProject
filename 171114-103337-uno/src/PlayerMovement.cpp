@@ -2,15 +2,15 @@
 #include "include.h"
 // Constructor
 
-PlayerMovement::PlayerMovement(int x, int y, int r, int g, int b)
+PlayerMovement::PlayerMovement(int x, int y)
 {
     //begin waardes, secs, this->x, this->y
     this->x = x;
     this->y = y;
-    //rgb van kleur
-    this->r = r;
-    this->g = g;
-    this->b = b;
+    this->leftMove = false;
+    this->rightMove = true;
+    this->upMove = false;
+    this->downMove = true;
 }
 
 // Clears current player location
@@ -24,19 +24,19 @@ void PlayerMovement::clear()
 //Draws nethis->xt player location
 void PlayerMovement::draw()
 {
-    lcd.fillCircle(this->x, this->y, 7, RGB(r, g, b));
+    lcd.fillCircle(this->x, this->y, 7, RGB(0,0,255));
 }
 
 //PLayer moves to the left
 void PlayerMovement::left()
 {
     //oude stip weg
- clear();
-  //x tien vanaf
-  if(this->x > 100)
-    this->x -= 21;
-  //nieuwe stip kleuren
-  draw();
+    clear();
+    //x tien vanaf
+    if (this->x > 100)
+        this->x -= 21;
+    //nieuwe stip kleuren
+    draw();
 }
 
 //zelfde functie als left, alleen voor right

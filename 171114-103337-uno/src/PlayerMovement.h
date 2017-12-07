@@ -5,7 +5,7 @@
 
 class PlayerMovement {
 public:
-    PlayerMovement(int xstartloc, int ystartloc, int r, int g, int b);
+    PlayerMovement(int x, int y);
     void left();
     void down();
     void up();
@@ -16,9 +16,10 @@ public:
  
     int x;
     int y;
-    int r;
-    int g;
-    int b;
+    bool leftMove;
+    bool rightMove;
+    bool upMove;
+    bool downMove;
     MI0283QT9 lcd;
 };
 
