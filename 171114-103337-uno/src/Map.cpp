@@ -10,7 +10,7 @@ Map::Map()
 {
 }
 
-void Map::drawGrid()
+  void Map::drawGrid()
 {
     // Delete menu with overwriting the background
     lcd.fillRect(0, 0, 83, 240, RGB(160, 182, 219));
@@ -37,9 +37,6 @@ void Map::drawGrid()
             y1 += 42;
             this->walls[immovableObject].x = x1;
             this->walls[immovableObject].y = y1;
-            // Serial.print(this->walls[immovableObject].x);
-            // Serial.print(" ");
-            // Serial.println(this->walls[immovableObject].y);
             immovableObject++;
         }
         x1 += 42;
@@ -79,10 +76,10 @@ void Map::drawGrid()
 
 void Map::drawBarrels(int x, int y)
 {
-    x = 21 * x + 110;
-    y = 21 * y + 25;
+    x = 26 * x + 86;
+    y = 26 * y + 2;
 
-    lcd.fillRect(x, y, 21, 21, RGB(115, 115, 115));
+    lcd.fillRect(x, y, 26, 26, RGB(255, 255, 0));
     // lcd.fillRect(x, y, 26, 26, RGB(rand() % 255, rand() % 255, rand() % 255));
 }
 
@@ -100,7 +97,7 @@ void Map::declareBarrels(int amount, int *positions)
     {
         for (int x = 0; x < 9; x++)
         {
-            if (!((x % 2 && y % 2) || (x + y <= 2) || (x + y >= 14)))
+            if (!((x % 2 && y % 2) || (x + y <= 1) || (x + y >= 15)))
             {
                 this->barrels[barrelNumber].x = x;
                 this->barrels[barrelNumber].y = y;
@@ -109,7 +106,8 @@ void Map::declareBarrels(int amount, int *positions)
         }
     }
 
-    
+    amount += 2;
+    srand(time(NULL));
     barrel barrels[amount];
 
     randomSeed(single_sample());

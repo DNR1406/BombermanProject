@@ -1,6 +1,8 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <stdint.h>
+// #include <SoftwareSerial.h>
+
 #include "include.h"
 
 int buffer[362];
@@ -18,15 +20,13 @@ int main()
     navigation.drawStartscreenButtons();
        // Check if any buttons are pressed
     navigation.checkButtonPresses();
-    
-
-    
 
     DDRB |= (1 << PB5);
 
 
     // communicationIR *commu = new communicationIR(36);
     // commu->fillBuffer(buffer, 1, 1, true);
+
    
     while (1)
     {

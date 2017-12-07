@@ -16,15 +16,18 @@ PlayerMovement::PlayerMovement(int x, int y)
 // Clears current player location
 void PlayerMovement::clear()
 {
-
-    lcd.drawCircle(this->x, this->y, 7, RGB(30, 107, 7));
-    lcd.fillCircle(this->x, this->y, 7, RGB(30, 107, 7));
+    int x = 120 + (this->x * 21);
+    int y = 35 + (this->y * 21);
+    lcd.drawCircle(x, y, 7, RGB(30, 107, 7));
+    lcd.fillCircle(x, y, 7, RGB(30, 107, 7));
 }
 
 //Draws nethis->xt player location
 void PlayerMovement::draw()
 {
-    lcd.fillCircle(this->x, this->y, 7, RGB(0,0,255));
+    int x = 120 + (this->x * 21);
+    int y = 35 + (this->y * 21);
+    lcd.fillCircle(x, y, 7, RGB(0, 0, 255));
 }
 
 //PLayer moves to the left
@@ -32,9 +35,9 @@ void PlayerMovement::left()
 {
     //oude stip weg
     clear();
-    //x tien vanaf
-    if (this->x > 100)
-        this->x -= 21;
+
+    this->x--;
+
     //nieuwe stip kleuren
     draw();
 }
@@ -43,8 +46,9 @@ void PlayerMovement::left()
 void PlayerMovement::right()
 {
     clear();
-    if (this->x < 306)
-        this->x += 21;
+
+    this->x++;
+
     draw();
 }
 
@@ -52,8 +56,9 @@ void PlayerMovement::right()
 void PlayerMovement::down()
 {
     clear();
-    if (this->y > 10)
-        this->y += 21;
+
+    this->y++;
+
     draw();
 }
 
@@ -61,7 +66,8 @@ void PlayerMovement::down()
 void PlayerMovement::up()
 {
     clear();
-    if (this->y < 228)
-        this->y -= 21;
+
+    this->y --;
+
     draw();
 }

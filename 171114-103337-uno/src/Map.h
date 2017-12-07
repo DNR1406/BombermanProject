@@ -2,9 +2,9 @@
 #include <stdint.h>
 #include "include.h"
 
-typedef struct barrel
-{
-    int x, y, barrel = 0;
+
+typedef struct barrel {
+    int x,y, barrel;
 } barrel;
 
 typedef struct wall

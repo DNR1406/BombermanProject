@@ -4,7 +4,7 @@
 /*---------------------------------------------------------------------------
 If you use a define, put it here: */
 #define DEBUG 1
-    /*
+/*
     Gebruik debug variable zo:
     #ifdef DEBUG
     #if (DEBUG == 1)
@@ -13,8 +13,7 @@ If you use a define, put it here: */
     */
 
 #define ADDRESS 0x52
-#define SD_CS   8
-
+#define SD_CS 8
 
 /*---------------------------------------------------------------------------
 If you create a header file, put it here: */
@@ -32,20 +31,14 @@ If you create a header file, put it here: */
 #include "PlayerMovement.h"
 #include "CommunictaionIR.h"
 
-
 #include <MI0283QT9.h>
 #include "Navigation.h"
 
-
-
 /*---------------------------------------------------------------------------
 If you use a struct, put it here: */
-typedef struct location {
-   int x, y;
+typedef struct location
+{
+    int x, y;
 } location;
-
-
-
-
 
 #endif
