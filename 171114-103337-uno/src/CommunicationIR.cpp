@@ -1,4 +1,32 @@
 #include "include.h"
+<<<<<<< HEAD
+#include <AVR/interrupt.h>
+
+// communicationIR::communicationIR(int frequenty)
+// {
+//     this->startTimers();
+//     this->buffer = {1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
+//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
+//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
+//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
+//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
+//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
+//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
+//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
+//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
+//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
+//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
+//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
+//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
+//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
+//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
+//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
+//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
+//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
+//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
+//     1, 0}
+// }
+=======
 #include <avr/interrupt.h>
 
 communicationIR::communicationIR(int frequenty)
@@ -14,6 +42,7 @@ void communicationIR::fillBuffer(int *buffer, int x, int y, bool bomb)
         p = !p;
     }
 }
+>>>>>>> 806108a83aa0bba294f249eae28081181f2b025b
 
 void communicationIR::startTimers()
 {

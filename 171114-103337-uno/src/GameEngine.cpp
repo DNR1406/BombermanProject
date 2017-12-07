@@ -4,7 +4,7 @@
 Map grid = Map();
 Screen screen = Screen();
 Communication c = Communication(1, 1);
-PlayerMovement player = PlayerMovement(98, 16, 0, 0, 205);
+PlayerMovement player = PlayerMovement(121, 36, 0, 0, 205);
 ArduinoNunchuk nunchuk = ArduinoNunchuk();
 
 GameEngine::GameEngine()
@@ -51,7 +51,7 @@ void GameEngine::checkPlayerActions()
 {
     nunchuk->init();
     // lcd.drawText(100, 20, "WERKEN", RGB(0, 0, 0), RGB(160, 182, 219), 1);
-    int lifes = 1;
+    int lifes = 3;
     while (lifes)
     {
         // Check if state of nunchuk had changed
@@ -60,10 +60,10 @@ void GameEngine::checkPlayerActions()
         //Place bomb if zButton has been pressed
         if (nunchuk->zButton)
         {
-           lcd.fillCircle(player.x, player.y, 5, RGB(0, 0, 0));
+        //    lcd.fillCircle(player.x, player.y, 5, RGB(0, 0, 0));
         }
         // Move player upwards
-        if (nunchuk->analogY > 155)
+        else if (nunchuk->analogY > 155)
         {
             player.up();
         }
@@ -73,7 +73,7 @@ void GameEngine::checkPlayerActions()
             player.down();
         }
         //Move player to the right
-        if (nunchuk->analogX > 155)
+        else if (nunchuk->analogX > 155)
         {
             player.right();
         }

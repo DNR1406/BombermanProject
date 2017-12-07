@@ -14,7 +14,6 @@
 int buffer[228];
 volatile int bitToSend;
 
-Navigation navigation = Navigation();
 
 int main()
 {
@@ -26,6 +25,12 @@ int main()
        // Check if any buttons are pressed
     navigation.checkButtonPresses();
 
+<<<<<<< HEAD
+    // communicationIR *commu = new communicationIR(36);
+
+    // while (1)
+    //     ;
+=======
     DDRB |= (1 << PB5);
 
     navigation.screenInit();
@@ -38,6 +43,7 @@ int main()
     while (1)
     {
     }
+>>>>>>> 806108a83aa0bba294f249eae28081181f2b025b
 
     return 0;
 }
