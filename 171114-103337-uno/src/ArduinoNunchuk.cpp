@@ -60,5 +60,5 @@ void ArduinoNunchuk::_sendByte(char data, char location)
 
   Wire.endTransmission();
 
-  _delay_ms(10);
+  _delay_ms(100);
 }

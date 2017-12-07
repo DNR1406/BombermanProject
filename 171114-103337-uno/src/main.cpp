@@ -6,24 +6,24 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <stdint.h>
-#include <SoftwareSerial.h>
+// #include <SoftwareSerial.h>
 
 #include "include.h"
 #include <Arduino.h>
 
 int buffer[362];
 volatile int bitToSend;
+Navigation navigation = Navigation();
 
 
 int main()
 {
     init();
-    Serial.begin(9600);
-    // navigation.screenInit();
-    // navigation.calibrateScreen();
-    // navigation.drawStartscreenButtons();
+    navigation.screenInit();
+    navigation.calibrateScreen();
+    navigation.drawStartscreenButtons();
        // Check if any buttons are pressed
-    // navigation.checkButtonPresses();
+    navigation.checkButtonPresses();
 
     DDRB |= (1 << PB5);
 
@@ -31,8 +31,8 @@ int main()
     // navigation.calibrateScreen();
     // navigation.drawStartscreenButtons();
 
-    communicationIR *commu = new communicationIR(36);
-    commu->fillBuffer(buffer, 1, 1, true);
+    // communicationIR *commu = new communicationIR(36);
+    // commu->fillBuffer(buffer, 1, 1, true);
 
     while (1)
     {

@@ -8,39 +8,67 @@ Map::Map()
 {
 }
 
-void Map::drawGrid()
+  void Map::drawGrid()
 {
     // Delete menu with overwriting the background
-    lcd.fillScreen(RGB(160, 182, 219));
+    lcd.fillRect(0, 0, 83, 240, RGB(160, 182, 219));
+    lcd.fillRect(89, 4, 231, 231, RGB(30, 107, 7));
+    lcd.fillRect(89, 0, 231, 4, RGB(255, 0, 0));
+    lcd.fillRect(89, 235, 231, 5, RGB(255, 0, 0));
 
     lcd.drawText(5, 5, "Home", RGB(255, 0, 0), RGB(160, 182, 219), 1);
-
-    // Two left over pixel lines on the top filled with black
-    lcd.fillRect(0, 0, 320, 2, RGB(0, 0, 0));
-
-    // Three left over pixel rows in the down side of the grid
-    lcd.fillRect(0, 236, 320, 4, RGB(0, 0, 0));
-    lcd.fillRect(83, 0, 3, 240, RGB(0, 0, 0));
-
-    // The next block of code is about drawing the squares in the grid.
-    // The squares should be static
-
-    // Identifying the beginning x point
-    int x1 = 112;
 
     // Going thru the horizontal grids. We have 4 of them. Per 4 horizontal points
     // We draw 4 vertical squares the increment of the y1 and x1 are both 54 because
     // Of one square being 26 by 26 squares, so we need to skip 54
+    int immovableObject = 0;
+    wall walls[immovableObject];
+    int x1 = 131;
     for (int i = 0; i < 4; i++)
     {
         // Identifying the beginning y point
-        int y1 = 28;
+        int y1 = 46;
         for (int j = 0; j < 4; j++)
         {
-            lcd.fillRect(x1, y1, 26, 26, RGB(0, 0, 0));
-            y1 += 52;
+            lcd.fillRect(x1, y1, 21, 21, RGB(0, 0, 0));
+            lcd.drawRect(x1, y1, 21, 21, RGB(50, 50, 50));
+            y1 += 42;
+            this->walls[immovableObject].x = x1;
+            this->walls[immovableObject].y = y1;
+            immovableObject++;
         }
-        x1 += 52;
+        x1 += 42;
+    }
+
+    // Identifying the beginning x point
+    x1 = 89;
+    for (int i = 0; i < 11; i++)
+    {
+        int y = 4;
+        for (int j = 0; j < 11; j++)
+        {
+            if (i == 0 || i == 10)
+            {
+                lcd.fillRect(x1, y, 21, 21, RGB(0, 0, 0));
+                lcd.drawRect(x1, y, 21, 21, RGB(50, 50, 50));
+                y += 21;
+            }
+            if (j == 0)
+            {
+                lcd.fillRect(x1, y, 21, 21, RGB(0, 0, 0));
+                lcd.drawRect(x1, y, 21, 21, RGB(50, 50, 50));
+            }
+        }
+        x1 += 21;
+    }
+
+    x1 = 110;
+    for (int i = 0; i < 9; i++)
+    {
+        int y = 214;
+        lcd.fillRect(x1, y, 21, 21, RGB(0, 0, 0));
+        lcd.drawRect(x1, y, 21, 21, RGB(50, 50, 50));
+        x1 += 21;
     }
 }
 
@@ -82,8 +110,8 @@ void Map::declareBarrels(int amount, int *positions)
         int rx = rand() % 9;
         int ry = rand() % 9;
 
-        // These placements are already made on the grid, they're solid, and can't be overwrited
-        while ((rx % 2 && ry % 2) || (rx + ry <= 1) || (rx + ry >= 15))
+        // These placements are already made on the grid, they're solid, and can't be overwritten
+        while ((rx % 2 && ry % 2) || (rx + ry <= 2) || (rx + ry >= 14))
         {
             rx = rand() % 9;
             ry = rand() % 9;
@@ -137,5 +165,14 @@ void Map::getBarrels(int barrels[59])
         {
             drawBarrels(this->barrels[i].x, this->barrels[i].y);
         }
+    }
+}
+
+void Map::getImmovableObjects(wall *walls)
+{
+
+    for (int i = 0; i < 16; i++)
+    {
+        walls[i] = this->walls[i];
     }
 }
