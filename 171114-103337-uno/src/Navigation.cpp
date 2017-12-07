@@ -24,16 +24,15 @@ void Navigation::screenInit()
 void Navigation::calibrateScreen()
 {
     lcd.touchRead();
-    lcd.touchStartCal();
-    // if (lcd.touchZ() || readCalData()) //calibration data in EEPROM?
-    // {
-    //     writeCalData(); //write data to EEPROM
-    // }
-    // else
-    // {
-    //     // lcd.touchStartCal();
-    //     writeCalData();
-    // }
+    // lcd.touchStartCal();
+    if (lcd.touchZ() || readCalData()) //calibration data in EEPROM?
+    {
+        writeCalData(); //write data to EEPROM
+    }
+    else
+    {
+        writeCalData();
+    }
 }
 
 void Navigation::checkButtonPresses()
@@ -50,7 +49,7 @@ void Navigation::checkButtonPresses()
                 // Game starten
                 gameEngine.startGame();
                 // lcd.fillRect(0,0,50,50,RGB(0,0,255));
-                checkHomeButton();
+                // checkHomeButton();
             }
 
             // Check if the button area from Option is touched
@@ -64,7 +63,7 @@ void Navigation::checkButtonPresses()
             // Check if the button area from Credits is touched
             else if ((lcd.touchX() > 95 && lcd.touchX() < 215) && (lcd.touchY() > 180 && lcd.touchY() < 210))
             {
-                // Open credits and open checkHomeButton
+                // Open credits
                 showCredits();
             }
         }
@@ -197,9 +196,6 @@ void Navigation::drawStartscreenButtons()
     lcd.fillRoundRect(95, 180, 120, 30, 5, RGB(0, 100, 100));
     lcd.drawRoundRect(95, 180, 120, 30, 5, RGB(0, 0, 0));
     lcd.drawText(100, 187, "CREDITS", RGB(255, 0, 0), RGB(0, 100, 100), 2);
-
-    // Check if any buttons are pressed
-    checkButtonPresses();
 }
 
 void Navigation::writeCalData(void)

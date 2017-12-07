@@ -7,6 +7,7 @@
 class ArduinoNunchuk
 {
   public:
+    ArduinoNunchuk();
     int analogX;
     int analogY;
     int accelX;
@@ -14,7 +15,6 @@ class ArduinoNunchuk
     int accelZ;
     int zButton;
     int cButton;
-    ArduinoNunchuk();
     void init();
     void update();
 

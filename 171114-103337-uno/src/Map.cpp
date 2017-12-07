@@ -97,7 +97,6 @@ void Map::declareBarrels(int amount, int *positions)
                 if (this->barrels[j].barrel) //Als je nog geen barrel hebt.
                 {
                     i--;
-                    lcd.drawText("%d",i);
                 }
                 else
                 {
