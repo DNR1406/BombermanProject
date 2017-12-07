@@ -21,7 +21,8 @@ void Map::drawGrid()
     // Going thru the horizontal grids. We have 4 of them. Per 4 horizontal points
     // We draw 4 vertical squares the increment of the y1 and x1 are both 54 because
     // Of one square being 26 by 26 squares, so we need to skip 54
-
+    int immovableObject = 0;
+    wall walls[immovableObject];
     int x1 = 131;
     for (int i = 0; i < 4; i++)
     {
@@ -31,8 +32,13 @@ void Map::drawGrid()
         {
             lcd.fillRect(x1, y1, 21, 21, RGB(0, 0, 0));
             lcd.drawRect(x1, y1, 21, 21, RGB(50, 50, 50));
-
             y1 += 42;
+            this->walls[immovableObject].x = x1;
+            this->walls[immovableObject].y = y1;
+            // Serial.print(this->walls[immovableObject].x);
+            // Serial.print(" ");
+            // Serial.println(this->walls[immovableObject].y);
+            immovableObject++;
         }
         x1 += 42;
     }
@@ -112,7 +118,7 @@ void Map::declareBarrels(int amount, int *positions)
         int rx = rand() % 9;
         int ry = rand() % 9;
 
-        // These placements are already made on the grid, they're solid, and can't be overwrited
+        // These placements are already made on the grid, they're solid, and can't be overwritten
         while ((rx % 2 && ry % 2) || (rx + ry <= 2) || (rx + ry >= 14))
         {
             rx = rand() % 9;
@@ -167,5 +173,14 @@ void Map::getBarrels(int barrels[59])
         {
             drawBarrels(this->barrels[i].x, this->barrels[i].y);
         }
+    }
+}
+
+void Map::getImmovableObjects(wall *walls)
+{
+
+    for (int i = 0; i < 16; i++)
+    {
+        walls[i] = this->walls[i];
     }
 }

@@ -1,5 +1,7 @@
 #include "PlayerMovement.h"
+#include "include.h"
 // Constructor
+
 PlayerMovement::PlayerMovement(int x, int y, int r, int g, int b)
 {
     //begin waardes, secs, this->x, this->y
@@ -32,7 +34,7 @@ void PlayerMovement::left()
  clear();
   //x tien vanaf
   if(this->x > 100)
-    this->x -= 1;
+    this->x -= 21;
   //nieuwe stip kleuren
   draw();
 }
@@ -42,7 +44,7 @@ void PlayerMovement::right()
 {
     clear();
     if (this->x < 306)
-        this->x += 1;
+        this->x += 21;
     draw();
 }
 
@@ -51,7 +53,7 @@ void PlayerMovement::down()
 {
     clear();
     if (this->y > 10)
-        this->y += 1;
+        this->y += 21;
     draw();
 }
 
@@ -60,6 +62,6 @@ void PlayerMovement::up()
 {
     clear();
     if (this->y < 228)
-        this->y -=1;
+        this->y -= 21;
     draw();
 }

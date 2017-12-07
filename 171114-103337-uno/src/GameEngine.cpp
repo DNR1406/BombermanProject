@@ -52,7 +52,17 @@ void GameEngine::checkPlayerActions()
     nunchuk->init();
     // lcd.drawText(100, 20, "WERKEN", RGB(0, 0, 0), RGB(160, 182, 219), 1);
     int lifes = 3;
-    while (lifes)
+    wall *walls = (wall *)(malloc(sizeof(wall[16])));
+    grid.getImmovableObjects(walls);
+    // for (int i = 0; i < 16; i++)
+    // {
+    //     Serial.print(walls[i].x);
+    //     Serial.print(" ");
+    //     Serial.println(walls[i].y);
+    // }
+    int i = 0;
+    // player.x != walls[i].x && player.y != walls[i].y
+    while ((player.x != walls[i].x -5 && player.y != walls[i].y -5))
     {
         // Check if state of nunchuk had changed
         nunchuk->update(); //Update nunchuk conditions
@@ -60,8 +70,9 @@ void GameEngine::checkPlayerActions()
         //Place bomb if zButton has been pressed
         if (nunchuk->zButton)
         {
-        //    lcd.fillCircle(player.x, player.y, 5, RGB(0, 0, 0));
+            //    lcd.fillCircle(player.x, player.y, 5, RGB(0, 0, 0));
         }
+
         // Move player upwards
         else if (nunchuk->analogY > 155)
         {
@@ -82,5 +93,9 @@ void GameEngine::checkPlayerActions()
         {
             player.left();
         }
+        i++;
+        if (i == 16) {
+            i = 0;
+        } 
     }
 }
