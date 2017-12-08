@@ -20,7 +20,7 @@ void GameEngine::startGame()
     grid.drawGrid();
     grid.declareBarrels(30, barrelPositions);
 
-    // int barrels[58];
+    int barrels[55];
 
     // c.receiveMap(barrels);
     // grid.getBarrels(barrels);
@@ -50,10 +50,9 @@ void GameEngine::incrementScore()
 void GameEngine::checkPlayerActions()
 {
     nunchuk->init();
-    // lcd.drawText(100, 20, "WERKEN", RGB(0, 0, 0), RGB(160, 182, 219), 1);
     int lifes = 3;
-    // wall *walls = (wall *)(malloc(sizeof(wall[16])));
-    // grid.getImmovableObjects(walls);
+
+
 
     // player.x != walls[i].x && player.y != walls[i].y
     while (lifes)
@@ -85,7 +84,7 @@ void GameEngine::checkPlayerActions()
 
         // If player is on 2nd (1), 4th (3), 6th (5) or 8th (7) row from y, they can
         // Never move left or right
-        if ((player.x % 2) && !(player.y % 2))
+        if (!(player.x % 2) && (player.y % 2))
         {
             player.rightMove = false;
             player.leftMove = false;
@@ -102,7 +101,6 @@ void GameEngine::checkPlayerActions()
         {
             player.downMove = false;
         }
-
         // Check if state of nunchuk had changed
         nunchuk->update(); //Update nunchuk conditions
 

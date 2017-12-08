@@ -23,16 +23,12 @@ class Map
     void drawBarrels(int x, int y);
     void declareBarrels(int amount, barrel *positions);
     void getBarrels(int barrels[55]);
-    void getImmovableObjects(wall *walls);
     int single_sample();
     void init_adc_single_sample();
 
   private:
   MI0283QT9 lcd;
   barrel barrels[55];
-  wall walls[16];
-
-   
 };
 
 #endif

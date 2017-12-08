@@ -23,8 +23,6 @@ void Map::drawGrid()
     // Going thru the horizontal grids. We have 4 of them. Per 4 horizontal points
     // We draw 4 vertical squares the increment of the y1 and x1 are both 54 because
     // Of one square being 26 by 26 squares, so we need to skip 54
-    int immovableObject = 0;
-    wall walls[immovableObject];
     int x1 = 131;
     for (int i = 0; i < 4; i++)
     {
@@ -35,9 +33,6 @@ void Map::drawGrid()
             lcd.fillRect(x1, y1, 21, 21, RGB(0, 0, 0));
             lcd.drawRect(x1, y1, 21, 21, RGB(50, 50, 50));
             y1 += 42;
-            this->walls[immovableObject].x = x1;
-            this->walls[immovableObject].y = y1;
-            immovableObject++;
         }
         x1 += 42;
     }
@@ -85,6 +80,12 @@ void Map::drawBarrels(int x, int y)
 
 void Map::declareBarrels(int amount, barrel *barrelPositions)
 {
+    init_adc_single_sample();
+    if (amount > 55)
+    {
+        amount = 55;
+    }
+
     int barrelNumber = 0;
     for (int y = 0; y < 9; y++)
     {
@@ -99,6 +100,10 @@ void Map::declareBarrels(int amount, barrel *barrelPositions)
         }
     }
 
+    srand(time(NULL));
+    barrel barrels[amount];
+
+    randomSeed(single_sample());
     for (int i = 0; i < amount; i++)
     {
         int rx = rand() % 9;
@@ -159,14 +164,6 @@ void Map::getBarrels(int barrels[55])
     }
 }
 
-void Map::getImmovableObjects(wall *walls)
-{
-
-    for (int i = 0; i < 16; i++)
-    {
-        walls[i] = this->walls[i];
-    }
-}
 
 void Map::init_adc_single_sample()
 {
