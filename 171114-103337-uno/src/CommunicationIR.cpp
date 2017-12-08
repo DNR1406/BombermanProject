@@ -1,32 +1,4 @@
 #include "include.h"
-<<<<<<< HEAD
-#include <AVR/interrupt.h>
-
-// communicationIR::communicationIR(int frequenty)
-// {
-//     this->startTimers();
-//     this->buffer = {1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-//     1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-//     1, 0}
-// }
-=======
 #include <avr/interrupt.h>
 
 communicationIR::communicationIR(int frequenty)
@@ -167,7 +139,6 @@ if ( XPLUSY % 2 == 0)
     }
     
 }
->>>>>>> 806108a83aa0bba294f249eae28081181f2b025b
 
 void communicationIR::startTimer2()
 {
@@ -188,8 +159,12 @@ void communicationIR::startTimer2()
 }
 void communicationIR::startTimer1()
 {
+ TCCR1B = 0;
  TCCR1A = 0; 
- TCCR1B = _BV(WGM12) | _BV (CS11);   // CTC, No prescaler
- OCR1A =  254;          // compare A register value (210 * clock speed)
+ TCNT1 = 0;
+ TCCR1B = _BV(WGM12) | _BV (CS10);   // CTC, No prescaler
+ OCR1A =  209;          // compare A register value (210 * clock speed)
                         //  = 13.125 nS , so frequency is 1 / (2 * 13.125) = 38095
+ TIMSK1 |= (1 << OCIE1A);
+ sei();
 }

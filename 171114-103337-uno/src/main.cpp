@@ -13,6 +13,8 @@
 
 int buffer[362];
 volatile int bitToSend;
+volatile int send;
+
 
 
 int main()
@@ -25,12 +27,6 @@ int main()
        // Check if any buttons are pressed
     // navigation.checkButtonPresses();
 
-<<<<<<< HEAD
-    // communicationIR *commu = new communicationIR(36);
-
-    // while (1)
-    //     ;
-=======
     DDRB |= (1 << PB5);
 
     // navigation.screenInit();
@@ -43,7 +39,6 @@ int main()
     while (1)
     {
     }
->>>>>>> 806108a83aa0bba294f249eae28081181f2b025b
 
     return 0;
 }
@@ -53,18 +48,16 @@ volatile uint32_t counterTimer2 = 0;
 // interupt functie
 ISR(TIMER2_COMPA_vect)
 {
-    TCCR1A ^= _BV (COM1A0) ;
     if (counterTimer2 == 1000)
     {
 
-    if (!(TCCR1A & _BV (COM1A0)) == 0 && buffer[bitToSend])
+    if (buffer[bitToSend])
     {
-        PORTB |= (1 << PB5);
+        send = 1;
     }
     else
     {
-        PORTB &= ~(1 << PB5);
-        
+        send = 0; 
     }
 
     bitToSend++;
@@ -76,4 +69,19 @@ ISR(TIMER2_COMPA_vect)
     counterTimer2 = 0;
     }
     counterTimer2++;
+}
+ISR(TIMER1_COMPA_vect)
+{
+    TCCR1A ^= _BV (COM1A0);
+    
+    if (send == 1) 
+    {
+    //     if (!(TCCR1A & _BV (COM1A0)) == 0){
+            
+    PORTB ^= (1 << PB5);
+    }
+    else
+    {
+    PORTB &= ~(1 << PB5);
+    }
 }
