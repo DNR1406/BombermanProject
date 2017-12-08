@@ -24,11 +24,11 @@ void Map::drawGrid()
     // We draw 4 vertical squares the increment of the y1 and x1 are both 54 because
     // Of one square being 26 by 26 squares, so we need to skip 54
     int x1 = 131;
-    for (int i = 0; i < 4; i++)
+    for (uint8_t i = 0; i < 4; i++)
     {
         // Identifying the beginning y point
         int y1 = 46;
-        for (int j = 0; j < 4; j++)
+        for (uint8_t j = 0; j < 4; j++)
         {
             lcd.fillRect(x1, y1, 21, 21, RGB(0, 0, 0));
             lcd.drawRect(x1, y1, 21, 21, RGB(50, 50, 50));
@@ -39,10 +39,10 @@ void Map::drawGrid()
 
     // Identifying the beginning x point
     x1 = 89;
-    for (int i = 0; i < 11; i++)
+    for (uint8_t i = 0; i < 11; i++)
     {
         int y = 4;
-        for (int j = 0; j < 11; j++)
+        for (uint8_t j = 0; j < 11; j++)
         {
             if (i == 0 || i == 10)
             {
@@ -60,7 +60,7 @@ void Map::drawGrid()
     }
 
     x1 = 110;
-    for (int i = 0; i < 9; i++)
+    for (uint8_t i = 0; i < 9; i++)
     {
         int y = 214;
         lcd.fillRect(x1, y, 21, 21, RGB(0, 0, 0));
@@ -78,18 +78,17 @@ void Map::drawBarrels(int x, int y)
     // lcd.drawRect(x, y, 21, 21, RGB(20, 20, 20));
 }
 
-void Map::declareBarrels(int amount, barrel *barrelPositions)
+void Map::declareBarrels(uint8_t amount, barrel *barrelPositions)
 {
-    init_adc_single_sample();
     if (amount > 55)
     {
         amount = 55;
     }
 
-    int barrelNumber = 0;
-    for (int y = 0; y < 9; y++)
+    uint8_t barrelNumber = 0;
+    for (uint8_t y = 0; y < 9; y++)
     {
-        for (int x = 0; x < 9; x++)
+        for (uint8_t x = 0; x < 9; x++)
         {
             if (!((x % 2 && y % 2) || (x + y <= 2) || (x + y >= 14)))
             {
@@ -99,15 +98,13 @@ void Map::declareBarrels(int amount, barrel *barrelPositions)
             }
         }
     }
+    srand(single_sample() % 3);
 
-    srand(time(NULL));
-    barrel barrels[amount];
-
-    randomSeed(single_sample());
-    for (int i = 0; i < amount; i++)
+    // randomSeed(single_sample());
+    for (uint8_t i = 0; i < amount; i++)
     {
-        int rx = rand() % 9;
-        int ry = rand() % 9;
+        uint8_t rx = rand() % 9;
+        uint8_t ry = rand() % 9;
 
         // These placements are already made on the grid,
         // they're solid, and can't declared to barrels
@@ -117,7 +114,7 @@ void Map::declareBarrels(int amount, barrel *barrelPositions)
             ry = rand() % 9;
         }
 
-        for (int j = 0; j <= i; j++)
+        for (uint8_t j = 0; j <= i; j++)
         {
             if (!this->barrels[j].barrel)
             {
@@ -130,19 +127,24 @@ void Map::declareBarrels(int amount, barrel *barrelPositions)
             }
         }
     }
-
-    for (int i = 0; i < amount; i++)
+    for (uint8_t i = 0; i < amount; i++)
+    {
+        Serial.print(this->barrels[i].x);
+        Serial.print("  ");
+        Serial.println(this->barrels[i].y);
+    }
+    for (uint8_t i = 0; i < amount; i++)
     {
         barrelPositions[i] = this->barrels[i];
     }
 }
 
-void Map::getBarrels(int barrels[55])
+void Map::getBarrels(uint8_t barrels[55])
 {
-    int barrelNumber = 0;
-    for (int y = 0; y < 9; y++)
+    uint8_t barrelNumber = 0;
+    for (uint8_t y = 0; y < 9; y++)
     {
-        for (int x = 0; x < 9; x++)
+        for (uint8_t x = 0; x < 9; x++)
         {
             if (!((x % 2 && y % 2) || (x + y <= 1) || (x + y >= 15)))
             {
@@ -153,7 +155,7 @@ void Map::getBarrels(int barrels[55])
         }
     }
 
-    for (int i = 0; i < 55; i++)
+    for (uint8_t i = 0; i < 55; i++)
     {
         this->barrels[i].barrel = barrels[i];
 
@@ -164,23 +166,21 @@ void Map::getBarrels(int barrels[55])
     }
 }
 
-
 void Map::init_adc_single_sample()
 {
-	ADMUX |= (1<<MUX0);		// input analog A1 Arduino
-	ADMUX |= (1<<REFS0);	// 5 volt
-	ADCSRA = (1<<ADPS2) | (1<<ADPS1) | (1<<ADPS0); // clock/128
-	ADCSRA |= (1<<ADEN);	// ADC enable
+    ADMUX |= (1 << MUX0);                                // input analog A1 Arduino
+    ADMUX |= (1 << REFS0);                               // 5 volt
+    ADCSRA = (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0); // clock/128
+    ADCSRA |= (1 << ADEN);                               // ADC enable
 }
 
 // Single sample of pin A0
 int Map::single_sample()
 {
-	uint16_t result;
-	ADCSRA |= (1<<ADSC);		// Start conversion
-	while(ADCSRA & (1<<ADSC)) ;	// Wait
-	result = ADC;
-	return result;
+    uint16_t result;
+    ADCSRA |= (1 << ADSC); // Start conversion
+    while (ADCSRA & (1 << ADSC))
+        ; // Wait
+    result = ADC;
+    return result;
 }
-
-

@@ -4,7 +4,7 @@
 
 
 typedef struct barrel {
-    int x,y, barrel;
+    uint8_t x,y, barrel;
 } barrel;
 
 typedef struct wall
@@ -21,8 +21,8 @@ class Map
     Map();
     void drawGrid();
     void drawBarrels(int x, int y);
-    void declareBarrels(int amount, barrel *positions);
-    void getBarrels(int barrels[55]);
+    void declareBarrels(uint8_t amount, barrel *positions);
+    void getBarrels(uint8_t barrels[55]);
     int single_sample();
     void init_adc_single_sample();
 

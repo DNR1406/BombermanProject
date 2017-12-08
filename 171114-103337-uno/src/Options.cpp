@@ -44,8 +44,7 @@ void Options::changeBrightness()
     lcd.drawText(20, 120, "After you're done, press the screen", RGB(0, 0, 0), RGB(160, 182, 219), 1);
     lcd.drawText(20, 130, "to go back.", RGB(0, 0, 0), RGB(160, 182, 219), 1);
 
-    int sensorWaarde;
-    int counter = 1;
+    uint8_t counter = 1;
     init_adc_single_sample();
     while (counter)
     {

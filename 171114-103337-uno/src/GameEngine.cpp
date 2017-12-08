@@ -20,7 +20,7 @@ void GameEngine::startGame()
     grid.drawGrid();
     grid.declareBarrels(30, barrelPositions);
 
-    int barrels[55];
+    uint8_t barrels[55];
 
     // c.receiveMap(barrels);
     // grid.getBarrels(barrels);
@@ -50,7 +50,7 @@ void GameEngine::incrementScore()
 void GameEngine::checkPlayerActions()
 {
     nunchuk->init();
-    int lifes = 3;
+    uint8_t lifes = 3;
 
 
 
