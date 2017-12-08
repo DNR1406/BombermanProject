@@ -37,7 +37,7 @@ void Navigation::calibrateScreen()
 
 void Navigation::checkButtonPresses()
 {
-    int pressed = 1;
+    uint8_t pressed = 1;
     while (pressed)
     {
         lcd.touchRead();
@@ -73,7 +73,7 @@ void Navigation::checkButtonPresses()
 // Check if the home button (which is only in "Settings" and "Credits") is pressed
 void Navigation::checkHomeButton()
 {
-    int back = 1;
+    uint8_t back = 1;
     while (back)
     {
         lcd.touchRead();
@@ -95,7 +95,7 @@ void Navigation::checkHomeButton()
 // Going back to options menu, this is needed when in brightness or volume page
 void Navigation::checkOptionsBackButton()
 {
-    int back = 1;
+    uint8_t back = 1;
     while (back)
     {
         lcd.touchRead();
@@ -233,3 +233,4 @@ uint8_t Navigation::readCalData()
 
     return 1;
 }
+

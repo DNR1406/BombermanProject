@@ -15,6 +15,8 @@ class Options
     void storeHighscore();
     void showHighscore();
     void readHighscoreFile();
+    void init_adc_single_sample();
+    int single_sample();
 
   private:
   MI0283QT9 lcd;

@@ -1,8 +1,8 @@
 #include <Wire.h>
 #include <util/delay.h>
 
-#include "ArduinoNunchuk.h"
-
+//#include "ArduinoNunchuk.h"
+#include "include.h"
 #define ADDRESS 0x52
 
 ArduinoNunchuk::ArduinoNunchuk() {
@@ -24,8 +24,8 @@ void ArduinoNunchuk::init()
 //functie om te controleren of er iets op de nunchuck veranderd is.
 void ArduinoNunchuk::update()
 {
-  int count = 0;
-  int values[6];
+  uint8_t count = 0;
+  uint8_t values[6];
 
   //vraag gegevens op
   Wire.requestFrom(ADDRESS, 6);
@@ -60,5 +60,5 @@ void ArduinoNunchuk::_sendByte(char data, char location)
 
   Wire.endTransmission();
 
-  _delay_ms(10);
+  _delay_ms(100);
 }
