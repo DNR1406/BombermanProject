@@ -30,10 +30,6 @@ If you create a header file, put it here: */
 #include "Functions.h"
 #include "PlayerMovement.h"
 #include "CommunictaionIR.h"
-<<<<<<< HEAD
-
-=======
->>>>>>> 569deaf3594d9fc4446f50dce56a6373f492a971
 
 #include <MI0283QT9.h>
 #include "Navigation.h"

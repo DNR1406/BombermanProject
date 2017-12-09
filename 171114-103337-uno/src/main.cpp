@@ -7,12 +7,9 @@
 
 int buffer[362];
 volatile int bitToSend;
-<<<<<<< HEAD
 volatile int send;
 
-=======
 Navigation navigation = Navigation();
->>>>>>> 569deaf3594d9fc4446f50dce56a6373f492a971
 
 
 int main()
@@ -24,11 +21,8 @@ int main()
     navigation.calibrateScreen();
     navigation.drawStartscreenButtons();
        // Check if any buttons are pressed
-<<<<<<< HEAD
     // navigation.checkButtonPresses();
-=======
     navigation.checkButtonPresses();
->>>>>>> 569deaf3594d9fc4446f50dce56a6373f492a971
 
     DDRB |= (1 << PB5);
 
@@ -71,7 +65,6 @@ ISR(TIMER2_COMPA_vect)
     }
     counterTimer2++;
 }
-<<<<<<< HEAD
 ISR(TIMER1_COMPA_vect)
 {
     TCCR1A ^= _BV (COM1A0);
@@ -87,7 +80,5 @@ ISR(TIMER1_COMPA_vect)
     PORTB &= ~(1 << PB5);
     }
 }
-=======
 
 
->>>>>>> 569deaf3594d9fc4446f50dce56a6373f492a971

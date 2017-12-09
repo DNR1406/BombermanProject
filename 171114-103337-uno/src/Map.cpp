@@ -10,7 +10,7 @@ Map::Map()
 {
 }
 
-void Map::drawGrid()
+void Map::drawPlayMap()
 {
     // Delete menu with overwriting the background
     lcd.fillRect(0, 0, 83, 240, RGB(160, 182, 219));
@@ -80,6 +80,7 @@ void Map::drawBarrels(int x, int y)
 
 void Map::declareBarrels(uint8_t amount)
 {
+
     for (uint8_t x = 0; x < 9; x++)
     {
         for (uint8_t y = 0; y < 9; y++)
@@ -90,9 +91,9 @@ void Map::declareBarrels(uint8_t amount)
             }
         }
     }
-    
-    srand(single_sample());
-    randomSeed(single_sample());
+
+    // srand(single_sample());
+    // randomSeed(single_sample());
 
     for (uint8_t i = 0; i < amount; i++)
     {

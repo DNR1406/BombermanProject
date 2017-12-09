@@ -1,7 +1,7 @@
 #include "include.h"
 
 //Constructor
-Map grid = Map();
+Map playMap = Map();
 Screen screen = Screen();
 Communication c = Communication(1, 1);
 PlayerMovement player = PlayerMovement(0, 0);
@@ -15,14 +15,14 @@ GameEngine::GameEngine()
 void GameEngine::startGame()
 {
     this->nunchuk = new ArduinoNunchuk();
-    // draws grid on screen
-    grid.drawGrid();
-    grid.declareBarrels(30);
 
-    
+    // draws playMap on screen
+    playMap.drawPlayMap();
+
+    playMap.declareBarrels(30);
 
     // c.receiveMap(barrels);
-    // grid.getBarrels(barrels);
+    // playMap.getBarrels(barrels);
 
     // c.sendMap(positions)
 
@@ -50,8 +50,6 @@ void GameEngine::checkPlayerActions()
 {
     nunchuk->init();
     uint8_t lifes = 3;
-
-
 
     // player.x != walls[i].x && player.y != walls[i].y
     while (lifes)
