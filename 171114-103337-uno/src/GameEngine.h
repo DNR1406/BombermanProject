@@ -14,6 +14,7 @@ public:
   void incrementScore();
   void addPlayer();
   void checkPlayerActions();
+  void GameEngine::detonateBomb();
 
 private:
   MI0283QT9 lcd;

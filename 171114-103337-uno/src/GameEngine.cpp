@@ -46,6 +46,11 @@ void GameEngine::incrementScore()
 {
 }
 
+//Function to let the bomb detonate
+void GameEngine::detonateBomb()
+{
+}
+
 void GameEngine::checkPlayerActions()
 {
     nunchuk->init();

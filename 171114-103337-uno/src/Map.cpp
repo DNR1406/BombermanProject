@@ -91,9 +91,8 @@ void Map::declareBarrels(uint8_t amount)
             }
         }
     }
-
-    // srand(single_sample());
-    // randomSeed(single_sample());
+    init_adc_single_sample();
+    srand(single_sample());
 
     for (uint8_t i = 0; i < amount; i++)
     {
@@ -130,33 +129,6 @@ void Map::declareBarrels(uint8_t amount)
     }
 }
 
-// void Map::getBarrels(uint8_t barrels[55])
-// {
-//     uint8_t barrelNumber = 0;
-//     for (uint8_t y = 0; y < 9; y++)
-//     {
-//         for (uint8_t x = 0; x < 9; x++)
-//         {
-//             if (!((x % 2 && y % 2) || (x + y <= 1) || (x + y >= 15)))
-//             {
-//                 this->barrels[barrelNumber].x = x;
-//                 this->barrels[barrelNumber].y = y;
-//                 barrelNumber++;
-//             }
-//         }
-//     }
-
-//     for (uint8_t i = 0; i < 55; i++)
-//     {
-//         this->barrels[i].barrel = barrels[i];
-
-//         if (this->barrels[i].barrel)
-//         {
-//             drawBarrels(this->barrels[i].x, this->barrels[i].y);
-//         }
-//     }
-// }
-
 void Map::init_adc_single_sample()
 {
     ADMUX |= (1 << MUX0);                                // input analog A1 Arduino
@@ -166,7 +138,7 @@ void Map::init_adc_single_sample()
 }
 
 // Single sample of pin A0
-int Map::single_sample()
+uint16_t Map::single_sample()
 {
     uint16_t result;
     ADCSRA |= (1 << ADSC); // Start conversion

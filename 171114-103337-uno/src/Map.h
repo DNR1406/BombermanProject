@@ -17,8 +17,7 @@ public:
   void drawPlayMap();
   void drawBarrels(int x, int y);
   void declareBarrels(uint8_t amount);
-  void getBarrels(uint8_t barrels[55]);
-  int single_sample();
+  uint16_t single_sample();
   void init_adc_single_sample();
 
   uint8_t barrels[9][9];
