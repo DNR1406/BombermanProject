@@ -75,96 +75,68 @@ void Map::drawBarrels(int x, int y)
     y = 21 * y + 25;
 
     lcd.fillRect(x, y, 21, 21, RGB(255, 0, 0));
-    // lcd.drawRect(x, y, 21, 21, RGB(20, 20, 20));
+    lcd.drawRect(x, y, 21, 21, RGB(20, 20, 20));
 }
 
-void Map::declareBarrels(uint8_t amount, barrel *barrelPositions)
+void Map::declareBarrels(uint8_t amount)
 {
-    if (amount > 55)
+    for (uint8_t x = 0; x < 9; x++)
     {
-        amount = 55;
-    }
-
-    uint8_t barrelNumber = 0;
-    for (uint8_t y = 0; y < 9; y++)
-    {
-        for (uint8_t x = 0; x < 9; x++)
+        for (uint8_t y = 0; y < 9; y++)
         {
-            if (!((x % 2 && y % 2) || (x + y <= 2) || (x + y >= 14)))
+            if (((x % 2 && y % 2) || (x + y <= 2) || (x + y >= 14)))
             {
-                this->barrels[barrelNumber].x = x;
-                this->barrels[barrelNumber].y = y;
-                barrelNumber++;
+                this->barrels[x][y] = 1;
             }
         }
     }
-    srand(single_sample() % 3);
+    
+    srand(single_sample());
+    randomSeed(single_sample());
 
-    // randomSeed(single_sample());
     for (uint8_t i = 0; i < amount; i++)
     {
         uint8_t rx = rand() % 9;
         uint8_t ry = rand() % 9;
 
-        // These placements are already made on the grid,
-        // they're solid, and can't declared to barrels
-        while ((rx % 2 && ry % 2) || (rx + ry <= 2) || (rx + ry >= 14))
+        if (this->barrels[rx][ry])
         {
-            rx = rand() % 9;
-            ry = rand() % 9;
+            i--;
         }
-
-        for (uint8_t j = 0; j <= i; j++)
+        else
         {
-            if (!this->barrels[j].barrel)
-            {
-                this->barrels[i] = {rx, ry, 1};
-                drawBarrels(rx, ry);
-            }
-            else if (this->barrels[j].x == rx && this->barrels[j].y == ry)
-            {
-                i--;
-            }
-        }
-    }
-    for (uint8_t i = 0; i < amount; i++)
-    {
-        Serial.print(this->barrels[i].x);
-        Serial.print("  ");
-        Serial.println(this->barrels[i].y);
-    }
-    for (uint8_t i = 0; i < amount; i++)
-    {
-        barrelPositions[i] = this->barrels[i];
-    }
-}
-
-void Map::getBarrels(uint8_t barrels[55])
-{
-    uint8_t barrelNumber = 0;
-    for (uint8_t y = 0; y < 9; y++)
-    {
-        for (uint8_t x = 0; x < 9; x++)
-        {
-            if (!((x % 2 && y % 2) || (x + y <= 1) || (x + y >= 15)))
-            {
-                this->barrels[barrelNumber].x = x;
-                this->barrels[barrelNumber].y = y;
-                barrelNumber++;
-            }
-        }
-    }
-
-    for (uint8_t i = 0; i < 55; i++)
-    {
-        this->barrels[i].barrel = barrels[i];
-
-        if (this->barrels[i].barrel)
-        {
-            drawBarrels(this->barrels[i].x, this->barrels[i].y);
+            this->barrels[rx][ry] = 1;
+            drawBarrels(rx, ry);
         }
     }
 }
+
+// void Map::getBarrels(uint8_t barrels[55])
+// {
+//     uint8_t barrelNumber = 0;
+//     for (uint8_t y = 0; y < 9; y++)
+//     {
+//         for (uint8_t x = 0; x < 9; x++)
+//         {
+//             if (!((x % 2 && y % 2) || (x + y <= 1) || (x + y >= 15)))
+//             {
+//                 this->barrels[barrelNumber].x = x;
+//                 this->barrels[barrelNumber].y = y;
+//                 barrelNumber++;
+//             }
+//         }
+//     }
+
+//     for (uint8_t i = 0; i < 55; i++)
+//     {
+//         this->barrels[i].barrel = barrels[i];
+
+//         if (this->barrels[i].barrel)
+//         {
+//             drawBarrels(this->barrels[i].x, this->barrels[i].y);
+//         }
+//     }
+// }
 
 void Map::init_adc_single_sample()
 {

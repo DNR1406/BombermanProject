@@ -21,14 +21,14 @@ class Map
     Map();
     void drawGrid();
     void drawBarrels(int x, int y);
-    void declareBarrels(uint8_t amount, barrel *positions);
+    void declareBarrels(uint8_t amount);
     void getBarrels(uint8_t barrels[55]);
     int single_sample();
     void init_adc_single_sample();
 
   private:
   MI0283QT9 lcd;
-  barrel barrels[55];
+  uint8_t barrels[9][9];
 };
 
 #endif

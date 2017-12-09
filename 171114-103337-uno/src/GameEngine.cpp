@@ -15,12 +15,11 @@ GameEngine::GameEngine()
 void GameEngine::startGame()
 {
     this->nunchuk = new ArduinoNunchuk();
-    barrel barrelPositions[55] = {};
     // draws grid on screen
     grid.drawGrid();
-    grid.declareBarrels(30, barrelPositions);
+    grid.declareBarrels(30);
 
-    uint8_t barrels[55];
+    
 
     // c.receiveMap(barrels);
     // grid.getBarrels(barrels);
