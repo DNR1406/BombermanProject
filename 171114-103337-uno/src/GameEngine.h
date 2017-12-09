@@ -13,7 +13,7 @@ public:
   void selectLevel();
   void incrementScore();
   void addPlayer();
-  void checkPlayerActions(uint8_t barrels[9][9]);
+  void checkPlayerActions();
 
 private:
   MI0283QT9 lcd;

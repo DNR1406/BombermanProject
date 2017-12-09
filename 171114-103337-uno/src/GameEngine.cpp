@@ -27,7 +27,7 @@ void GameEngine::startGame()
     // c.sendMap(positions)
 
     player.draw();
-    checkPlayerActions(playMap.barrels);
+    checkPlayerActions();
 }
 
 // function to add players to the game
@@ -46,12 +46,11 @@ void GameEngine::incrementScore()
 {
 }
 
-void GameEngine::checkPlayerActions(uint8_t barrels[9][9])
+void GameEngine::checkPlayerActions()
 {
     nunchuk->init();
     uint8_t lifes = 3;
 
-    // player.x != walls[i].x && player.y != walls[i].y
     while (lifes)
     {
         player.upMove = true;
@@ -59,19 +58,19 @@ void GameEngine::checkPlayerActions(uint8_t barrels[9][9])
         player.leftMove = true;
         player.rightMove = true;
 
-        if (barrels[player.x + 1][player.y] == 1)
+        if (playMap.barrels[player.x + 1][player.y] == 1)
         {
             player.rightMove = false;
         }
-        if (barrels[player.x - 1][player.y] == 1)
+        if (playMap.barrels[player.x - 1][player.y] == 1)
         {
             player.leftMove = false;
         }
-        if (barrels[player.x][player.y + 1] == 1)
+        if (playMap.barrels[player.x][player.y + 1] == 1)
         {
             player.downMove = false;
         }
-        if (barrels[player.x][player.y - 1] == 1)
+        if (playMap.barrels[player.x][player.y - 1] == 1)
         {
             player.upMove = false;
         }
