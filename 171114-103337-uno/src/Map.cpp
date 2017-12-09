@@ -87,7 +87,7 @@ void Map::declareBarrels(uint8_t amount)
         {
             if (((x % 2 && y % 2) || (x + y <= 2) || (x + y >= 14)))
             {
-                this->barrels[x][y] = 1;
+                this->barrels[x][y] = 2;
             }
         }
     }
@@ -97,18 +97,36 @@ void Map::declareBarrels(uint8_t amount)
 
     for (uint8_t i = 0; i < amount; i++)
     {
-        uint8_t rx = rand() % 9;
-        uint8_t ry = rand() % 9;
+        uint8_t x = rand() % 9;
+        uint8_t y = rand() % 9;
 
-        if (this->barrels[rx][ry])
+        if (this->barrels[x][y])
         {
             i--;
         }
         else
         {
-            this->barrels[rx][ry] = 1;
-            drawBarrels(rx, ry);
+            this->barrels[x][y] = 1;
+            drawBarrels(x, y);
         }
+    }
+    for (uint8_t x = 0; x < 9; x++)
+    {
+        for (uint8_t y = 0; y < 9; y++)
+        {
+            Serial.print(this->barrels[y][x]);
+            Serial.print(" ");
+        }
+        Serial.println();
+    }
+    for (uint8_t x = 0; x < 9; x++)
+    {
+        for (uint8_t y = 0; y < 9; y++)
+        {
+            Serial.print(this->barrels[x][y]);
+            Serial.print(" ");
+        }
+        Serial.println();
     }
 }
 

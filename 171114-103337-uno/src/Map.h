@@ -21,9 +21,10 @@ public:
   int single_sample();
   void init_adc_single_sample();
 
+  uint8_t barrels[9][9];
+
 private:
   MI0283QT9 lcd;
-  uint8_t barrels[9][9];
 };
 
 #endif

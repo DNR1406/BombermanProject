@@ -19,7 +19,7 @@ void GameEngine::startGame()
     // draws playMap on screen
     playMap.drawPlayMap();
 
-    playMap.declareBarrels(30);
+    playMap.declareBarrels(10);
 
     // c.receiveMap(barrels);
     // playMap.getBarrels(barrels);
@@ -27,7 +27,7 @@ void GameEngine::startGame()
     // c.sendMap(positions)
 
     player.draw();
-    checkPlayerActions();
+    checkPlayerActions(playMap.barrels);
 }
 
 // function to add players to the game
@@ -46,7 +46,7 @@ void GameEngine::incrementScore()
 {
 }
 
-void GameEngine::checkPlayerActions()
+void GameEngine::checkPlayerActions(uint8_t barrels[9][9])
 {
     nunchuk->init();
     uint8_t lifes = 3;
@@ -58,6 +58,23 @@ void GameEngine::checkPlayerActions()
         player.downMove = true;
         player.leftMove = true;
         player.rightMove = true;
+
+        if (barrels[player.x + 1][player.y] == 1)
+        {
+            player.rightMove = false;
+        }
+        if (barrels[player.x - 1][player.y] == 1)
+        {
+            player.leftMove = false;
+        }
+        if (barrels[player.x][player.y + 1] == 1)
+        {
+            player.downMove = false;
+        }
+        if (barrels[player.x][player.y - 1] == 1)
+        {
+            player.upMove = false;
+        }
 
         // If player is on 2nd (1) 4th (3) or 6th (5) or 8th (7) row from x, they can
         // Never move up or down
@@ -98,6 +115,7 @@ void GameEngine::checkPlayerActions()
         {
             player.downMove = false;
         }
+
         // Check if state of nunchuk had changed
         nunchuk->update(); //Update nunchuk conditions
 
