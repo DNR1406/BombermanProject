@@ -1,6 +1,6 @@
 #include <stdint.h>
 
-#include "include.h"
+#include "../include.h"
 
 #ifndef Communication_H
 #define Communication_H

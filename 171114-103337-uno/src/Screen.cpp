@@ -1,21 +1,16 @@
-
-
-
 #include "include.h"
 
 //constructor
 Screen::Screen() {
-  //begin waardes, secs, x, y
-  seconds = 0;
-  x = 160;
-  y = 120;
-  //rgb van kleur
-  r = 0;
-  g = 200;
-  b = 0;
+  // Start values for secs, x, y
+  this->seconds = 0;
+  this->x = 160;
+  this->y = 120;
+  // RGB for color
+  this->r = 0;
+  this->g = 200;
+  this->b = 0;
 }
-
-
 
 //de stip wit maken, dus weg halen
 void Screen::clear() {

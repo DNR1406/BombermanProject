@@ -22,3 +22,27 @@ void init_timer()
     //enable interrupts!
     sei();     
 }
+
+//function for in/output
+void init_in_out_put()
+{
+    //in/out put register B
+    DDRB = 0;
+    //in/out put register C
+    DDRC = 0;
+    //in/out put register D
+    DDRD = 0;
+}
+
+//function to init single sample
+void init_single_Sample()
+{
+    // input analog A0 Arduino
+    ADMUX = 0;
+    // 5 volt
+    ADMUX |= (1 << REFS0);
+    // clock/128
+    ADCSRA = (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
+    // ADC enable
+    ADCSRA |= (1 << ADEN);
+}

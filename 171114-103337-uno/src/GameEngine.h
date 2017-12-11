@@ -2,6 +2,8 @@
 #include <stdint.h>
 #include "include.h"
 
+class ArduinoNunchuk;
+
 #ifndef GameEngine_H
 #define GameEngine_H
 

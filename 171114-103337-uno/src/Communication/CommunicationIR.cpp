@@ -1,4 +1,4 @@
-#include "include.h"
+#include "../include.h"
 #include <avr/interrupt.h>
 
 communicationIR::communicationIR(int frequenty)

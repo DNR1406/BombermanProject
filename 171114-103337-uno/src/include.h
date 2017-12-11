@@ -2,37 +2,40 @@
 #define include_H
 
 /*---------------------------------------------------------------------------
-If you use a define, put it here: */
-#define DEBUG 1
-/*
-    Gebruik debug variable zo:
-    #ifdef DEBUG
-    #if (DEBUG == 1)
-    printf("Debug");
-    #endif
-    */
-
-#define ADDRESS 0x52
-#define SD_CS 8
-
-/*---------------------------------------------------------------------------
 If you create a header file, put it here: */
+#include "Communication/Communication.h"
+#include "Communication/CommunictaionIR.h"
+#include "Navigation/Navigation.h"
+#include "Navigation/NavigationScreen.h"
+
 #include "ArduinoNunchuk.h"
 #include "Bomb.h"
-#include "Communication.h"
 #include "GameEngine.h"
 #include "Map.h"
 #include "Player.h"
 #include "Screen.h"
 #include "Options.h"
-#include <SPI.h>
-#include <Arduino.h>
-#include "Functions.h"
 #include "PlayerMovement.h"
-#include "CommunictaionIR.h"
 
+#include "Functions.h"
+
+
+
+//other
+#include <SPI.h>
+#include <GraphicsLib.h>
 #include <MI0283QT9.h>
-#include "Navigation.h"
+#include <DS1307.h>
+#include <wiring_private.h>
+#include <avr/io.h>
+#include <avr/interrupt.h>
+#include <stdint.h>
+#include <SoftwareSerial.h>
+#include <Arduino.h>
+#include <EEPROM.h>
+
+#include <stdint.h>
+
 
 /*---------------------------------------------------------------------------
 If you use a struct, put it here: */
