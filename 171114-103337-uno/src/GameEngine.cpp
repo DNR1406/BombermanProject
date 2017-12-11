@@ -19,6 +19,7 @@ void GameEngine::startGame()
     // draws playMap on screen
     playMap.drawPlayMap();
 
+    // Declare the barrels and draw them on the screen
     playMap.declareBarrels(10);
 
     // c.receiveMap(barrels);
@@ -26,7 +27,11 @@ void GameEngine::startGame()
 
     // c.sendMap(positions)
 
+
+    // Draw player one
     player.draw();
+
+    // Check what the player is doing, i.e. moving the joystick, pressing buttons, etc.
     checkPlayerActions();
 }
 
@@ -63,18 +68,26 @@ void GameEngine::checkPlayerActions()
         player.leftMove = true;
         player.rightMove = true;
 
+
+        // If there is a barrel on the right side of the player
         if (playMap.barrels[player.x + 1][player.y] == 1)
         {
             player.rightMove = false;
         }
+        
+        // If there is a barrel on the left side of the player
         if (playMap.barrels[player.x - 1][player.y] == 1)
         {
             player.leftMove = false;
         }
+
+        // If there is a barrel on the bottom side of the player
         if (playMap.barrels[player.x][player.y + 1] == 1)
         {
             player.downMove = false;
         }
+
+        // If there is a barrel on the top side of the player
         if (playMap.barrels[player.x][player.y - 1] == 1)
         {
             player.upMove = false;
