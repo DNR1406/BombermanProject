@@ -69,6 +69,7 @@ void Map::drawPlayMap()
     }
 }
 
+// Daaw barrel
 void Map::drawBarrels(int x, int y)
 {
     x = 21 * x + 110;
@@ -76,6 +77,14 @@ void Map::drawBarrels(int x, int y)
 
     lcd.fillRect(x, y, 21, 21, RGB(255, 0, 0));
     lcd.drawRect(x, y, 21, 21, RGB(20, 20, 20));
+}
+
+void Map::deleteBarrels(uint16_t x, uint8_t y)
+{
+    this->barrels[x][y] = 0;
+    x = 21 * x + 110;
+    y = 21 * y + 25;
+    lcd.fillRect(x, y, 21, 21, RGB(30, 107, 7));
 }
 
 void Map::declareBarrels(uint8_t amount)
@@ -91,6 +100,7 @@ void Map::declareBarrels(uint8_t amount)
             }
         }
     }
+
     init_adc_single_sample();
     srand(single_sample());
 
@@ -109,24 +119,16 @@ void Map::declareBarrels(uint8_t amount)
             drawBarrels(x, y);
         }
     }
-    for (uint8_t x = 0; x < 9; x++)
-    {
-        for (uint8_t y = 0; y < 9; y++)
-        {
-            Serial.print(this->barrels[y][x]);
-            Serial.print(" ");
-        }
-        Serial.println();
-    }
-    for (uint8_t x = 0; x < 9; x++)
-    {
-        for (uint8_t y = 0; y < 9; y++)
-        {
-            Serial.print(this->barrels[x][y]);
-            Serial.print(" ");
-        }
-        Serial.println();
-    }
+}
+
+void Map::placeBomb(uint16_t x, uint8_t y)
+{
+    // Draw bomb
+    x = 21 * x + 120;
+    y = 21 * y + 35;
+    lcd.fillCircle(x, y, 7, RGB(0, 0, 0));
+
+    // start timer
 }
 
 void Map::init_adc_single_sample()
