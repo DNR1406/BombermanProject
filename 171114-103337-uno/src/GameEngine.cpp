@@ -27,7 +27,6 @@ void GameEngine::startGame()
 
     // c.sendMap(positions)
 
-
     // Draw player one
     player.draw();
 
@@ -51,16 +50,13 @@ void GameEngine::incrementScore()
 {
 }
 
-//Function to let the bomb detonate
-void GameEngine::detonateBomb()
-{
-}
 
 void GameEngine::checkPlayerActions()
 {
     nunchuk->init();
     uint8_t lifes = 3;
 
+    uint8_t bombPlaced;
     while (lifes)
     {
         player.upMove = true;
@@ -68,13 +64,12 @@ void GameEngine::checkPlayerActions()
         player.leftMove = true;
         player.rightMove = true;
 
-
         // If there is a barrel on the right side of the player
         if (playMap.barrels[player.x + 1][player.y] == 1)
         {
             player.rightMove = false;
         }
-        
+
         // If there is a barrel on the left side of the player
         if (playMap.barrels[player.x - 1][player.y] == 1)
         {
@@ -139,28 +134,58 @@ void GameEngine::checkPlayerActions()
         //Place bomb if zButton has been pressed
         if (nunchuk->zButton)
         {
-            //    lcd.fillCircle(player.x, player.y, 5, RGB(0, 0, 0));
+            playMap.placeBomb(player.x, player.y);
+            bombPlaced = 1;
+
+            // if timer is 1 or 2 seconds
+            // If there is a barrel on the right side of the player
+            if (playMap.barrels[player.x + 1][player.y] == 1)
+            {
+                playMap.deleteBarrels(player.x + 1, player.y);
+            }
+
+            // If there is a barrel on the left side of the player
+            if (playMap.barrels[player.x - 1][player.y] == 1)
+            {
+                playMap.deleteBarrels(player.x - 1, player.y);
+            }
+
+            // If there is a barrel on the bottom side of the player
+            if (playMap.barrels[player.x][player.y + 1] == 1)
+            {
+                playMap.deleteBarrels(player.x, player.y + 1);
+            }
+
+            // If there is a barrel on the top side of the player
+            if (playMap.barrels[player.x][player.y - 1] == 1)
+            {
+                playMap.deleteBarrels(player.x, player.y - 1);
+            }
         }
 
         // Move player upwards
         else if (nunchuk->analogY > 155 && player.upMove)
         {
-            player.up();
+            player.up(bombPlaced);
+            bombPlaced = 0;
         }
         //Move player downwards
         else if (nunchuk->analogY < 100 && player.downMove)
         {
-            player.down();
+            player.down(bombPlaced);
+            bombPlaced = 0;
         }
         //Move player to the right
         else if (nunchuk->analogX > 155 && player.rightMove)
         {
-            player.right();
+            player.right(bombPlaced);
+            bombPlaced = 0;
         }
         //Move player to the left
         else if (nunchuk->analogX < 100 && player.leftMove)
         {
-            player.left();
+            player.left(bombPlaced);
+            bombPlaced = 0;
         }
     }
 }

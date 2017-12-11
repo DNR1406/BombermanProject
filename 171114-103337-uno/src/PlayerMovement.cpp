@@ -14,11 +14,11 @@ PlayerMovement::PlayerMovement(int x, int y)
 }
 
 // Clears current player location
-void PlayerMovement::clear()
+void PlayerMovement::clearPlayer()
 {
+
     int x = 120 + (this->x * 21);
     int y = 35 + (this->y * 21);
-    lcd.drawCircle(x, y, 7, RGB(30, 107, 7));
     lcd.fillCircle(x, y, 7, RGB(30, 107, 7));
 }
 
@@ -31,33 +31,45 @@ void PlayerMovement::draw()
 }
 
 //PLayer moves to the left
-void PlayerMovement::left()
+void PlayerMovement::left(uint8_t bombPlaced)
 {
-    clear();
+    if (!bombPlaced)
+    {
+        clearPlayer();
+    }
     this->x--;
     draw();
 }
 
 //zelfde functie als left, alleen voor right
-void PlayerMovement::right()
+void PlayerMovement::right(uint8_t bombPlaced)
 {
-    clear();
+    if (!bombPlaced)
+    {
+        clearPlayer();
+    }
     this->x++;
     draw();
 }
 
 //zelfde functie als left, alleen voor down
-void PlayerMovement::down()
+void PlayerMovement::down(uint8_t bombPlaced)
 {
-    clear();
+    if (!bombPlaced)
+    {
+        clearPlayer();
+    }
     this->y++;
     draw();
 }
 
 //zelfde functie als left, alleen voor up
-void PlayerMovement::up()
+void PlayerMovement::up(uint8_t bombPlaced)
 {
-    clear();
+    if (!bombPlaced)
+    {
+        clearPlayer();
+    }
     this->y--;
     draw();
 }
