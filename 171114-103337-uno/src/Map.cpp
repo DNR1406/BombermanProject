@@ -69,6 +69,7 @@ void Map::drawPlayMap()
     }
 }
 
+// Daaw barrel
 void Map::drawBarrels(int x, int y)
 {
     x = 21 * x + 110;
