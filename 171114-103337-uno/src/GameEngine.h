@@ -12,12 +12,13 @@ class GameEngine
 {
 public:
   GameEngine();
-  void startGame();
+  void startGame(int amount);
   void selectLevel();
   void incrementScore();
   void addPlayer();
   void checkPlayerActions();
   void deleteBomb();
+  void endOfGame();
 
 private:
   MI0283QT9 lcd;

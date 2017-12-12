@@ -12,7 +12,7 @@
 Map playMap = Map();
 Screen screen = Screen();
 Communication c = Communication(1, 1);
-PlayerMovement player = PlayerMovement(0, 0);
+PlayerMovement player = PlayerMovement(8, 8);
 ArduinoNunchuk nunchuk = ArduinoNunchuk();
 
 //volatile uint32_t counterTimer2;
@@ -22,7 +22,7 @@ GameEngine::GameEngine()
 }
 
 // startGame function
-void GameEngine::startGame()
+void GameEngine::startGame(int amount)
 {
     this->nunchuk = new ArduinoNunchuk();
 
@@ -30,7 +30,7 @@ void GameEngine::startGame()
     playMap.drawPlayMap();
 
     // Declare the barrels and draw them on the screen
-    playMap.declareBarrels(55);
+    playMap.declareBarrels(amount);
 
     // c.receiveMap(barrels);
     // playMap.getBarrels(barrels);
@@ -143,9 +143,14 @@ void GameEngine::checkPlayerActions()
         //Place bomb if zButton has been pressed
         if (nunchuk->zButton)
         {
-            this->bombPlayer1 = new Bomb(player.x, player.y, counterTimer2);
-            playMap.placeBomb(player.x, player.y);
-            bombPlaced = 1;
+            if (this->bombPlayer1->returnExploded())
+            {
+                // Creates new instance of a bomb and saves x, y and last known time
+                this->bombPlayer1 = new Bomb(player.x, player.y, counterTimer2);
+
+                playMap.placeBomb(player.x, player.y);
+                bombPlaced = 1;
+            }
         }
 
         // Move player upwards
@@ -173,41 +178,61 @@ void GameEngine::checkPlayerActions()
             bombPlaced = 0;
         }
 
+        // Runs a timer and executes when timer reaches its limit
         if (bombPlayer1->checkDetonation())
         {
+            this->bombPlayer1->setExploded(1);
+
             // if timer is 1 or 2 seconds
             // If there is a barrel on the right side of the player
             if (playMap.barrels[this->bombPlayer1->returnXlocation() + 1][this->bombPlayer1->returnYlocation()] == 1)
             {
-                deleteBomb();
-                playMap.deleteBarrels(this->bombPlayer1->returnXlocation() + 1, this->bombPlayer1->returnYlocation());
+                if (this->bombPlayer1->returnXlocation() < 8)
+                {
+                    deleteBomb();
+                    playMap.deleteBarrels(this->bombPlayer1->returnXlocation() + 1, this->bombPlayer1->returnYlocation());
+                }
             }
 
             // If there is a barrel on the left side of the player
-            if (playMap.barrels[this->bombPlayer1->returnXlocation() - 1][this->bombPlayer1->returnYlocation()] == 1)
+            else if (playMap.barrels[this->bombPlayer1->returnXlocation() - 1][this->bombPlayer1->returnYlocation()] == 1)
             {
-                deleteBomb();
-                playMap.deleteBarrels(this->bombPlayer1->returnXlocation() - 1, this->bombPlayer1->returnYlocation());
+                if (this->bombPlayer1->returnXlocation())
+                {
+                    deleteBomb();
+                    playMap.deleteBarrels(this->bombPlayer1->returnXlocation() - 1, this->bombPlayer1->returnYlocation());
+                }
             }
 
             // If there is a barrel on the bottom side of the player
-            if (playMap.barrels[this->bombPlayer1->returnXlocation()][this->bombPlayer1->returnYlocation() + 1] == 1)
+            else if (playMap.barrels[this->bombPlayer1->returnXlocation()][this->bombPlayer1->returnYlocation() + 1] == 1)
             {
-                deleteBomb();
-                playMap.deleteBarrels(this->bombPlayer1->returnXlocation(), this->bombPlayer1->returnYlocation() + 1);
+                if (this->bombPlayer1->returnYlocation() < 8)
+                {
+                    deleteBomb();
+                    playMap.deleteBarrels(this->bombPlayer1->returnXlocation(), this->bombPlayer1->returnYlocation() + 1);
+                }
             }
 
             // If there is a barrel on the top side of the player
-            if (playMap.barrels[this->bombPlayer1->returnXlocation()][this->bombPlayer1->returnYlocation() - 1] == 1)
+            else if (playMap.barrels[this->bombPlayer1->returnXlocation()][this->bombPlayer1->returnYlocation() - 1] == 1)
+            {
+                if (this->bombPlayer1->returnYlocation())
+                {
+                    deleteBomb();
+                    playMap.deleteBarrels(this->bombPlayer1->returnXlocation(), this->bombPlayer1->returnYlocation() - 1);
+                }
+            }
+            else
             {
                 deleteBomb();
-                playMap.deleteBarrels(this->bombPlayer1->returnXlocation(), this->bombPlayer1->returnYlocation() - 1);
             }
         }
     }
 }
 
-void GameEngine::deleteBomb() {
+void GameEngine::deleteBomb()
+{
     int x = 120 + (this->bombPlayer1->returnXlocation() * 21);
     int y = 35 + (this->bombPlayer1->returnYlocation() * 21);
     lcd.fillCircle(x, y, 8, RGB(30, 107, 7));

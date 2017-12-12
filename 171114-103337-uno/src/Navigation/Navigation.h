@@ -34,6 +34,11 @@ private:
   void deleteBrightnessScreen();
   void startBrightnessScreen();
 
+  // Levelscreen
+  void drawLevelScreen();
+  void deleteLevelScreen();
+  void startLevelScreen();
+
   // Other
   int getAnalogVal();
   void drawNotFinishedYet();

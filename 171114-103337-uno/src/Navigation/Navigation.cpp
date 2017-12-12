@@ -24,8 +24,6 @@ void Navigation::drawStartScreen()
 
     // Draws credits button
     this->screen->drawButton(F("CREDITS"), 3, 110, 187);
-
-     Serial.println(freeMemory());
 }
 
 void Navigation::deleteStartScreen()
@@ -61,7 +59,7 @@ void Navigation::startStartScreen()
         {
         case 1:
             // Start game
-            this->gameEngine->startGame();
+            this->startLevelScreen();
             this->drawStartScreen();
             pressed = 0;
             break;
@@ -242,19 +240,84 @@ void Navigation::startBrightnessScreen()
     this->deleteBrightnessScreen();
 }
 
+// Levelscreen
+void Navigation::drawLevelScreen()
+{
+    this->screen->drawHeader(F("LEVEL SLCT"));
+    this->screen->drawBackButton();
+    this->screen->drawButton(F("LEVEL 1"), 1, 110, 108);
+    this->screen->drawButton(F("LEVEL 2"), 2, 110, 147);
+    this->screen->drawButton(F("LEVEL 3"), 3, 110, 187);
+}
+
+void Navigation::deleteLevelScreen()
+{
+    this->screen->deleteBackButton();
+    this->screen->deleteHeader();
+    this->screen->deleteButton(1);
+    this->screen->deleteButton(2);
+    this->screen->deleteButton(3);
+}
+
+// Select between levels of amount of barrels
+void Navigation::startLevelScreen()
+{
+    this->drawLevelScreen();
+
+    // Loop while nothing is pressed
+    uint8_t pressed = 0;
+    while (!pressed)
+    {
+        // Check for press
+        pressed = this->screen->checkTouchscreen();
+
+        // If anyting is pressed, delete Levels screen
+        if (pressed)
+        {
+            this->deleteLevelScreen();
+        }
+
+        // Check what is pressed
+        switch (pressed)
+        {
+        case 1:
+            // Start game with 18 barrels
+            this->gameEngine->startGame(18);
+            this->drawLevelScreen();
+            pressed = 0;
+            break;
+        case 2:
+            // Start game with 36 barrels
+            this->gameEngine->startGame(36);
+            this->drawLevelScreen();
+            pressed = 0;
+            break;
+        case 3:
+            // Start game with 55 barrels
+            this->gameEngine->startGame(55);
+            this->drawLevelScreen();
+            pressed = 0;
+            break;
+        case 4:
+            // Go back
+            return;
+            break;
+        };
+    }
+}
+
 // Other
 int Navigation::getAnalogVal()
 {
     uint16_t result;
     // Start conversion
-    ADCSRA |= (1 << ADSC); 
+    ADCSRA |= (1 << ADSC);
     // Wait
     while (ADCSRA & (1 << ADSC))
-        ; 
+        ;
     result = ADC;
     return result / 10;
 }
-
 
 // Functions for stuff that is not finished
 void Navigation::drawNotFinishedYet()

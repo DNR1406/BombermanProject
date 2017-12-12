@@ -14,8 +14,8 @@ class PlayerMovement
     void clearPlayer();
     void draw();
 
-    int x;
-    int y;
+    uint8_t x;
+    uint8_t y;
     bool leftMove;
     bool rightMove;
     bool upMove;

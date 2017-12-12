@@ -11,11 +11,15 @@ class Bomb
     uint8_t checkDetonation();
     uint8_t returnXlocation();
     uint8_t returnYlocation();
+    uint8_t returnExploded();
+    void setExploded(uint8_t exploded);
 
   private:
     uint8_t lastXlocation;
     uint8_t lastYlocation;
     uint32_t lastKnownTime;
+    uint8_t exploded;
+
 };
 
 #endif
