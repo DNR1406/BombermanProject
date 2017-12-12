@@ -19,8 +19,6 @@ If you create a header file, put it here: */
 
 #include "Functions.h"
 
-
-
 //other
 #include <SPI.h>
 #include <GraphicsLib.h>
@@ -38,10 +36,12 @@ If you create a header file, put it here: */
 
 
 /*---------------------------------------------------------------------------
-If you use a struct, put it here: */
-typedef struct location
-{
-    int x, y;
-} location;
+global variables */
+
+extern volatile uint8_t buffer[362];
+extern volatile uint8_t bitToSend;
+extern volatile uint8_t send;
+extern volatile uint32_t counterTimer2;
+
 
 #endif
