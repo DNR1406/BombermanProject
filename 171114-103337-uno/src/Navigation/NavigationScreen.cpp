@@ -31,12 +31,12 @@ void NavigationScreen::startScreen()
 // Header
 void NavigationScreen::drawHeader(String text)
 {
-  this->lcd.drawText(100, 20, text, RGB(0, 0, 0), RGB(160, 182, 219), 2);
+  this->lcd.drawText(80, 20, text, RGB(0, 0, 0), RGB(160, 182, 219), 2);
 }
 
 void NavigationScreen::deleteHeader()
 {
-  this->lcd.drawText(100, 20, "                ", RGB(0, 0, 0), RGB(160, 182, 219), 2);
+  this->lcd.drawText(80, 20, "                ", RGB(0, 0, 0), RGB(160, 182, 219), 2);
 }
 
 // Back button

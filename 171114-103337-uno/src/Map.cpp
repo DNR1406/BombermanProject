@@ -19,6 +19,8 @@ void Map::drawPlayMap()
     lcd.fillRect(89, 235, 231, 5, RGB(255, 0, 0));
 
     lcd.drawText(5, 5, "Home", RGB(255, 0, 0), RGB(160, 182, 219), 1);
+    // Seperates the home button from the rest of the screen
+    lcd.fillRect(0, 25, 89, 4, RGB(255, 0, 0));
 
     // Going thru the horizontal grids. We have 4 of them. Per 4 horizontal points
     // We draw 4 vertical squares the increment of the y1 and x1 are both 54 because
@@ -89,18 +91,18 @@ void Map::deleteBarrels(uint16_t x, uint8_t y)
 
 void Map::declareBarrels(uint8_t amount)
 {
-    lcd.drawText(0, 100, " LEVEL: ", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+    lcd.drawText(15, 35, "LEVEL: ", RGB(0, 0, 0), RGB(160, 182, 219), 1);
     if (amount < 19)
     {
-        lcd.drawText(0, 110, "   1", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+        lcd.drawText(65, 35, "1", RGB(0, 0, 0), RGB(160, 182, 219), 1);
     }
     else if (amount < 37)
     {
-        lcd.drawText(0, 110, "   2", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+        lcd.drawText(65, 35, "2", RGB(0, 0, 0), RGB(160, 182, 219), 1);
     }
     else
     {
-        lcd.drawText(0, 110, "   3", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+        lcd.drawText(65, 35, "3", RGB(0, 0, 0), RGB(160, 182, 219), 1);
     }
 
     // lcd.drawInteger(0, 110, 50, amount, RGB(255,0,0), RGB(160,182,219), 1);
