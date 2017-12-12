@@ -17,7 +17,7 @@ void init_begin()
     init_in_out_put();
     init_single_Sample();
     init_timer1();
-    // init_timer2();
+    init_timer2();
     sei();
 }
 
@@ -45,8 +45,19 @@ void init_single_Sample()
     ADCSRA |= (1 << ADEN);
 }
 
-//function to init timer 1
+// Function to init timer 2
 void init_timer1()
+{
+    // CTC, No prescaler
+    TCCR1B = _BV(WGM12) | _BV(CS10);
+    // compare A register value (210 * clock speed)
+    //  = 13.125 nS , so frequency is 1 / (2 * 13.125) = 38095
+    OCR1A = 209;
+    TIMSK1 |= (1 << OCIE1A);
+}
+
+//function to init timer 1
+void init_timer2()
 {
     //TCNT2 count to 200
     OCR2A = 200;
@@ -58,46 +69,36 @@ void init_timer1()
     TIMSK2 |= (1 << OCIE2A);
 }
 
-// Function to init timer 2
-void init_timer2()
-{
-    // CTC, No prescaler
-    TCCR1B = _BV(WGM12) | _BV(CS10);
-    // compare A register value (210 * clock speed)
-    //  = 13.125 nS , so frequency is 1 / (2 * 13.125) = 38095
-    OCR1A = 209;
-    TIMSK1 |= (1 << OCIE1A);
-}
-
 /*--------------------------------------------------------------------------
 Timer functions:
 */
-// interupt functie
+
 ISR(TIMER2_COMPA_vect)
 {
-    if (!(counterTimer2 % 6))
+    if (!(counterTimer2 == 6))
     {
-        if (buffer[bitToSend])
-        {
-            send = 1;
-        }
-        else
-        {
-            send = 0;
-        }
+        // if (buffer[bitToSend])
+        // {
+        //     send = 1;
+        // }
+        // else
+        // {
+        //     send = 0;
+        // }
 
-        bitToSend++;
+        // bitToSend++;
 
-        if (bitToSend == 326)
-        {
-            bitToSend = 0;
-        }
+        // if (bitToSend == 326)
+        // {
+        //     bitToSend = 0;
+        // }
+        // counterTimer2 = 0;
     }
 
-    if (!(counterTimer2 % 100))
-    {
-        Serial.println(counterTimer2);
-    }
+    // if (!(counterTimer2 % 100))
+    // {
+    //     // Serial.println(counterTimer2);
+    // }
 
     counterTimer2++;
 }

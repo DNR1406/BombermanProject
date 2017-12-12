@@ -5,9 +5,17 @@
 
 class Bomb
 {
- public:
- Bomb();
- Bomb(int x, int y);
+  public:
+    Bomb();
+    Bomb(uint8_t x, uint8_t y, uint32_t startTime);
+    uint8_t checkDetonation();
+    uint8_t returnXlocation();
+    uint8_t returnYlocation();
+
+  private:
+    uint8_t lastXlocation;
+    uint8_t lastYlocation;
+    uint32_t lastKnownTime;
 };
 
 #endif

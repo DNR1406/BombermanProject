@@ -3,6 +3,7 @@
 #include "include.h"
 
 class ArduinoNunchuk;
+class Bomb;
 
 #ifndef GameEngine_H
 #define GameEngine_H
@@ -16,11 +17,12 @@ public:
   void incrementScore();
   void addPlayer();
   void checkPlayerActions();
-  void GameEngine::detonateBomb();
+  void deleteBomb();
 
 private:
   MI0283QT9 lcd;
   ArduinoNunchuk *nunchuk;
+  Bomb *bombPlayer1;
 };
 
 #endif

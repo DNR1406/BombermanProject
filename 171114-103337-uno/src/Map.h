@@ -2,10 +2,6 @@
 #include <stdint.h>
 #include "include.h"
 
-typedef struct wall
-{
-  int x, y;
-} wall;
 
 #ifndef Map_H
 #define Map_H

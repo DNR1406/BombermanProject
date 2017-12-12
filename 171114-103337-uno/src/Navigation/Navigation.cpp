@@ -204,7 +204,7 @@ void Navigation::startCreditScreen()
 void Navigation::drawBrightnessScreen()
 {
     // Draw brightness screen
-    this->screen->drawHeader(F("BRIGHTNES"));
+    this->screen->drawHeader(F("BRIGHTNESS"));
     this->screen->drawBackButton();
     this->screen->drawBrightness();
 }

@@ -1,4 +1,12 @@
-#include "include.h"
+#include "Map.h"
+#include "Screen.h"
+#include "Communication/Communication.h"
+#include "PlayerMovement.h"
+#include "ArduinoNunchuk.h"
+
+#include <stdint.h>
+
+#include "Globals.h"
 
 //Constructor
 Map playMap = Map();
@@ -6,6 +14,8 @@ Screen screen = Screen();
 Communication c = Communication(1, 1);
 PlayerMovement player = PlayerMovement(0, 0);
 ArduinoNunchuk nunchuk = ArduinoNunchuk();
+
+//volatile uint32_t counterTimer2;
 
 GameEngine::GameEngine()
 {
@@ -20,7 +30,7 @@ void GameEngine::startGame()
     playMap.drawPlayMap();
 
     // Declare the barrels and draw them on the screen
-    playMap.declareBarrels(10);
+    playMap.declareBarrels(55);
 
     // c.receiveMap(barrels);
     // playMap.getBarrels(barrels);
@@ -49,7 +59,6 @@ void GameEngine::selectLevel()
 void GameEngine::incrementScore()
 {
 }
-
 
 void GameEngine::checkPlayerActions()
 {
@@ -134,33 +143,9 @@ void GameEngine::checkPlayerActions()
         //Place bomb if zButton has been pressed
         if (nunchuk->zButton)
         {
+            this->bombPlayer1 = new Bomb(player.x, player.y, counterTimer2);
             playMap.placeBomb(player.x, player.y);
             bombPlaced = 1;
-
-            // if timer is 1 or 2 seconds
-            // If there is a barrel on the right side of the player
-            if (playMap.barrels[player.x + 1][player.y] == 1)
-            {
-                playMap.deleteBarrels(player.x + 1, player.y);
-            }
-
-            // If there is a barrel on the left side of the player
-            if (playMap.barrels[player.x - 1][player.y] == 1)
-            {
-                playMap.deleteBarrels(player.x - 1, player.y);
-            }
-
-            // If there is a barrel on the bottom side of the player
-            if (playMap.barrels[player.x][player.y + 1] == 1)
-            {
-                playMap.deleteBarrels(player.x, player.y + 1);
-            }
-
-            // If there is a barrel on the top side of the player
-            if (playMap.barrels[player.x][player.y - 1] == 1)
-            {
-                playMap.deleteBarrels(player.x, player.y - 1);
-            }
         }
 
         // Move player upwards
@@ -187,5 +172,43 @@ void GameEngine::checkPlayerActions()
             player.left(bombPlaced);
             bombPlaced = 0;
         }
+
+        if (bombPlayer1->checkDetonation())
+        {
+            // if timer is 1 or 2 seconds
+            // If there is a barrel on the right side of the player
+            if (playMap.barrels[this->bombPlayer1->returnXlocation() + 1][this->bombPlayer1->returnYlocation()] == 1)
+            {
+                deleteBomb();
+                playMap.deleteBarrels(this->bombPlayer1->returnXlocation() + 1, this->bombPlayer1->returnYlocation());
+            }
+
+            // If there is a barrel on the left side of the player
+            if (playMap.barrels[this->bombPlayer1->returnXlocation() - 1][this->bombPlayer1->returnYlocation()] == 1)
+            {
+                deleteBomb();
+                playMap.deleteBarrels(this->bombPlayer1->returnXlocation() - 1, this->bombPlayer1->returnYlocation());
+            }
+
+            // If there is a barrel on the bottom side of the player
+            if (playMap.barrels[this->bombPlayer1->returnXlocation()][this->bombPlayer1->returnYlocation() + 1] == 1)
+            {
+                deleteBomb();
+                playMap.deleteBarrels(this->bombPlayer1->returnXlocation(), this->bombPlayer1->returnYlocation() + 1);
+            }
+
+            // If there is a barrel on the top side of the player
+            if (playMap.barrels[this->bombPlayer1->returnXlocation()][this->bombPlayer1->returnYlocation() - 1] == 1)
+            {
+                deleteBomb();
+                playMap.deleteBarrels(this->bombPlayer1->returnXlocation(), this->bombPlayer1->returnYlocation() - 1);
+            }
+        }
     }
+}
+
+void GameEngine::deleteBomb() {
+    int x = 120 + (this->bombPlayer1->returnXlocation() * 21);
+    int y = 35 + (this->bombPlayer1->returnYlocation() * 21);
+    lcd.fillCircle(x, y, 8, RGB(30, 107, 7));
 }
