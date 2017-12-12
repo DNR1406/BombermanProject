@@ -89,6 +89,21 @@ void Map::deleteBarrels(uint16_t x, uint8_t y)
 
 void Map::declareBarrels(uint8_t amount)
 {
+    lcd.drawText(0, 100, " LEVEL: ", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+    if (amount < 19)
+    {
+        lcd.drawText(0, 110, "   1", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+    }
+    else if (amount < 37)
+    {
+        lcd.drawText(0, 110, "   2", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+    }
+    else
+    {
+        lcd.drawText(0, 110, "   3", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+    }
+
+    // lcd.drawInteger(0, 110, 50, amount, RGB(255,0,0), RGB(160,182,219), 1);
 
     for (uint8_t x = 0; x < 9; x++)
     {
@@ -138,7 +153,6 @@ void Map::init_adc_single_sample()
     ADCSRA = (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0); // clock/128
     ADCSRA |= (1 << ADEN);                               // ADC enable
 }
-
 
 // Single sample of pin A0
 uint16_t Map::single_sample()

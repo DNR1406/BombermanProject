@@ -21,6 +21,7 @@ void GameEngine::startGame(int amount)
 
     // Declare the barrels and draw them on the screen
     playMap.declareBarrels(amount);
+    
 
     // c.receiveMap(barrels);
     // playMap.getBarrels(barrels);
