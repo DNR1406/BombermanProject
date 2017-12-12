@@ -14,7 +14,7 @@ public:
   void incrementScore();
   void addPlayer();
   void checkPlayerActions();
-  void GameEngine::detonateBomb();
+  int freeRam();
 
 private:
   MI0283QT9 lcd;

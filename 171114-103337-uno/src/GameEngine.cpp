@@ -4,7 +4,7 @@
 Map playMap = Map();
 Screen screen = Screen();
 Communication c = Communication(1, 1);
-PlayerMovement player = PlayerMovement(0, 0);
+PlayerMovement player = PlayerMovement(8, 8);
 ArduinoNunchuk nunchuk = ArduinoNunchuk();
 
 GameEngine::GameEngine()
@@ -20,7 +20,7 @@ void GameEngine::startGame()
     playMap.drawPlayMap();
 
     // Declare the barrels and draw them on the screen
-    playMap.declareBarrels(10);
+    playMap.declareBarrels(55);
 
     // c.receiveMap(barrels);
     // playMap.getBarrels(barrels);
@@ -49,7 +49,6 @@ void GameEngine::selectLevel()
 void GameEngine::incrementScore()
 {
 }
-
 
 void GameEngine::checkPlayerActions()
 {
@@ -139,27 +138,40 @@ void GameEngine::checkPlayerActions()
 
             // if timer is 1 or 2 seconds
             // If there is a barrel on the right side of the player
+
             if (playMap.barrels[player.x + 1][player.y] == 1)
             {
-                playMap.deleteBarrels(player.x + 1, player.y);
+                if (player.x < 8)
+                {
+                    playMap.deleteBarrels(player.x + 1, player.y);
+                }
             }
 
             // If there is a barrel on the left side of the player
             if (playMap.barrels[player.x - 1][player.y] == 1)
             {
-                playMap.deleteBarrels(player.x - 1, player.y);
+                if (player.x)
+                {
+                    playMap.deleteBarrels(player.x - 1, player.y);
+                }
             }
 
             // If there is a barrel on the bottom side of the player
             if (playMap.barrels[player.x][player.y + 1] == 1)
             {
-                playMap.deleteBarrels(player.x, player.y + 1);
+                if (player.y < 8)
+                {
+                    playMap.deleteBarrels(player.x, player.y + 1);
+                }
             }
 
             // If there is a barrel on the top side of the player
             if (playMap.barrels[player.x][player.y - 1] == 1)
             {
-                playMap.deleteBarrels(player.x, player.y - 1);
+                if (player.y)
+                {
+                    playMap.deleteBarrels(player.x, player.y - 1);
+                }
             }
         }
 
@@ -187,5 +199,12 @@ void GameEngine::checkPlayerActions()
             player.left(bombPlaced);
             bombPlaced = 0;
         }
+        Serial.println(freeRam());
     }
+}
+int GameEngine::freeRam()
+{
+    extern int __heap_start, *__brkval;
+    int v;
+    return (int)&v - (__brkval == 0 ? (int)&__heap_start : (int)__brkval);
 }

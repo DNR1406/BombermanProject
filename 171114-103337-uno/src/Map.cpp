@@ -139,6 +139,7 @@ void Map::init_adc_single_sample()
     ADCSRA |= (1 << ADEN);                               // ADC enable
 }
 
+
 // Single sample of pin A0
 uint16_t Map::single_sample()
 {
