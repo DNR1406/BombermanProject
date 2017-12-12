@@ -1,6 +1,11 @@
-//void for startup timer
-void init_timer();
-//function for in/output
+// Function to startup all initits
+void init_begin();
+
+// Function for in/output
 void init_in_out_put();
-//function to init single sample
+// Function to init single sample
 void init_single_Sample();
+// Function to startup timer
+void init_timer1();
+// Function to startup timer2
+void init_timer2();

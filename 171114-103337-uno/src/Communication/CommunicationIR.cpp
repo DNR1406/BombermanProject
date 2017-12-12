@@ -3,168 +3,98 @@
 
 communicationIR::communicationIR(int frequenty)
 {
-    this->startTimer1();
-    this->startTimer2();
 }
 
 void communicationIR::fillBuffer(int *buffer, int x, int y, bool bomb)
 {
-    int X = 9;
-    int Y = 200;
-    bool bomB = 1;
-    int XPLUSY = X + Y;
+    uint8_t bufferCounter = 0;
 
-    int bufferCounter = 0;
-
-    for (int i = 0; i < 362; i++)
+    for (uint8_t i = 0; i < 38; i++)
     {
         buffer[i] = 0;
     }
 
     //startbit
-    for (int i = 0; i < 24; i++)
+    for (uint8_t i = 0; i < 4; i++)
     {
         buffer[bufferCounter] = 1;
         bufferCounter++;
     }
 
     //interval startbit
-    for (int i = 0; i < 6; i++)
+
+    buffer[bufferCounter] = 0;
+    bufferCounter++;
+
+    //fill X nibble in buffer
+    for (uint8_t i = 4; i >= 0; i--)
     {
+        if ((x >> i) & 1)
+        {
+            buffer[bufferCounter] = 1;
+            bufferCounter++;
+            buffer[bufferCounter] = 1;
+            bufferCounter++;
+        }
+        else
+        {
+            buffer[bufferCounter] = 1;
+            bufferCounter++;
+        }
+
         buffer[bufferCounter] = 0;
         bufferCounter++;
     }
-    //fill X nibble in buffer
-    for (int i = 7; i >= 0; i--)
-    {
-        if (X >> i & 1)
-        {
-            for (int i = 0; i < 12; i++)
-            {
-                buffer[bufferCounter] = 1;
-                bufferCounter++;
-            }
-        }
-        else
-        {
-            for (int i = 0; i < 6; i++)
-            {
-                buffer[bufferCounter] = 1;
-                bufferCounter++;
-            }
-        }
-        for (int i = 0; i < 6; i++)
-        {
-            buffer[bufferCounter] = 0;
-            bufferCounter++;
-        }
-    }
     //fill y nibble in buffer
-    for (int i = 7; i >= 0; i--)
+    for (uint8_t i = 4; i >= 0; i--)
     {
-        if (Y >> i & 1)
+        if ((y >> i) & 1)
         {
-            for (int i = 0; i < 12; i++)
-            {
-                buffer[bufferCounter] = 1;
-                bufferCounter++;
-            }
+            buffer[bufferCounter] = 1;
+            bufferCounter++;
+            buffer[bufferCounter] = 1;
+            bufferCounter++;
         }
         else
         {
-            for (int i = 0; i < 6; i++)
-            {
-                buffer[bufferCounter] = 1;
-                bufferCounter++;
-            }
-        }
-        for (int i = 0; i < 6; i++)
-        {
-            buffer[bufferCounter] = 0;
+            buffer[bufferCounter] = 1;
             bufferCounter++;
         }
+
+        buffer[bufferCounter] = 0;
+        bufferCounter++;
     }
 
     //Fill bomb bit in buffer
-    if (bomB)
+    if (bomb)
     {
-        for (int i = 0; i < 12; i++)
-        {
-            buffer[bufferCounter] = 1;
-            bufferCounter++;
-        }
+        buffer[bufferCounter] = 1;
+        bufferCounter++;
+        buffer[bufferCounter] = 1;
+        bufferCounter++;
     }
     else
     {
-        for (int i = 0; i < 6; i++)
-        {
-            buffer[bufferCounter] = 1;
-            bufferCounter++;
-        }
-    }
-    for (int i = 0; i < 6; i++)
-    {
-        buffer[bufferCounter] = 0;
+        buffer[bufferCounter] = 1;
         bufferCounter++;
     }
-if ( XPLUSY % 2 == 0)
+
+    buffer[bufferCounter] = 0;
+    bufferCounter++;
+
+    if ((x + y) % 2)
     {
-        
-        for (int i = 0; i < 12; i++)
-        {
-            buffer[bufferCounter] = 1;
-            bufferCounter++;
-        }
+        buffer[bufferCounter] = 1;
+        bufferCounter++;
+        buffer[bufferCounter] = 1;
+        bufferCounter++;
     }
     else
     {
-        for (int i = 0; i < 6; i++)
-        {
-            buffer[bufferCounter] = 1;
-            bufferCounter++;
-        }
-    }
-     for (int i = 0; i < 6; i++)
-    {
-        buffer[bufferCounter] = 0;
+        buffer[bufferCounter] = 1;
         bufferCounter++;
     }
 
-    for (int i = 0; i < 362; i++)
-    {
-        Serial.print(i);
-        Serial.print("\t");
-        Serial.println(buffer[i]);
-        
-    }
-    
-}
-
-void communicationIR::startTimer2()
-{
-    //set registers to zero
-    TCCR2A = 0;
-    TCCR2B = 0;
-    TCNT2 = 0;
-    //TCNT2 count to 200
-    OCR2A = 200;
-    //enable CTC, counter counts to 200, after that it starts again
-    TCCR2A |= (1 << WGM21);
-    //prescaler 8
-    TCCR2B |= (1 << CS21);
-    //enable TIMER2_COMPA_vect
-    TIMSK2 |= (1 << OCIE2A);
-    //enable interrupts!
-    sei();
-}
-void communicationIR::startTimer1()
-{
- TCCR1B = 0;
- TCCR1A = 0; 
- TCNT1 = 0;
- TCCR1B = _BV(WGM12) | _BV (CS10);   // CTC, No prescaler
- OCR1A =  209;          // compare A register value (210 * clock speed)
-                        //  = 13.125 nS , so frequency is 1 / (2 * 13.125) = 38095
- TIMSK1 |= (1 << OCIE1A);
- sei();
+    buffer[bufferCounter] = 0;
+    bufferCounter++;
 }

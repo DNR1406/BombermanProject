@@ -38,7 +38,7 @@ If you create a header file, put it here: */
 /*---------------------------------------------------------------------------
 global variables */
 
-extern volatile uint8_t buffer[362];
+extern volatile uint8_t buffer[38];
 extern volatile uint8_t bitToSend;
 extern volatile uint8_t send;
 extern volatile uint32_t counterTimer2;

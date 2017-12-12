@@ -2,11 +2,8 @@
 
 int main()
 {
-    init();
+    init_begin();
     Serial.begin(9600);
-
-    init_in_out_put();
-    init_single_Sample();
 
     Navigation *navigation = new Navigation();
     navigation->startStartScreen();

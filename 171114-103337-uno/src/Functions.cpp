@@ -1,26 +1,24 @@
 #include <avr/interrupt.h>
-#include "include.h"
+#include <Arduino.h>
 
+#include "Functions.h"
+#include "Globals.h"
 
-//function to init timer
-void init_timer()
+//variables
+volatile uint8_t buffer[38];
+volatile uint8_t bitToSend;
+volatile uint8_t send;
+volatile uint32_t counterTimer2;
+
+void init_begin()
 {
-    //set registers to zero
-    TCCR2A = 0;
-    TCCR2B = 0;
-    TCNT2  = 0;
+    init();
 
-    //TCNT2 count to 200
-    OCR2A = 200;
-    //enable CTC, counter counts to 200, after that it starts again
-    TCCR2A |= (1 << WGM21);
-    //prescaler 8
-    TCCR2B |= (1 << CS21);
-    //enable TIMER2_COMPA_vect
-    TIMSK2 |= (1 << OCIE2A);
-
-    //enable interrupts!
-    sei();     
+    init_in_out_put();
+    init_single_Sample();
+    init_timer1();
+    // init_timer2();
+    sei();
 }
 
 //function for in/output
@@ -47,19 +45,38 @@ void init_single_Sample()
     ADCSRA |= (1 << ADEN);
 }
 
+//function to init timer 1
+void init_timer1()
+{
+    //TCNT2 count to 200
+    OCR2A = 200;
+    //enable CTC, counter counts to 200, after that it starts again
+    TCCR2A |= (1 << WGM21);
+    //prescaler 8
+    TCCR2B |= (1 << CS21);
+    //enable TIMER2_COMPA_vect
+    TIMSK2 |= (1 << OCIE2A);
+}
 
+// Function to init timer 2
+void init_timer2()
+{
+    // CTC, No prescaler
+    TCCR1B = _BV(WGM12) | _BV(CS10);
+    // compare A register value (210 * clock speed)
+    //  = 13.125 nS , so frequency is 1 / (2 * 13.125) = 38095
+    OCR1A = 209;
+    TIMSK1 |= (1 << OCIE1A);
+}
 
-volatile uint8_t buffer[362];
-volatile uint8_t bitToSend;
-volatile uint8_t send;
-volatile uint32_t counterTimer2;
-
+/*--------------------------------------------------------------------------
+Timer functions:
+*/
 // interupt functie
 ISR(TIMER2_COMPA_vect)
 {
-    if (counterTimer2 == 1000)
+    if (!(counterTimer2 % 6))
     {
-
         if (buffer[bitToSend])
         {
             send = 1;
@@ -75,10 +92,16 @@ ISR(TIMER2_COMPA_vect)
         {
             bitToSend = 0;
         }
-        counterTimer2 = 0;
     }
+
+    if (!(counterTimer2 % 100))
+    {
+        Serial.println(counterTimer2);
+    }
+
     counterTimer2++;
 }
+
 ISR(TIMER1_COMPA_vect)
 {
     TCCR1A ^= _BV(COM1A0);
