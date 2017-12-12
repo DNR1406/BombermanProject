@@ -11,7 +11,7 @@ class GameEngine
 {
 public:
   GameEngine();
-  void startGame();
+  void startGame(int amount);
   void selectLevel();
   void incrementScore();
   void addPlayer();

@@ -12,15 +12,15 @@ GameEngine::GameEngine()
 }
 
 // startGame function
-void GameEngine::startGame()
+void GameEngine::startGame(int amount)
 {
     this->nunchuk = new ArduinoNunchuk();
 
-    // draws playMap on screen
+    // draws playMap on screen 
     playMap.drawPlayMap();
 
     // Declare the barrels and draw them on the screen
-    playMap.declareBarrels(55);
+    playMap.declareBarrels(amount);
 
     // c.receiveMap(barrels);
     // playMap.getBarrels(barrels);
@@ -55,7 +55,7 @@ void GameEngine::checkPlayerActions()
     nunchuk->init();
     uint8_t lifes = 3;
 
-    uint8_t bombPlaced;
+    uint8_t bombPlaced; 
     while (lifes)
     {
         player.upMove = true;
