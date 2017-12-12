@@ -1,7 +1,7 @@
 #include "include.h"
 
 //Constructor
-Map grid = Map();
+Map playMap = Map();
 Screen screen = Screen();
 Communication c = Communication(1, 1);
 PlayerMovement player = PlayerMovement(0, 0);
@@ -15,19 +15,22 @@ GameEngine::GameEngine()
 void GameEngine::startGame()
 {
     this->nunchuk = new ArduinoNunchuk();
-    barrel barrelPositions[55] = {};
-    // draws grid on screen
-    grid.drawGrid();
-    grid.declareBarrels(30, barrelPositions);
 
-    uint8_t barrels[55];
+    // draws playMap on screen
+    playMap.drawPlayMap();
+
+    // Declare the barrels and draw them on the screen
+    playMap.declareBarrels(10);
 
     // c.receiveMap(barrels);
-    // grid.getBarrels(barrels);
+    // playMap.getBarrels(barrels);
 
     // c.sendMap(positions)
 
+    // Draw player one
     player.draw();
+
+    // Check what the player is doing, i.e. moving the joystick, pressing buttons, etc.
     checkPlayerActions();
 }
 
@@ -47,20 +50,43 @@ void GameEngine::incrementScore()
 {
 }
 
+
 void GameEngine::checkPlayerActions()
 {
     nunchuk->init();
     uint8_t lifes = 3;
 
-
-
-    // player.x != walls[i].x && player.y != walls[i].y
+    uint8_t bombPlaced;
     while (lifes)
     {
         player.upMove = true;
         player.downMove = true;
         player.leftMove = true;
         player.rightMove = true;
+
+        // If there is a barrel on the right side of the player
+        if (playMap.barrels[player.x + 1][player.y] == 1)
+        {
+            player.rightMove = false;
+        }
+
+        // If there is a barrel on the left side of the player
+        if (playMap.barrels[player.x - 1][player.y] == 1)
+        {
+            player.leftMove = false;
+        }
+
+        // If there is a barrel on the bottom side of the player
+        if (playMap.barrels[player.x][player.y + 1] == 1)
+        {
+            player.downMove = false;
+        }
+
+        // If there is a barrel on the top side of the player
+        if (playMap.barrels[player.x][player.y - 1] == 1)
+        {
+            player.upMove = false;
+        }
 
         // If player is on 2nd (1) 4th (3) or 6th (5) or 8th (7) row from x, they can
         // Never move up or down
@@ -101,34 +127,65 @@ void GameEngine::checkPlayerActions()
         {
             player.downMove = false;
         }
+
         // Check if state of nunchuk had changed
         nunchuk->update(); //Update nunchuk conditions
 
         //Place bomb if zButton has been pressed
         if (nunchuk->zButton)
         {
-            //    lcd.fillCircle(player.x, player.y, 5, RGB(0, 0, 0));
+            playMap.placeBomb(player.x, player.y);
+            bombPlaced = 1;
+
+            // if timer is 1 or 2 seconds
+            // If there is a barrel on the right side of the player
+            if (playMap.barrels[player.x + 1][player.y] == 1)
+            {
+                playMap.deleteBarrels(player.x + 1, player.y);
+            }
+
+            // If there is a barrel on the left side of the player
+            if (playMap.barrels[player.x - 1][player.y] == 1)
+            {
+                playMap.deleteBarrels(player.x - 1, player.y);
+            }
+
+            // If there is a barrel on the bottom side of the player
+            if (playMap.barrels[player.x][player.y + 1] == 1)
+            {
+                playMap.deleteBarrels(player.x, player.y + 1);
+            }
+
+            // If there is a barrel on the top side of the player
+            if (playMap.barrels[player.x][player.y - 1] == 1)
+            {
+                playMap.deleteBarrels(player.x, player.y - 1);
+            }
         }
 
         // Move player upwards
         else if (nunchuk->analogY > 155 && player.upMove)
         {
-            player.up();
+            player.up(bombPlaced);
+            bombPlaced = 0;
         }
         //Move player downwards
         else if (nunchuk->analogY < 100 && player.downMove)
         {
-            player.down();
+            player.down(bombPlaced);
+            bombPlaced = 0;
         }
         //Move player to the right
         else if (nunchuk->analogX > 155 && player.rightMove)
         {
-            player.right();
+            player.right(bombPlaced);
+            bombPlaced = 0;
         }
         //Move player to the left
         else if (nunchuk->analogX < 100 && player.leftMove)
         {
-            player.left();
+            player.left(bombPlaced);
+            bombPlaced = 0;
         }
     }
 }

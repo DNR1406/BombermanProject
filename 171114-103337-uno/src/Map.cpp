@@ -10,7 +10,7 @@ Map::Map()
 {
 }
 
-void Map::drawGrid()
+void Map::drawPlayMap()
 {
     // Delete menu with overwriting the background
     lcd.fillRect(0, 0, 83, 240, RGB(160, 182, 219));
@@ -69,101 +69,66 @@ void Map::drawGrid()
     }
 }
 
+// Daaw barrel
 void Map::drawBarrels(int x, int y)
 {
     x = 21 * x + 110;
     y = 21 * y + 25;
 
     lcd.fillRect(x, y, 21, 21, RGB(255, 0, 0));
-    // lcd.drawRect(x, y, 21, 21, RGB(20, 20, 20));
+    lcd.drawRect(x, y, 21, 21, RGB(20, 20, 20));
 }
 
-void Map::declareBarrels(uint8_t amount, barrel *barrelPositions)
+void Map::deleteBarrels(uint16_t x, uint8_t y)
 {
-    if (amount > 55)
-    {
-        amount = 55;
-    }
+    this->barrels[x][y] = 0;
+    x = 21 * x + 110;
+    y = 21 * y + 25;
+    lcd.fillRect(x, y, 21, 21, RGB(30, 107, 7));
+}
 
-    uint8_t barrelNumber = 0;
-    for (uint8_t y = 0; y < 9; y++)
+void Map::declareBarrels(uint8_t amount)
+{
+
+    for (uint8_t x = 0; x < 9; x++)
     {
-        for (uint8_t x = 0; x < 9; x++)
+        for (uint8_t y = 0; y < 9; y++)
         {
-            if (!((x % 2 && y % 2) || (x + y <= 2) || (x + y >= 14)))
+            if (((x % 2 && y % 2) || (x + y <= 2) || (x + y >= 14)))
             {
-                this->barrels[barrelNumber].x = x;
-                this->barrels[barrelNumber].y = y;
-                barrelNumber++;
+                this->barrels[x][y] = 2;
             }
         }
     }
-    srand(single_sample() % 3);
 
-    // randomSeed(single_sample());
+    init_adc_single_sample();
+    srand(single_sample());
+
     for (uint8_t i = 0; i < amount; i++)
     {
-        uint8_t rx = rand() % 9;
-        uint8_t ry = rand() % 9;
+        uint8_t x = rand() % 9;
+        uint8_t y = rand() % 9;
 
-        // These placements are already made on the grid,
-        // they're solid, and can't declared to barrels
-        while ((rx % 2 && ry % 2) || (rx + ry <= 2) || (rx + ry >= 14))
+        if (this->barrels[x][y])
         {
-            rx = rand() % 9;
-            ry = rand() % 9;
+            i--;
         }
-
-        for (uint8_t j = 0; j <= i; j++)
+        else
         {
-            if (!this->barrels[j].barrel)
-            {
-                this->barrels[i] = {rx, ry, 1};
-                drawBarrels(rx, ry);
-            }
-            else if (this->barrels[j].x == rx && this->barrels[j].y == ry)
-            {
-                i--;
-            }
+            this->barrels[x][y] = 1;
+            drawBarrels(x, y);
         }
-    }
-    for (uint8_t i = 0; i < amount; i++)
-    {
-        Serial.print(this->barrels[i].x);
-        Serial.print("  ");
-        Serial.println(this->barrels[i].y);
-    }
-    for (uint8_t i = 0; i < amount; i++)
-    {
-        barrelPositions[i] = this->barrels[i];
     }
 }
 
-void Map::getBarrels(uint8_t barrels[55])
+void Map::placeBomb(uint16_t x, uint8_t y)
 {
-    uint8_t barrelNumber = 0;
-    for (uint8_t y = 0; y < 9; y++)
-    {
-        for (uint8_t x = 0; x < 9; x++)
-        {
-            if (!((x % 2 && y % 2) || (x + y <= 1) || (x + y >= 15)))
-            {
-                this->barrels[barrelNumber].x = x;
-                this->barrels[barrelNumber].y = y;
-                barrelNumber++;
-            }
-        }
-    }
+    // Draw bomb
+    x = 21 * x + 120;
+    y = 21 * y + 35;
+    lcd.fillCircle(x, y, 7, RGB(0, 0, 0));
 
-    for (uint8_t i = 0; i < 55; i++)
-    {
-        this->barrels[i].barrel = barrels[i];
-
-        if (this->barrels[i].barrel)
-        {
-            drawBarrels(this->barrels[i].x, this->barrels[i].y);
-        }
-    }
+    // start timer
 }
 
 void Map::init_adc_single_sample()
@@ -175,7 +140,7 @@ void Map::init_adc_single_sample()
 }
 
 // Single sample of pin A0
-int Map::single_sample()
+uint16_t Map::single_sample()
 {
     uint16_t result;
     ADCSRA |= (1 << ADSC); // Start conversion
