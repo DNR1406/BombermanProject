@@ -31,18 +31,18 @@ void GameEngine::startGame(int amount)
 
     // Declare the barrels and draw them on the screen
     playMap.declareBarrels(amount);
-    
 
     // c.receiveMap(barrels);
-    // playMap.getBarrels(barrels);
-
-    // c.sendMap(positions)
+    // c.sendMap(positions);
 
     // Draw player one
     player.draw();
 
     // Check what the player is doing, i.e. moving the joystick, pressing buttons, etc.
     checkPlayerActions();
+//     PORTD &= ~(1 << PORTD3);
+//     PORTD &= ~(1 << PORTD4);
+//     PORTB &= ~(1 << PORTB2);
 }
 
 // function to add players to the game
@@ -63,11 +63,21 @@ void GameEngine::incrementScore()
 
 void GameEngine::checkPlayerActions()
 {
+    // Inits the nunchuk and reads its data
     nunchuk->init();
-    uint8_t lifes = 3;
-
+    // Variabeles for amount of lifes and if a bomb has been placed
     uint8_t bombPlaced;
-    while (lifes)
+    uint8_t clearBomb;
+    uint8_t bombX;
+    uint8_t bombY;
+
+    // PORTD &= ~(1 << PORTD3) | ~(1 << PORTD4);
+    // PORTB &= ~(1 << PORTB2);
+
+    PORTD |= (1 << PORTD3) | (1 << PORTD4);
+    PORTB |= (1 << PORTB2);
+
+    while (this->lifes)
     {
         player.upMove = true;
         player.downMove = true;
@@ -148,87 +158,86 @@ void GameEngine::checkPlayerActions()
             {
                 // Creates new instance of a bomb and saves x, y and last known time
                 this->bombPlayer1 = new Bomb(player.x, player.y, counterTimer2);
-
+                playMap.barrels[player.x][player.y] = 1; // Make sure player can't walk over bomb
+                bombX = player.x;
+                bombY = player.y;
                 playMap.placeBomb(player.x, player.y);
                 bombPlaced = 1;
+                clearBomb = 1;
             }
         }
 
         // Move player upwards
         else if (nunchuk->analogY > 155 && player.upMove)
         {
-            player.up(bombPlaced);
-            bombPlaced = 0;
+            player.up(clearBomb);
+            clearBomb = 0;
         }
         //Move player downwards
         else if (nunchuk->analogY < 100 && player.downMove)
         {
-            player.down(bombPlaced);
-            bombPlaced = 0;
+            player.down(clearBomb);
+            clearBomb = 0;
         }
         //Move player to the right
         else if (nunchuk->analogX > 155 && player.rightMove)
         {
-            player.right(bombPlaced);
-            bombPlaced = 0;
+            player.right(clearBomb);
+            clearBomb = 0;
         }
         //Move player to the left
         else if (nunchuk->analogX < 100 && player.leftMove)
         {
-            player.left(bombPlaced);
-            bombPlaced = 0;
+            player.left(clearBomb);
+            clearBomb = 0;
         }
 
         // Runs a timer and executes when timer reaches its limit
-        if (bombPlayer1->checkDetonation())
+        if (bombPlayer1->checkDetonation() && bombPlaced)
         {
             this->bombPlayer1->setExploded(1);
 
             // if timer is 1 or 2 seconds
-            // If there is a barrel on the right side of the player
+            // If there is a barrel on the right side of the Bomb
             if (playMap.barrels[this->bombPlayer1->returnXlocation() + 1][this->bombPlayer1->returnYlocation()] == 1)
             {
                 if (this->bombPlayer1->returnXlocation() < 8)
                 {
-                    deleteBomb();
                     playMap.deleteBarrels(this->bombPlayer1->returnXlocation() + 1, this->bombPlayer1->returnYlocation());
                 }
             }
 
-            // If there is a barrel on the left side of the player
-            else if (playMap.barrels[this->bombPlayer1->returnXlocation() - 1][this->bombPlayer1->returnYlocation()] == 1)
+            // If there is a barrel on the left side of the Bomb
+            if (playMap.barrels[this->bombPlayer1->returnXlocation() - 1][this->bombPlayer1->returnYlocation()] == 1)
             {
                 if (this->bombPlayer1->returnXlocation())
                 {
-                    deleteBomb();
                     playMap.deleteBarrels(this->bombPlayer1->returnXlocation() - 1, this->bombPlayer1->returnYlocation());
                 }
             }
 
-            // If there is a barrel on the bottom side of the player
-            else if (playMap.barrels[this->bombPlayer1->returnXlocation()][this->bombPlayer1->returnYlocation() + 1] == 1)
+            // If there is a barrel on the bottom side of the Bomb
+            if (playMap.barrels[this->bombPlayer1->returnXlocation()][this->bombPlayer1->returnYlocation() + 1] == 1)
             {
                 if (this->bombPlayer1->returnYlocation() < 8)
                 {
-                    deleteBomb();
                     playMap.deleteBarrels(this->bombPlayer1->returnXlocation(), this->bombPlayer1->returnYlocation() + 1);
                 }
             }
-
-            // If there is a barrel on the top side of the player
-            else if (playMap.barrels[this->bombPlayer1->returnXlocation()][this->bombPlayer1->returnYlocation() - 1] == 1)
+            // If there is a barrel on the top side of the Bomb
+            if (playMap.barrels[this->bombPlayer1->returnXlocation()][this->bombPlayer1->returnYlocation() - 1] == 1)
             {
                 if (this->bombPlayer1->returnYlocation())
                 {
-                    deleteBomb();
                     playMap.deleteBarrels(this->bombPlayer1->returnXlocation(), this->bombPlayer1->returnYlocation() - 1);
                 }
             }
-            else
-            {
-                deleteBomb();
-            }
+
+            deleteBomb();
+            playMap.barrels[bombX][bombY] = 0;
+            bombPlaced = 0;
         }
+        Serial.println(lifes);
     }
 }
 
@@ -237,4 +246,23 @@ void GameEngine::deleteBomb()
     int x = 120 + (this->bombPlayer1->returnXlocation() * 21);
     int y = 35 + (this->bombPlayer1->returnYlocation() * 21);
     lcd.fillCircle(x, y, 8, RGB(30, 107, 7));
+    // Checks if the location of the player is in the radius of the bomb
+    if ((player.x == this->bombPlayer1->returnXlocation() + 1) && (player.y == this->bombPlayer1->returnYlocation()) || (player.x == this->bombPlayer1->returnXlocation() - 1) && (player.y == this->bombPlayer1->returnYlocation()) || (player.x == this->bombPlayer1->returnXlocation()) && (player.y == this->bombPlayer1->returnYlocation()) || (player.x == this->bombPlayer1->returnXlocation()) && (player.y == this->bombPlayer1->returnYlocation() + 1) || (player.x == this->bombPlayer1->returnXlocation()) && (player.y == this->bombPlayer1->returnYlocation() - 1))
+    {
+        this->lifes--;
+        if (lifes == 2)
+        {
+            PORTB &= ~(1 << PORTB2);
+        }
+        else if (lifes == 1)
+        {
+            PORTD &= ~(1 << PORTD4);
+        }
+        else
+        {
+            PORTD &= ~(1 << PORTD3);
+        }
+    }
+    this->bombPlayer1->setXlocation(10);
+    this->bombPlayer1->setYlocation(10);
 }

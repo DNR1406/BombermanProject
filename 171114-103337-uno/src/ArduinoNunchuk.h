@@ -17,6 +17,7 @@ class ArduinoNunchuk
     int cButton;
     void init();
     void update();
+    uint8_t nunchukDelay();
 
   private:
     void _sendByte(char data, char location);

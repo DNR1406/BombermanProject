@@ -60,5 +60,11 @@ void ArduinoNunchuk::_sendByte(char data, char location)
 
   Wire.endTransmission();
 
-  _delay_ms(100);
+  _delay_ms(50); // MOET VERVANGEN WORDEN DOOR TIMER!!
+
+} 
+
+uint8_t ArduinoNunchuk::nunchukDelay() 
+{
+    return ((this->lastKnownTime + 500) < counterTimer2);
 }

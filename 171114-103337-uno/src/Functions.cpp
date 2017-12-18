@@ -30,6 +30,10 @@ void init_in_out_put()
     DDRC = 0;
     //in/out put register D
     DDRD = 0;
+
+    // Sets pin 3,4 and 10 to output
+    DDRD |= (1 << DDD3) | (1 << DDD4);
+    DDRB |= (1 << DDB2);
 }
 
 //function to init single sample

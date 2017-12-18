@@ -24,6 +24,7 @@ private:
   MI0283QT9 lcd;
   ArduinoNunchuk *nunchuk;
   Bomb *bombPlayer1;
+  uint8_t lifes = 3;
 };
 
 #endif
