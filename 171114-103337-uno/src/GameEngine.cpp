@@ -40,9 +40,7 @@ void GameEngine::startGame(int amount)
 
     // Check what the player is doing, i.e. moving the joystick, pressing buttons, etc.
     checkPlayerActions();
-//     PORTD &= ~(1 << PORTD3);
-//     PORTD &= ~(1 << PORTD4);
-//     PORTB &= ~(1 << PORTB2);
+    endGameScreen();
 }
 
 // function to add players to the game
@@ -59,6 +57,11 @@ void GameEngine::selectLevel()
 // functie to increment player score
 void GameEngine::incrementScore()
 {
+}
+
+void GameEngine::endGameScreen() {
+     lcd.fillScreen(RGB(160, 182, 219));
+     lcd.drawText(110, 130, "YOU LOSE",RGB(0,0,0),RGB(160,182,219), 2);
 }
 
 void GameEngine::checkPlayerActions()

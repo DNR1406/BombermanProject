@@ -1,12 +1,13 @@
 #include <Wire.h>
 #include <util/delay.h>
+#include "Globals.h"
 
 //#include "ArduinoNunchuk.h"
 #include "include.h"
 #define ADDRESS 0x52
 
-ArduinoNunchuk::ArduinoNunchuk() {
-  
+ArduinoNunchuk::ArduinoNunchuk()
+{
 }
 void ArduinoNunchuk::init()
 {
@@ -31,7 +32,7 @@ void ArduinoNunchuk::update()
   Wire.requestFrom(ADDRESS, 6);
 
   //stop ze in een array
-  while(Wire.available())
+  while (Wire.available())
   {
     values[count] = Wire.read();
     count++;
@@ -61,10 +62,12 @@ void ArduinoNunchuk::_sendByte(char data, char location)
   Wire.endTransmission();
 
   _delay_ms(50); // MOET VERVANGEN WORDEN DOOR TIMER!!
+  // while (nunchukDelay(counterTimer2))
+  // {
+  // }
+}
 
-} 
-
-uint8_t ArduinoNunchuk::nunchukDelay() 
+uint8_t ArduinoNunchuk::nunchukDelay(uint32_t nunchukTimer)
 {
-    return ((this->lastKnownTime + 500) < counterTimer2);
+  return ((nunchukTimer + 500) < counterTimer2);
 }
