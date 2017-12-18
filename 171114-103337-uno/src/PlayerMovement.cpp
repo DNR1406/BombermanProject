@@ -73,3 +73,11 @@ void PlayerMovement::up(uint8_t bombPlaced)
     this->y--;
     draw();
 }
+
+uint8_t PlayerMovement::getXLocation() {
+    return this->x;
+}
+
+uint8_t PlayerMovement::getYLocation() {
+     return this->y;
+}

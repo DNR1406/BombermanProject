@@ -13,6 +13,8 @@ class PlayerMovement
     void right(uint8_t bombPlaced);
     void clearPlayer();
     void draw();
+    uint8_t getXLocation();
+    uint8_t getYLocation();
 
     uint8_t x;
     uint8_t y;

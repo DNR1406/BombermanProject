@@ -202,7 +202,7 @@ void Navigation::startCreditScreen()
 void Navigation::drawBrightnessScreen()
 {
     // Draw brightness screen
-    this->screen->drawHeader(F("BRIGHTNES"));
+    this->screen->drawHeader(F("BRIGHTNESS"));
     this->screen->drawBackButton();
     this->screen->drawBrightness();
 }
@@ -243,7 +243,7 @@ void Navigation::startBrightnessScreen()
 // Levelscreen
 void Navigation::drawLevelScreen()
 {
-    this->screen->drawHeader(F("LEVEL SLCT"));
+    this->screen->drawHeader(F("SELECT LEVEL"));
     this->screen->drawBackButton();
     this->screen->drawButton(F("LEVEL 1"), 1, 110, 108);
     this->screen->drawButton(F("LEVEL 2"), 2, 110, 147);
