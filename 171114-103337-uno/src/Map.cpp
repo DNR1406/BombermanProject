@@ -91,18 +91,18 @@ void Map::deleteBarrels(uint16_t x, uint8_t y)
 
 void Map::declareBarrels(uint8_t amount)
 {
-    lcd.drawText(15, 35, "LEVEL: ", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+    lcd.drawText(5, 35, "LEVEL: ", RGB(0, 0, 0), RGB(160, 182, 219), 1);
     if (amount < 19)
     {
-        lcd.drawText(65, 35, "1", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+        lcd.drawText(55, 35, "1", RGB(0, 0, 0), RGB(160, 182, 219), 1);
     }
     else if (amount < 37)
     {
-        lcd.drawText(65, 35, "2", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+        lcd.drawText(55, 35, "2", RGB(0, 0, 0), RGB(160, 182, 219), 1);
     }
     else
     {
-        lcd.drawText(65, 35, "3", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+        lcd.drawText(55, 35, "3", RGB(0, 0, 0), RGB(160, 182, 219), 1);
     }
 
     // lcd.drawInteger(0, 110, 50, amount, RGB(255,0,0), RGB(160,182,219), 1);
@@ -111,12 +111,19 @@ void Map::declareBarrels(uint8_t amount)
     {
         for (uint8_t y = 0; y < 9; y++)
         {
-            if (((x % 2 && y % 2) || (x + y <= 2) || (x + y >= 14)))
+            if ((x % 2 && y % 2) || (x == 7 && y == 7) || (x == 1 && y == 1) )
             {
                 this->barrels[x][y] = 2;
             }
+            if (x + y <= 2 || x + y >= 14)
+            {
+                this->barrels[x][y] = 3;
+            }
         }
     }
+
+    this->barrels[1][1] = 2;
+    this->barrels[7][7] = 2;
 
     init_adc_single_sample();
     srand(single_sample());

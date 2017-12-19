@@ -25,6 +25,9 @@ void NavigationScreen::startScreen()
   {
     // Write data to EEPROM
     writeCalData();
+  } else {
+    // lcd.touchStartCal();
+    writeCalData();
   }
 }
 

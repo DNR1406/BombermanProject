@@ -18,6 +18,8 @@ public:
   void addPlayer();
   void checkPlayerActions();
   void deleteBomb();
+  void endGameScreen();
+  void updateScore(int score);
   void endOfGame();
   uint8_t checkPlayerDamage();
 
