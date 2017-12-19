@@ -39,7 +39,7 @@ void GameEngine::startGame(int amount)
 
     // Check what the player is doing, i.e. moving the joystick, pressing buttons, etc.
     checkPlayerActions();
-    endGameScreen();
+    // endGameScreen();
 }
 
 // function to add players to the game
