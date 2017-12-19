@@ -91,18 +91,18 @@ void Map::deleteBarrels(uint16_t x, uint8_t y)
 
 void Map::declareBarrels(uint8_t amount)
 {
-    lcd.drawText(15, 35, "LEVEL: ", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+    lcd.drawText(5, 35, "LEVEL: ", RGB(0, 0, 0), RGB(160, 182, 219), 1);
     if (amount < 19)
     {
-        lcd.drawText(65, 35, "1", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+        lcd.drawText(55, 35, "1", RGB(0, 0, 0), RGB(160, 182, 219), 1);
     }
     else if (amount < 37)
     {
-        lcd.drawText(65, 35, "2", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+        lcd.drawText(55, 35, "2", RGB(0, 0, 0), RGB(160, 182, 219), 1);
     }
     else
     {
-        lcd.drawText(65, 35, "3", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+        lcd.drawText(55, 35, "3", RGB(0, 0, 0), RGB(160, 182, 219), 1);
     }
 
     // lcd.drawInteger(0, 110, 50, amount, RGB(255,0,0), RGB(160,182,219), 1);

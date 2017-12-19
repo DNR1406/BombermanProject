@@ -16,6 +16,7 @@ PlayerMovement player = PlayerMovement(8, 8);
 ArduinoNunchuk nunchuk = ArduinoNunchuk();
 
 //volatile uint32_t counterTimer2;
+int score;
 
 GameEngine::GameEngine()
 {
@@ -32,6 +33,7 @@ void GameEngine::startGame(int amount)
     // Declare the barrels and draw them on the screen
     playMap.declareBarrels(amount);
 
+    lcd.drawText(5, 60, "SCORE: ", RGB(0, 0, 0), RGB(160, 182, 219), 1);
     // Draw player one
     player.draw();
 
@@ -46,8 +48,10 @@ void GameEngine::addPlayer()
     // Player(); from player Class
 }
 
-void GameEngine::updateScore() {
-
+void GameEngine::updateScore(int score)
+{ 
+    lcd.drawInteger(55, 60, score - 1, DEC, RGB(0, 0, 0), RGB(160, 182, 219), 1);
+    // Serial.println(score);
 }
 
 // function to select level 
@@ -67,7 +71,7 @@ void GameEngine::endGameScreen() {
 
 void GameEngine::checkPlayerActions()
 {
-    // Inits the nunchuk and reads its data
+     // Inits the nunchuk and reads its data
     nunchuk->init();
 
     // Variable that's needed for checking if bomb is placed
@@ -85,6 +89,7 @@ void GameEngine::checkPlayerActions()
     PORTD |= (1 << PORTD4);
     PORTB |= (1 << PORTB2);
 
+    score = 1;
     while (this->lifes)
     {
         player.upMove = true;
@@ -218,6 +223,7 @@ void GameEngine::checkPlayerActions()
                 if (this->bombPlayer1->returnXlocation() < 8)
                 {
                     playMap.deleteBarrels(this->bombPlayer1->returnXlocation() + 1, this->bombPlayer1->returnYlocation());
+                    score += 13;
                 }
             }
 
@@ -227,6 +233,7 @@ void GameEngine::checkPlayerActions()
                 if (this->bombPlayer1->returnXlocation())
                 {
                     playMap.deleteBarrels(this->bombPlayer1->returnXlocation() - 1, this->bombPlayer1->returnYlocation());
+                    score += 13;
                 }
             }
 
@@ -236,6 +243,7 @@ void GameEngine::checkPlayerActions()
                 if (this->bombPlayer1->returnYlocation() < 8)
                 {
                     playMap.deleteBarrels(this->bombPlayer1->returnXlocation(), this->bombPlayer1->returnYlocation() + 1);
+                    score += 13;
                 }
             }
             // If there is a barrel on the top side of the Bomb
@@ -244,6 +252,7 @@ void GameEngine::checkPlayerActions()
                 if (this->bombPlayer1->returnYlocation())
                 {
                     playMap.deleteBarrels(this->bombPlayer1->returnXlocation(), this->bombPlayer1->returnYlocation() - 1);
+                    score += 13;
                 }
             }
 
@@ -253,6 +262,7 @@ void GameEngine::checkPlayerActions()
                 if (this->bombPlayer1->returnXlocation() < 7)
                 {
                     playMap.deleteBarrels(this->bombPlayer1->returnXlocation() + 2, this->bombPlayer1->returnYlocation());
+                    score += 13;
                 }
             }
 
@@ -262,6 +272,7 @@ void GameEngine::checkPlayerActions()
                 if (this->bombPlayer1->returnXlocation())
                 {
                     playMap.deleteBarrels(this->bombPlayer1->returnXlocation() - 2, this->bombPlayer1->returnYlocation());
+                    score += 13;
                 }
             }
 
@@ -271,6 +282,7 @@ void GameEngine::checkPlayerActions()
                 if (this->bombPlayer1->returnYlocation() < 7)
                 {
                     playMap.deleteBarrels(this->bombPlayer1->returnXlocation(), this->bombPlayer1->returnYlocation() + 2);
+                    score += 13;
                 }
             }
             // If there is a barrel on the 2nd top side of the Bomb
@@ -279,6 +291,7 @@ void GameEngine::checkPlayerActions()
                 if (this->bombPlayer1->returnYlocation())
                 {
                     playMap.deleteBarrels(this->bombPlayer1->returnXlocation(), this->bombPlayer1->returnYlocation() - 2);
+                    score += 13;
                 }
             }
 
@@ -286,6 +299,7 @@ void GameEngine::checkPlayerActions()
             deleteBomb();
             playMap.barrels[bombX][bombY] = 0;
             bombPlaced = 0;
+            updateScore(score);
         }
     }
 }
@@ -297,9 +311,8 @@ void GameEngine::deleteBomb()
     int y = 35 + (this->bombPlayer1->returnYlocation() * 21);
     lcd.fillCircle(x, y, 8, RGB(30, 107, 7));
 
-
     // Checks if the location of the player is in the radius of the bomb
-    if ((player.x == this->bombPlayer1->returnXlocation() + 1 && player.y == this->bombPlayer1->returnYlocation()) || (player.x == this->bombPlayer1->returnXlocation() - 1 && player.y == this->bombPlayer1->returnYlocation()) || (player.x == this->bombPlayer1->returnXlocation() && player.y == this->bombPlayer1->returnYlocation()) || (player.x == this->bombPlayer1->returnXlocation() && player.y == this->bombPlayer1->returnYlocation() + 1) || (player.x == this->bombPlayer1->returnXlocation() && player.y == this->bombPlayer1->returnYlocation() - 1) || (player.x == this->bombPlayer1->returnXlocation() + 2 && player.y == this->bombPlayer1->returnYlocation()) || (player.x == this->bombPlayer1->returnXlocation() - 2 && player.y == this->bombPlayer1->returnYlocation()) || (player.x == this->bombPlayer1->returnXlocation() &&(player.y == this->bombPlayer1->returnYlocation() + 2) || (player.x == this->bombPlayer1->returnXlocation() && player.y == this->bombPlayer1->returnYlocation() - 2)))
+    if (checkPlayerDamage())
     {
         // Decrease player's life
         this->lifes--;
@@ -322,4 +335,14 @@ void GameEngine::deleteBomb()
     // Setting bomb location to 10,10 so it's out of the radius
     this->bombPlayer1->setXlocation(10);
     this->bombPlayer1->setYlocation(10);
+}
+
+uint8_t GameEngine::checkPlayerDamage()
+{
+    if ((player.x == this->bombPlayer1->returnXlocation() + 1 && player.y == this->bombPlayer1->returnYlocation()) || (player.x == this->bombPlayer1->returnXlocation() - 1 && player.y == this->bombPlayer1->returnYlocation()) || (player.x == this->bombPlayer1->returnXlocation() && player.y == this->bombPlayer1->returnYlocation()) || (player.x == this->bombPlayer1->returnXlocation() && player.y == this->bombPlayer1->returnYlocation() + 1) || (player.x == this->bombPlayer1->returnXlocation() && player.y == this->bombPlayer1->returnYlocation() - 1) || (player.x == this->bombPlayer1->returnXlocation() + 2 && player.y == this->bombPlayer1->returnYlocation()) || (player.x == this->bombPlayer1->returnXlocation() - 2 && player.y == this->bombPlayer1->returnYlocation()) || (player.x == this->bombPlayer1->returnXlocation() && (player.y == this->bombPlayer1->returnYlocation() + 2) || (player.x == this->bombPlayer1->returnXlocation() && player.y == this->bombPlayer1->returnYlocation() - 2)))
+    {
+        return 1;
+    } else {
+        return 0;
+    }
 }
