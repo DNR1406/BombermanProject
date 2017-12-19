@@ -287,9 +287,8 @@ void GameEngine::deleteBomb()
     int y = 35 + (this->bombPlayer1->returnYlocation() * 21);
     lcd.fillCircle(x, y, 8, RGB(30, 107, 7));
 
-
     // Checks if the location of the player is in the radius of the bomb
-    if ((player.x == this->bombPlayer1->returnXlocation() + 1 && player.y == this->bombPlayer1->returnYlocation()) || (player.x == this->bombPlayer1->returnXlocation() - 1 && player.y == this->bombPlayer1->returnYlocation()) || (player.x == this->bombPlayer1->returnXlocation() && player.y == this->bombPlayer1->returnYlocation()) || (player.x == this->bombPlayer1->returnXlocation() && player.y == this->bombPlayer1->returnYlocation() + 1) || (player.x == this->bombPlayer1->returnXlocation() && player.y == this->bombPlayer1->returnYlocation() - 1) || (player.x == this->bombPlayer1->returnXlocation() + 2 && player.y == this->bombPlayer1->returnYlocation()) || (player.x == this->bombPlayer1->returnXlocation() - 2 && player.y == this->bombPlayer1->returnYlocation()) || (player.x == this->bombPlayer1->returnXlocation() &&(player.y == this->bombPlayer1->returnYlocation() + 2) || (player.x == this->bombPlayer1->returnXlocation() && player.y == this->bombPlayer1->returnYlocation() - 2)))
+    if (checkPlayerDamage())
     {
         // Decrease player's life
         this->lifes--;
@@ -312,4 +311,14 @@ void GameEngine::deleteBomb()
     // Setting bomb location to 10,10 so it's out of the radius
     this->bombPlayer1->setXlocation(10);
     this->bombPlayer1->setYlocation(10);
+}
+
+uint8_t GameEngine::checkPlayerDamage()
+{
+    if ((player.x == this->bombPlayer1->returnXlocation() + 1 && player.y == this->bombPlayer1->returnYlocation()) || (player.x == this->bombPlayer1->returnXlocation() - 1 && player.y == this->bombPlayer1->returnYlocation()) || (player.x == this->bombPlayer1->returnXlocation() && player.y == this->bombPlayer1->returnYlocation()) || (player.x == this->bombPlayer1->returnXlocation() && player.y == this->bombPlayer1->returnYlocation() + 1) || (player.x == this->bombPlayer1->returnXlocation() && player.y == this->bombPlayer1->returnYlocation() - 1) || (player.x == this->bombPlayer1->returnXlocation() + 2 && player.y == this->bombPlayer1->returnYlocation()) || (player.x == this->bombPlayer1->returnXlocation() - 2 && player.y == this->bombPlayer1->returnYlocation()) || (player.x == this->bombPlayer1->returnXlocation() && (player.y == this->bombPlayer1->returnYlocation() + 2) || (player.x == this->bombPlayer1->returnXlocation() && player.y == this->bombPlayer1->returnYlocation() - 2)))
+    {
+        return 1;
+    } else {
+        return 0;
+    }
 }

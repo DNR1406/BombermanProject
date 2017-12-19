@@ -19,6 +19,7 @@ public:
   void checkPlayerActions();
   void deleteBomb();
   void endOfGame();
+  uint8_t checkPlayerDamage();
 
 private:
   MI0283QT9 lcd;
