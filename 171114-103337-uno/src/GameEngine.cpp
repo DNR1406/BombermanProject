@@ -32,9 +32,6 @@ void GameEngine::startGame(int amount)
     // Declare the barrels and draw them on the screen
     playMap.declareBarrels(amount);
 
-    // c.receiveMap(barrels);
-    // c.sendMap(positions);
-
     // Draw player one
     player.draw();
 
@@ -72,16 +69,20 @@ void GameEngine::checkPlayerActions()
 {
     // Inits the nunchuk and reads its data
     nunchuk->init();
-    // Variabeles for amount of lifes and if a bomb has been placed
+
+    // Variable that's needed for checking if bomb is placed
     uint8_t bombPlaced;
+
+    // Variable that's needed for checking if player needs to clear the bomb while walking
     uint8_t clearBomb;
+
+    // Buffer for saving the bomb's location
     uint8_t bombX;
     uint8_t bombY;
 
-    // PORTD &= ~(1 << PORTD3) | ~(1 << PORTD4);
-    // PORTB &= ~(1 << PORTB2);
-
-    PORTD |= (1 << PORTD3) | (1 << PORTD4);
+    // Set all leds
+    PORTD |= (1 << PORTD3);
+    PORTD |= (1 << PORTD4);
     PORTB |= (1 << PORTB2);
 
     while (this->lifes)
@@ -156,7 +157,7 @@ void GameEngine::checkPlayerActions()
         }
 
         // Check if state of nunchuk had changed
-        nunchuk->update(); //Update nunchuk conditions
+        nunchuk->update();
 
         //Place bomb if zButton has been pressed
         if (nunchuk->zButton)
@@ -165,10 +166,17 @@ void GameEngine::checkPlayerActions()
             {
                 // Creates new instance of a bomb and saves x, y and last known time
                 this->bombPlayer1 = new Bomb(player.x, player.y, counterTimer2);
-                playMap.barrels[player.x][player.y] = 1; // Make sure player can't walk over bomb
+
+                // Make sure player can't walk over bomb
+                playMap.barrels[player.x][player.y] = 1;
+
+                // Saves bomb position in buffer
                 bombX = player.x;
                 bombY = player.y;
+
+                // Draw the bomb on the screen
                 playMap.placeBomb(player.x, player.y);
+
                 bombPlaced = 1;
                 clearBomb = 1;
             }
@@ -204,7 +212,6 @@ void GameEngine::checkPlayerActions()
         {
             this->bombPlayer1->setExploded(1);
 
-            // if timer is 1 or 2 seconds
             // If there is a barrel on the right side of the Bomb
             if (playMap.barrels[this->bombPlayer1->returnXlocation() + 1][this->bombPlayer1->returnYlocation()] == 1)
             {
@@ -240,23 +247,64 @@ void GameEngine::checkPlayerActions()
                 }
             }
 
+            // If there is a barrel on the 2nd right side of the Bomb
+            if (playMap.barrels[this->bombPlayer1->returnXlocation() + 2][this->bombPlayer1->returnYlocation()] == 1)
+            {
+                if (this->bombPlayer1->returnXlocation() < 7)
+                {
+                    playMap.deleteBarrels(this->bombPlayer1->returnXlocation() + 2, this->bombPlayer1->returnYlocation());
+                }
+            }
+
+            // If there is a barrel on the 2nd left side of the Bomb
+            if (playMap.barrels[this->bombPlayer1->returnXlocation() - 2][this->bombPlayer1->returnYlocation()] == 1)
+            {
+                if (this->bombPlayer1->returnXlocation())
+                {
+                    playMap.deleteBarrels(this->bombPlayer1->returnXlocation() - 2, this->bombPlayer1->returnYlocation());
+                }
+            }
+
+            // If there is a barrel on the 2nd bottom side of the Bomb
+            if (playMap.barrels[this->bombPlayer1->returnXlocation()][this->bombPlayer1->returnYlocation() + 2] == 1)
+            {
+                if (this->bombPlayer1->returnYlocation() < 7)
+                {
+                    playMap.deleteBarrels(this->bombPlayer1->returnXlocation(), this->bombPlayer1->returnYlocation() + 2);
+                }
+            }
+            // If there is a barrel on the 2nd top side of the Bomb
+            if (playMap.barrels[this->bombPlayer1->returnXlocation()][this->bombPlayer1->returnYlocation() - 2] == 1)
+            {
+                if (this->bombPlayer1->returnYlocation())
+                {
+                    playMap.deleteBarrels(this->bombPlayer1->returnXlocation(), this->bombPlayer1->returnYlocation() - 2);
+                }
+            }
+
+            // Delete the bomb, make the bomb dissapear as a barrel instance and make bombPlaced 0
             deleteBomb();
             playMap.barrels[bombX][bombY] = 0;
             bombPlaced = 0;
         }
-        Serial.println(lifes);
     }
 }
 
 void GameEngine::deleteBomb()
 {
+    // Converting x and y position to lcd screen pixel position
     int x = 120 + (this->bombPlayer1->returnXlocation() * 21);
     int y = 35 + (this->bombPlayer1->returnYlocation() * 21);
     lcd.fillCircle(x, y, 8, RGB(30, 107, 7));
+
+
     // Checks if the location of the player is in the radius of the bomb
-    if ((player.x == this->bombPlayer1->returnXlocation() + 1) && (player.y == this->bombPlayer1->returnYlocation()) || (player.x == this->bombPlayer1->returnXlocation() - 1) && (player.y == this->bombPlayer1->returnYlocation()) || (player.x == this->bombPlayer1->returnXlocation()) && (player.y == this->bombPlayer1->returnYlocation()) || (player.x == this->bombPlayer1->returnXlocation()) && (player.y == this->bombPlayer1->returnYlocation() + 1) || (player.x == this->bombPlayer1->returnXlocation()) && (player.y == this->bombPlayer1->returnYlocation() - 1))
+    if ((player.x == this->bombPlayer1->returnXlocation() + 1 && player.y == this->bombPlayer1->returnYlocation()) || (player.x == this->bombPlayer1->returnXlocation() - 1 && player.y == this->bombPlayer1->returnYlocation()) || (player.x == this->bombPlayer1->returnXlocation() && player.y == this->bombPlayer1->returnYlocation()) || (player.x == this->bombPlayer1->returnXlocation() && player.y == this->bombPlayer1->returnYlocation() + 1) || (player.x == this->bombPlayer1->returnXlocation() && player.y == this->bombPlayer1->returnYlocation() - 1) || (player.x == this->bombPlayer1->returnXlocation() + 2 && player.y == this->bombPlayer1->returnYlocation()) || (player.x == this->bombPlayer1->returnXlocation() - 2 && player.y == this->bombPlayer1->returnYlocation()) || (player.x == this->bombPlayer1->returnXlocation() &&(player.y == this->bombPlayer1->returnYlocation() + 2) || (player.x == this->bombPlayer1->returnXlocation() && player.y == this->bombPlayer1->returnYlocation() - 2)))
     {
+        // Decrease player's life
         this->lifes--;
+
+        // Putting leds out
         if (lifes == 2)
         {
             PORTB &= ~(1 << PORTB2);
@@ -270,6 +318,8 @@ void GameEngine::deleteBomb()
             PORTD &= ~(1 << PORTD3);
         }
     }
+
+    // Setting bomb location to 10,10 so it's out of the radius
     this->bombPlayer1->setXlocation(10);
     this->bombPlayer1->setYlocation(10);
 }
