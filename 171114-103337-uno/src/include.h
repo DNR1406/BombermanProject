@@ -31,6 +31,7 @@ If you create a header file, put it here: */
 #include <SoftwareSerial.h>
 #include <Arduino.h>
 #include <EEPROM.h>
+#include <elapsedMillis.h>
 
 #include <stdint.h>
 

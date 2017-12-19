@@ -19,6 +19,7 @@ public:
   void checkPlayerActions();
   void deleteBomb();
   void endGameScreen();
+  void updateScore();
 
 private:
   MI0283QT9 lcd;

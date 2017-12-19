@@ -49,7 +49,11 @@ void GameEngine::addPlayer()
     // Player(); from player Class
 }
 
-// function to select level
+void GameEngine::updateScore() {
+
+}
+
+// function to select level 
 void GameEngine::selectLevel()
 {
 }
