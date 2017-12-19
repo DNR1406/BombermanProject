@@ -34,12 +34,12 @@ void GameEngine::startGame(int amount)
     playMap.declareBarrels(amount);
 
     lcd.drawText(5, 60, "SCORE: ", RGB(0, 0, 0), RGB(160, 182, 219), 1);
-
     // Draw player one
     player.draw();
 
     // Check what the player is doing, i.e. moving the joystick, pressing buttons, etc.
     checkPlayerActions();
+    // endGameScreen();
 }
 
 // function to add players to the game
@@ -64,9 +64,14 @@ void GameEngine::incrementScore()
 {
 }
 
+void GameEngine::endGameScreen() {
+     lcd.fillScreen(RGB(160, 182, 219));
+     lcd.drawText(110, 130, "YOU LOSE",RGB(0,0,0),RGB(160,182,219), 2);
+}
+
 void GameEngine::checkPlayerActions()
 {
-    // Inits the nunchuk and reads its data
+     // Inits the nunchuk and reads its data
     nunchuk->init();
 
     // Variable that's needed for checking if bomb is placed
