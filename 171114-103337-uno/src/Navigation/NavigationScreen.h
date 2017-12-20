@@ -25,6 +25,9 @@ class NavigationScreen
     void drawCredits();
     void deleteCredits();
 
+    // Highscores
+    void readHighscoreFromEEPROM();
+    void deleteHighscoreButtons();
     // Brightness
     void drawBrightness();
     void deleteBrightness();

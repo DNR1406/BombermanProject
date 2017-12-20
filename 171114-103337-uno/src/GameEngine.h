@@ -21,6 +21,8 @@ public:
   void endGameScreen();
   void updateScore(int score);
   void endOfGame();
+  void readDataFromEEPROM();
+  void writeScoreToEEPROM(int score);
   uint8_t checkPlayerDamage();
 
 private:

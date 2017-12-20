@@ -145,9 +145,7 @@ void Navigation::startOptionsScreen()
             break;
         case 3:
             // Highscore (Not finished)
-            this->drawNotFinishedYet();
-            delay(1000);
-            this->deleteNotFinishedYet();
+            this->startHighScoreScreen();
             this->drawOptionsScreen();
             pressed = 0;
             break;
@@ -158,7 +156,33 @@ void Navigation::startOptionsScreen()
         };
     }
 }
+void Navigation::drawHighscoreScreen()
+{
+    this->screen->drawHeader(F("HIGHSCORE"));
+    this->screen->drawBackButton();
+    this->screen->readHighscoreFromEEPROM();
+}
 
+void Navigation::startHighScoreScreen()
+{
+    this->drawHighscoreScreen();
+
+    // Loop while nothing is pressed
+    uint8_t pressed = 0;
+    while (!pressed)
+    {
+        // Check for new press
+        pressed = this->screen->checkTouchscreen();
+
+        //Go back
+        if (pressed == 4)
+        {
+            this->deleteHighScoreScreen();
+
+            return;
+        }
+    }
+}
 // Credits screen
 void Navigation::drawCreditsScreen()
 {
@@ -167,7 +191,12 @@ void Navigation::drawCreditsScreen()
     this->screen->drawHeader(F("CREDITS"));
     this->screen->drawCredits();
 }
-
+void Navigation::deleteHighScoreScreen()
+{
+    this->screen->deleteBackButton();
+    this->screen->deleteHeader();
+    this->screen->deleteHighscoreButtons();
+}
 void Navigation::deleteCreditsScreen()
 {
     // Delete buttons
@@ -221,7 +250,8 @@ void Navigation::startBrightnessScreen()
     this->drawBrightnessScreen();
 
     // variablen for pressed and value
-    uint8_t pressed = 0, val = 0;
+    uint8_t pressed = 0;
+    uint16_t val = 0;
 
     // Loop while nothing is pressed
     while (pressed != 4)
@@ -231,8 +261,12 @@ void Navigation::startBrightnessScreen()
 
         // Read analog val
         val = this->getAnalogVal();
-        // If it is less than 10, val becomes 10
-        val = (val < 10) ? 10 : val;
+        // val = analogRead(A0);
+        val = map(val, 0, 1023, 0, 100);
+        if (val < 10)
+        {
+            val = 10;
+        }
         // Set brightness
         this->screen->setBrightness(val);
     }
@@ -316,7 +350,7 @@ int Navigation::getAnalogVal()
     while (ADCSRA & (1 << ADSC))
         ;
     result = ADC;
-    return result / 10;
+    return result;
 }
 
 // Functions for stuff that is not finished

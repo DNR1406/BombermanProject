@@ -62,10 +62,12 @@ void ArduinoNunchuk::_sendByte(char data, char location)
   Wire.endTransmission();
 
   // uint32_t nunchukDelay = counterTimer2; 
-  // while(nunchukDelay + 50  < counterTimer2) {
+  // while(nunchukDelay + 30  < counterTimer2) {
+    
   // }
 
   _delay_ms(100); // MOET VERVANGEN WORDEN DOOR TIMER!!
+  
 
     
 }

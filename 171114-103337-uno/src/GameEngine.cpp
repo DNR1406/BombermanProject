@@ -39,6 +39,8 @@ void GameEngine::startGame(int amount)
 
     // Check what the player is doing, i.e. moving the joystick, pressing buttons, etc.
     checkPlayerActions();
+    writeScoreToEEPROM(score);
+    readDataFromEEPROM();
     // endGameScreen();
 }
 
@@ -386,4 +388,21 @@ uint8_t GameEngine::checkPlayerDamage()
     {
         return 0;
     }
+}
+
+void GameEngine::readDataFromEEPROM() { 
+    byte value  = EEPROM.read(50);
+
+    Serial.println(value, DEC);
+}
+
+void GameEngine::writeScoreToEEPROM(int score) {
+    // Divides score by 3 to put it in a byte
+    int val = score;
+
+    // Initializes the used address
+    int addr1 = 50;
+
+    // Writes each part of the score to their address
+    EEPROM.write(addr1, val);
 }
