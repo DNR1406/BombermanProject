@@ -15,8 +15,8 @@ Communication c = Communication(1, 1);
 PlayerMovement player = PlayerMovement(8, 8);
 ArduinoNunchuk nunchuk = ArduinoNunchuk();
 
-//volatile uint32_t counterTimer2;
-int score;
+// Total score
+int score = 0;
 
 GameEngine::GameEngine()
 {
@@ -244,7 +244,7 @@ void GameEngine::checkPlayerActions()
             // If there is a barrel on the 2nd left side of the Bomb and there is no wall inbetween
             if (playMap.barrels[this->bombPlayer1->returnXlocation() - 2][this->bombPlayer1->returnYlocation()] == 1 && playMap.barrels[this->bombPlayer1->returnXlocation() - 1][this->bombPlayer1->returnYlocation()] != 2)
             {
-                if (this->bombPlayer1->returnXlocation())
+                if (this->bombPlayer1->returnXlocation() > 1)
                 {
                     playMap.deleteBarrels(this->bombPlayer1->returnXlocation() - 2, this->bombPlayer1->returnYlocation());
                     score += 4;
@@ -283,7 +283,7 @@ void GameEngine::checkPlayerActions()
             // If there is a barrel on the 2nd top side of the Bomb and there is no wall inbetween
             if (playMap.barrels[this->bombPlayer1->returnXlocation()][this->bombPlayer1->returnYlocation() - 2] == 1 && playMap.barrels[this->bombPlayer1->returnXlocation()][this->bombPlayer1->returnYlocation() - 1] != 2)
             {
-                if (this->bombPlayer1->returnYlocation())
+                if (this->bombPlayer1->returnYlocation() > 1)
                 {
                     playMap.deleteBarrels(this->bombPlayer1->returnXlocation(), this->bombPlayer1->returnYlocation() - 2);
                     score += 4;
@@ -342,6 +342,7 @@ void GameEngine::deleteBomb()
     this->bombPlayer1->setYlocation(15);
 }
 
+// Check if Player is in bomb exploding range
 uint8_t GameEngine::checkPlayerDamage()
 {
     if (player.x == this->bombPlayer1->returnXlocation() + 1 && player.y == this->bombPlayer1->returnYlocation())
