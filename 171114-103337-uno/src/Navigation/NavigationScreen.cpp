@@ -18,14 +18,17 @@ void NavigationScreen::startScreen()
   // Fill screen light blue
   lcd.fillScreen(RGB(160, 182, 219));
 
-  // Caliberation
+  // Calibration
   lcd.touchRead();
   // Calibration data in EEPROM?
+  // lcd.touchStartCal();
   if (lcd.touchZ() || readCalData())
   {
     // Write data to EEPROM
     writeCalData();
-  } else {
+  }
+  else
+  {
     // lcd.touchStartCal();
     writeCalData();
   }
@@ -178,4 +181,18 @@ uint8_t NavigationScreen::readCalData()
   }
 
   return 1;
+}
+
+void NavigationScreen::readHighscoreFromEEPROM()
+{
+  byte value = EEPROM.read(50);
+  lcd.drawText(60, 50, "Player 1:", RGB(0, 0, 0), RGB(160, 182, 219), 2);
+  lcd.drawInteger(205, 50, value - 1, DEC, RGB(0, 0, 0), RGB(160, 182, 219), 2);
+}
+
+void NavigationScreen::deleteHighscoreButtons()
+{
+  byte value = EEPROM.read(50);
+  lcd.drawText(60, 50, "Player 1:", RGB(160, 182, 219), RGB(160, 182, 219), 2);
+  lcd.drawInteger(205, 50, value -1, DEC, RGB(160, 182, 219), RGB(160, 182, 219), 2);
 }

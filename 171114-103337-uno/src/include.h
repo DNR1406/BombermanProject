@@ -14,7 +14,6 @@ If you create a header file, put it here: */
 #include "Map.h"
 #include "Player.h"
 #include "Screen.h"
-#include "Options.h"
 #include "PlayerMovement.h"
 
 #include "Functions.h"
