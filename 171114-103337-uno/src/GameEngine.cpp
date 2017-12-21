@@ -15,8 +15,7 @@ Communication c = Communication(1, 1);
 PlayerMovement player = PlayerMovement(8, 8);
 ArduinoNunchuk nunchuk = ArduinoNunchuk();
 
-// Total score
-//volatile uint32_t counterTimer2;
+//Total score player 1
 int score = 0;
 
 GameEngine::GameEngine()
@@ -384,16 +383,19 @@ void GameEngine::readDataFromEEPROM()
 
 void GameEngine::writeScoreToEEPROM(int score)
 {
+    // Initializes the used address
+    int addr1 = 50;
+
     // Writes each part of the score to their address
     EEPROM.write(addr1, score + 1);
 }
 
 void GameEngine::updateScore(int score)
 {
-    lcd.drawInteger(55, 130, score, DEC, RGB(31, 255, 0), RGB(0, 0, 0), 1);
+    lcd.drawInteger(62, 130, score, DEC, RGB(31, 255, 0), RGB(50,50,50), 1);
 }
 
-void GameEngine::updateLifes()
+void GameEngine::updateLifes() 
 {
-    lcd.drawInteger(55, 120, this->lifes, DEC, RGB(31, 255, 0), RGB(0, 0, 0), 1);
+    lcd.drawInteger(62, 120, this->lifes, DEC, RGB(31, 255, 0), RGB(50,50,50), 1);
 }
