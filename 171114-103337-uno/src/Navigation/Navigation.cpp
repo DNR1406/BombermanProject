@@ -263,10 +263,6 @@ void Navigation::startBrightnessScreen()
         val = this->getAnalogVal();
         // val = analogRead(A0);
         val = map(val, 0, 1023, 0, 100);
-        if (val < 10)
-        {
-            val = 10;
-        }
         // Set brightness
         this->screen->setBrightness(val);
     }
@@ -348,7 +344,8 @@ int Navigation::getAnalogVal()
     ADCSRA |= (1 << ADSC);
     // Wait
     while (ADCSRA & (1 << ADSC))
-        ;
+    {
+    }
     result = ADC;
     return result;
 }
