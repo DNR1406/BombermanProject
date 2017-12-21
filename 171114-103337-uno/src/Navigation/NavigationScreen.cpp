@@ -109,7 +109,7 @@ void NavigationScreen::setBrightness(int val)
   {
     val = 10;
   }
-  lcd.led(val);
+  lcd.led(val); 
   Serial.println(val);
 }
 

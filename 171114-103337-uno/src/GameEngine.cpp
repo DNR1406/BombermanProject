@@ -40,7 +40,7 @@ void GameEngine::startGame(int amount)
     // Check what the player is doing, i.e. moving the joystick, pressing buttons, etc.
     checkPlayerActions();
     writeScoreToEEPROM(score);
-    readDataFromEEPROM();
+    // readDataFromEEPROM();
     // endGameScreen();
 }
 
@@ -66,14 +66,15 @@ void GameEngine::incrementScore()
 {
 }
 
-void GameEngine::endGameScreen() {
-     lcd.fillScreen(RGB(160, 182, 219));
-     lcd.drawText(110, 130, "YOU LOSE",RGB(0,0,0),RGB(160,182,219), 2);
+void GameEngine::endGameScreen()
+{
+    lcd.fillScreen(RGB(160, 182, 219));
+    lcd.drawText(110, 130, "YOU LOSE", RGB(0, 0, 0), RGB(160, 182, 219), 2);
 }
 
 void GameEngine::checkPlayerActions()
 {
-     // Inits the nunchuk and reads its data
+    // Inits the nunchuk and reads its data
     nunchuk->init();
 
     // Variable that's needed for checking if bomb is placed
@@ -98,55 +99,27 @@ void GameEngine::checkPlayerActions()
         player.leftMove = true;
         player.rightMove = true;
 
-        // If player is on 9th (8) row from x they can never move right
-        if (player.x == 8)
-        {
-            player.rightMove = false;
-        }
-        // If there is a barrel on the right side of the player
-        else if (playMap.barrels[player.x + 1][player.y] == 1)
-        {
-            player.rightMove = false;
-        }
-
-        // If player is on 1st (0) row from x they can never move left
-        if (!player.x)
-        {
-            player.leftMove = false;
-        }
-        // If there is a barrel on the left side of the player
-        else if (playMap.barrels[player.x - 1][player.y] == 1)
-        {
-            player.leftMove = false;
-        }
-
-        // If player is on the 1st (0) from y they can never move up
-        if (!player.y)
-        {
-            player.upMove = false;
-        }
-        // If there is a barrel on the top side of the player
-        else if (playMap.barrels[player.x][player.y - 1] == 1)
-        {
-            player.upMove = false;
-        }
-        // If player is on the 9th (8) row from y they can never move down
-        if (player.y == 8)
-        {
-            player.downMove = false;
-        }
-        // If there is a barrel on the bottom side of the player
-        else if (playMap.barrels[player.x][player.y + 1] == 1)
-        {
-            player.downMove = false;
-        }
-
         // If player is on 2nd (1) 4th (3) or 6th (5) or 8th (7) row from x, they can
         // Never move up or down
         if ((player.x % 2) && !(player.y % 2))
         {
             player.upMove = false;
             player.downMove = false;
+        }
+        else
+        {
+            // If player is on the 1st (0) from y they can never move up or If there is a barrel on the top side of the player
+            if (!player.y || playMap.barrels[player.x][player.y - 1] == 1)
+            {
+                player.upMove = false;
+            }
+            //
+
+            // If player is on the 9th (8) row from y they can never move down or If there is a barrel on the bottom side of the player
+            if (player.y == 8 || playMap.barrels[player.x][player.y + 1] == 1)
+            {
+                player.downMove = false;
+            }
         }
 
         // If player is on 2nd (1), 4th (3), 6th (5) or 8th (7) row from y, they can
@@ -155,6 +128,20 @@ void GameEngine::checkPlayerActions()
         {
             player.rightMove = false;
             player.leftMove = false;
+        }
+        else
+        {
+            // If player is on 9th (8) row from x they can never move right, or if there is a barrel on the right side of the player
+            if (player.x == 8 || playMap.barrels[player.x + 1][player.y] == 1)
+            {
+                player.rightMove = false;
+            }
+
+            // If player is on 1st (0) row from x they can never move left or If there is a barrel on the left side of the player
+            if (!player.x || playMap.barrels[player.x - 1][player.y] == 1)
+            {
+                player.leftMove = false;
+            }
         }
 
         // Check if state of nunchuk had changed
@@ -390,13 +377,15 @@ uint8_t GameEngine::checkPlayerDamage()
     }
 }
 
-void GameEngine::readDataFromEEPROM() { 
-    byte value  = EEPROM.read(50);
+void GameEngine::readDataFromEEPROM()
+{
+    byte value = EEPROM.read(50);
 
     Serial.println(value, DEC);
 }
 
-void GameEngine::writeScoreToEEPROM(int score) {
+void GameEngine::writeScoreToEEPROM(int score)
+{
     // Divides score by 3 to put it in a byte
     int val = score;
 
