@@ -12,9 +12,12 @@ class Bomb
     uint8_t returnXlocation();
     uint8_t returnYlocation();
     uint8_t returnExploded();
+    void setTime(uint32_t time);
     void setExploded(uint8_t exploded);
     void setXlocation(uint8_t x);
     void setYlocation(uint8_t y);
+
+    void printBomb();
 
 
   private:

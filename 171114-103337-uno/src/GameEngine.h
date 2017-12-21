@@ -2,6 +2,8 @@
 #include <stdint.h>
 #include "include.h"
 
+#define OWNBOMBS 4
+
 class ArduinoNunchuk;
 class Bomb;
 
@@ -17,7 +19,7 @@ public:
   void incrementScore();
   void addPlayer();
   void checkPlayerActions();
-  void deleteBomb();
+  void deleteBomb(uint8_t number);
   void endGameScreen();
   void updateScore(int score);
   void endOfGame();
@@ -26,13 +28,15 @@ public:
   void showPlayerOneInfo();
   void showPlayerTwoInfo();
   void updateLifes();
-  uint8_t checkPlayerDamage();
+  uint8_t checkPlayerDamage(uint8_t number);
 
 private:
   MI0283QT9 lcd;
   ArduinoNunchuk *nunchuk;
-  Bomb *bombPlayer1;
+  Bomb *bombs[OWNBOMBS];
   int lifes = 3;
+
+  uint8_t addBomb(uint8_t x, uint8_t y);
 };
 
 #endif
