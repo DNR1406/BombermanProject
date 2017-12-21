@@ -23,13 +23,16 @@ public:
   void endOfGame();
   void readDataFromEEPROM();
   void writeScoreToEEPROM(int score);
+  void showPlayerOneInfo();
+  void showPlayerTwoInfo();
+  void updateLifes();
   uint8_t checkPlayerDamage();
 
 private:
   MI0283QT9 lcd;
   ArduinoNunchuk *nunchuk;
   Bomb *bombPlayer1;
-  uint8_t lifes = 3;
+  int lifes = 3;
 };
 
 #endif

@@ -16,6 +16,7 @@ PlayerMovement player = PlayerMovement(8, 8);
 ArduinoNunchuk nunchuk = ArduinoNunchuk();
 
 // Total score
+//volatile uint32_t counterTimer2;
 int score = 0;
 
 GameEngine::GameEngine()
@@ -33,7 +34,6 @@ void GameEngine::startGame(int amount)
     // Declare the barrels and draw them on the screen
     playMap.declareBarrels(amount);
 
-    lcd.drawText(5, 60, "SCORE: ", RGB(0, 0, 0), RGB(160, 182, 219), 1);
     // Draw player one
     player.draw();
 
@@ -48,12 +48,6 @@ void GameEngine::startGame(int amount)
 void GameEngine::addPlayer()
 {
     // Player(); from player Class
-}
-
-void GameEngine::updateScore(int score)
-{
-    lcd.drawInteger(55, 60, score - 1, DEC, RGB(0, 0, 0), RGB(160, 182, 219), 1);
-    // Serial.println(score);
 }
 
 // function to select level
@@ -74,6 +68,9 @@ void GameEngine::endGameScreen()
 
 void GameEngine::checkPlayerActions()
 {
+
+    updateScore(score);
+    updateLifes();
     // Inits the nunchuk and reads its data
     nunchuk->init();
 
@@ -81,7 +78,7 @@ void GameEngine::checkPlayerActions()
     uint8_t bombPlaced;
 
     // Variable that's needed for checking if player needs to clear the bomb while walking
-    uint8_t clearBomb;
+    uint8_t clearBomb = 0;
 
     // Buffer for saving the bomb's location
     uint8_t bombX;
@@ -284,6 +281,7 @@ void GameEngine::checkPlayerActions()
             playMap.barrels[bombX][bombY] = 0;
             bombPlaced = 0;
             updateScore(score);
+            updateLifes();
         }
     }
 }
@@ -293,7 +291,7 @@ void GameEngine::deleteBomb()
     // Converting x and y position to lcd screen pixel position
     int x = 120 + (this->bombPlayer1->returnXlocation() * 21);
     int y = 35 + (this->bombPlayer1->returnYlocation() * 21);
-    lcd.fillCircle(x, y, 8, RGB(30, 107, 7));
+    lcd.fillCircle(x, y, 8, RGB(29, 79, 22));
 
     // Checks if the location of the player is in the radius of the bomb
     if (checkPlayerDamage())
@@ -386,12 +384,16 @@ void GameEngine::readDataFromEEPROM()
 
 void GameEngine::writeScoreToEEPROM(int score)
 {
-    // Divides score by 3 to put it in a byte
-    int val = score;
-
-    // Initializes the used address
-    int addr1 = 50;
-
     // Writes each part of the score to their address
-    EEPROM.write(addr1, val);
+    EEPROM.write(addr1, score + 1);
+}
+
+void GameEngine::updateScore(int score)
+{
+    lcd.drawInteger(55, 130, score, DEC, RGB(31, 255, 0), RGB(0, 0, 0), 1);
+}
+
+void GameEngine::updateLifes()
+{
+    lcd.drawInteger(55, 120, this->lifes, DEC, RGB(31, 255, 0), RGB(0, 0, 0), 1);
 }
