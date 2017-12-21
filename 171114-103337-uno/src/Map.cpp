@@ -12,33 +12,6 @@ Map::Map()
 
 void Map::drawPlayMap()
 {
-    // Delete menu with overwriting the background
-    lcd.fillRect(89, 4, 231, 231, RGB(29, 79, 22));
-    lcd.fillRect(0, 0, 320, 4, RGB(0, 0, 0));
-    lcd.fillRect(0, 235, 320, 5, RGB(0, 0, 0));
-
-    lcd.fillRect(0, 4, 89, 231, RGB(50, 50, 50));
-
-    lcd.drawText(12, 10, "Home", RGB(255, 40, 40), RGB(50, 50, 50), 1);
-
-    // Draws rectangle in playerbox
-    lcd.drawText(12, 50, "Player 1 ", RGB(255, 40, 40), RGB(50, 50, 50), 1);
-    lcd.fillRect(10, 64, 69, 50, RGB(15, 15, 15));
-    lcd.fillCircle(44, 89, 12, RGB(14, 44, 135));
-
-    // Draws lifes in Player one square
-    lcd.drawText(12, 120, "LIVES: ", RGB(0, 0, 0), RGB(50, 50, 50), 1);
-
-    // Draws score in Player one square
-    lcd.drawText(12, 130, "SCORE: ", RGB(0, 0, 0), RGB(50, 50, 50), 1);
-
-    // Draws rectangle in playerbox
-    lcd.drawText(12, 148, "Player 2 ", RGB(255, 40, 40), RGB(50, 50, 50), 1);
-    lcd.fillRect(10, 162, 69, 50, RGB(15, 15, 15));
-    lcd.fillCircle(44, 187, 12, RGB(153, 12, 12));
-
-    // Draws lifes in Player two square
-    lcd.drawText(12, 220, "LIVES: ", RGB(0, 0, 0), RGB(50, 50, 50), 1);
 
     //Drawing the inside walls
     int x = 131;
@@ -77,9 +50,34 @@ void Map::drawPlayMap()
         }
         x += 21;
     }
+
+    // Draw green background as "grass"
+    lcd.fillRect(89, 4, 231, 231, RGB(29, 79, 22));
+
+    // Black line at top and black line at bottom black
+    lcd.fillRect(0, 0, 320, 4, RGB(0, 0, 0));
+    lcd.fillRect(0, 235, 320, 5, RGB(0, 0, 0));
+
+    // Draw grey background at left side of screen
+    lcd.fillRect(0, 4, 89, 231, RGB(50, 50, 50));
+
+    // "Avatar"  of player 1
+    lcd.fillRect(10, 64, 69, 50, RGB(15, 15, 15));
+    lcd.fillCircle(44, 89, 12, RGB(14, 44, 135));
+
+    // "Avatar"  of player 2
+    lcd.fillRect(10, 162, 69, 50, RGB(15, 15, 15));
+    lcd.fillCircle(44, 187, 12, RGB(153, 12, 12));
+
+    // Draw all text
+    lcd.drawText(12, 10, "Home", RGB(255, 40, 40), RGB(50, 50, 50), 1);
+    lcd.drawText(12, 50, "Player 1 ", RGB(255, 40, 40), RGB(50, 50, 50), 1);
+    lcd.drawText(12, 120, "LIVES: ", RGB(0, 0, 0), RGB(50, 50, 50), 1);
+    lcd.drawText(12, 130, "SCORE: ", RGB(0, 0, 0), RGB(50, 50, 50), 1);
+    lcd.drawText(12, 148, "Player 2 ", RGB(255, 40, 40), RGB(50, 50, 50), 1);
+    lcd.drawText(12, 220, "LIVES: ", RGB(0, 0, 0), RGB(50, 50, 50), 1);
 }
 
-// Daaw barrel
 void Map::drawBarrels(int x, int y)
 {
     x = 21 * x + 110;
@@ -105,6 +103,7 @@ void Map::deleteBarrels(uint16_t x, uint8_t y)
 
 void Map::declareBarrels(uint8_t amount)
 {
+    // Check level and print it out on the screen
     lcd.drawText(12, 30, "LEVEL: ", RGB(0, 0, 0), RGB(50, 50, 50), 1);
     if (amount < 19)
     {
@@ -119,6 +118,7 @@ void Map::declareBarrels(uint8_t amount)
         lcd.drawText(62, 30, "3", RGB(0, 0, 0), RGB(50, 50, 50), 1);
     }
 
+    // Make sure these squares are already taken, so no barrels can be placed there
     for (uint8_t x = 0; x < 9; x++)
     {
         for (uint8_t y = 0; y < 9; y++)
@@ -129,6 +129,7 @@ void Map::declareBarrels(uint8_t amount)
             }
             if (x + y <= 2 || x + y >= 14)
             {
+                // 3 means that no barrels can be placed there, but the player can still walk on it
                 this->barrels[x][y] = 3;
             }
         }
@@ -140,6 +141,7 @@ void Map::declareBarrels(uint8_t amount)
     init_adc_single_sample();
     srand(single_sample());
 
+    // Randomly generate an "amount" of barrels, draw them on the screen and put them in the array
     for (uint8_t i = 0; i < amount; i++)
     {
         uint8_t x = rand() % 9;
