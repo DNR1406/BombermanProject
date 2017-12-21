@@ -65,6 +65,11 @@ void ArduinoNunchuk::_sendByte(char data, char location)
   // while(nunchukDelay + 30  < counterTimer2) {
     
   // }
+  // int i;
+  // while(i < 1000){
+  //   i++;
+  // }
+  
 
   _delay_ms(100); // MOET VERVANGEN WORDEN DOOR TIMER!!
   

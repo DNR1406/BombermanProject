@@ -19,7 +19,7 @@ void PlayerMovement::clearPlayer()
 
     int x = 120 + (this->x * 21);
     int y = 35 + (this->y * 21);
-    lcd.fillCircle(x, y, 7, RGB(30, 107, 7));
+    lcd.fillCircle(x, y, 7, RGB(29, 79, 22));
 }
 
 //Draws nethis->xt player location
@@ -27,7 +27,7 @@ void PlayerMovement::draw()
 {
     int x = 120 + (this->x * 21);
     int y = 35 + (this->y * 21);
-    lcd.fillCircle(x, y, 7, RGB(0, 0, 255));
+    lcd.fillCircle(x, y, 7, RGB(14, 44, 135));
 }
 
 //PLayer moves to the left
