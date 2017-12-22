@@ -6,7 +6,6 @@
 #include <stdint.h>
 #include "Globals.h"
 
-
 //Constructor
 Map playMap = Map();
 Screen screen = Screen();
@@ -14,7 +13,7 @@ Communication c = Communication(1, 1);
 PlayerMovement player = PlayerMovement(8, 8);
 ArduinoNunchuk nunchuk = ArduinoNunchuk();
 
-//volatile uint32_t counterTimer2;
+//Total score player 1
 int score = 0;
 
 GameEngine::GameEngine()
@@ -26,7 +25,7 @@ void GameEngine::startGame(int amount)
 {
     this->nunchuk = new ArduinoNunchuk();
 
-    for (uint8_t i = 0; i < OWNBOMBS; i++)
+    for (uint8_t i = 0; i < BOMBS; i++)
     {
         this->bombs[i] = (Bomb *)malloc(sizeof(Bomb *));
         this->bombs[i] = new Bomb(15, 15, 0);
@@ -44,6 +43,7 @@ void GameEngine::startGame(int amount)
     // Check what the player is doing, i.e. moving the joystick, pressing buttons, etc.
     checkPlayerActions();
     writeScoreToEEPROM(score);
+    // readDataFromEEPROM();
     // endGameScreen();
 }
 
@@ -77,15 +77,7 @@ void GameEngine::checkPlayerActions()
     // Inits the nunchuk and reads its data
     nunchuk->init();
 
-    // Variable that's needed for checking if bomb is placed
-    uint8_t bombPlaced;
-
-    // Variable that's needed for checking if player needs to clear the bomb while walking
-    uint8_t clearBomb = 0;
-
-    // Buffer for saving the bomb's location
-    uint8_t bombX;
-    uint8_t bombY;
+    uint8_t bombPlace = 0;
 
     // Set all leds
     PORTD |= (1 << PORTD3);
@@ -94,58 +86,10 @@ void GameEngine::checkPlayerActions()
     score = 1;
     while (this->lifes)
     {
-        for (int i = 0; i < OWNBOMBS; i++)
-        {
-            this->bombs[i]->printBomb();
-        }
-
         player.upMove = true;
         player.downMove = true;
         player.leftMove = true;
         player.rightMove = true;
-
-        // If player is on 9th (8) row from x they can never move right
-        if (player.x == 8)
-        {
-            player.rightMove = false;
-        }
-        // If there is a barrel on the right side of the player
-        else if (playMap.barrels[player.x + 1][player.y] == 1)
-        {
-            player.rightMove = false;
-        }
-
-        // If player is on 1st (0) row from x they can never move left
-        if (!player.x)
-        {
-            player.leftMove = false;
-        }
-        // If there is a barrel on the left side of the player
-        else if (playMap.barrels[player.x - 1][player.y] == 1)
-        {
-            player.leftMove = false;
-        }
-
-        // If player is on the 1st (0) from y they can never move up
-        if (!player.y)
-        {
-            player.upMove = false;
-        }
-        // If there is a barrel on the top side of the player
-        else if (playMap.barrels[player.x][player.y - 1] == 1)
-        {
-            player.upMove = false;
-        }
-        // If player is on the 9th (8) row from y they can never move down
-        if (player.y == 8)
-        {
-            player.downMove = false;
-        }
-        // If there is a barrel on the bottom side of the player
-        else if (playMap.barrels[player.x][player.y + 1] == 1)
-        {
-            player.downMove = false;
-        }
 
         // If player is on 2nd (1) 4th (3) or 6th (5) or 8th (7) row from x, they can
         // Never move up or down
@@ -153,6 +97,21 @@ void GameEngine::checkPlayerActions()
         {
             player.upMove = false;
             player.downMove = false;
+        }
+        else
+        {
+            // If player is on the 1st (0) from y they can never move up or If there is a barrel on the top side of the player
+            if (!player.y || playMap.barrels[player.x][player.y - 1] == 1)
+            {
+                player.upMove = false;
+            }
+            //
+
+            // If player is on the 9th (8) row from y they can never move down or If there is a barrel on the bottom side of the player
+            if (player.y == 8 || playMap.barrels[player.x][player.y + 1] == 1)
+            {
+                player.downMove = false;
+            }
         }
 
         // If player is on 2nd (1), 4th (3), 6th (5) or 8th (7) row from y, they can
@@ -162,6 +121,20 @@ void GameEngine::checkPlayerActions()
             player.rightMove = false;
             player.leftMove = false;
         }
+        else
+        {
+            // If player is on 9th (8) row from x they can never move right, or if there is a barrel on the right side of the player
+            if (player.x == 8 || playMap.barrels[player.x + 1][player.y] == 1)
+            {
+                player.rightMove = false;
+            }
+
+            // If player is on 1st (0) row from x they can never move left or If there is a barrel on the left side of the player
+            if (!player.x || playMap.barrels[player.x - 1][player.y] == 1)
+            {
+                player.leftMove = false;
+            }
+        }
 
         // Check if state of nunchuk had changed
         nunchuk->update();
@@ -169,159 +142,229 @@ void GameEngine::checkPlayerActions()
         //Place bomb if zButton has been pressed
         if (nunchuk->zButton)
         {
+            bombPlace = this->addBomb(player.x, player.y);
 
-            if (this->addBomb(player.x, player.y))
+            if (bombPlace)
             {
+                bombPlace--;
                 // Make sure player can't walk over bomb
-                playMap.barrels[player.x][player.y] = 1;
-
-                // Saves bomb position in buffer
-                bombX = player.x;
-                bombY = player.y;
+                playMap.barrels[this->bombs[bombPlace]->returnXlocation()][this->bombs[bombPlace]->returnYlocation()] = 1;
 
                 // Draw the bomb on the screen
-                playMap.placeBomb(player.x, player.y);
+                playMap.placeBomb(this->bombs[bombPlace]->returnXlocation(), this->bombs[bombPlace]->returnYlocation());
 
-                bombPlaced = 1;
-                clearBomb = 1;
+                bombPlace++;
             }
         }
 
         // Move player upwards
         if (nunchuk->analogY > 155 && player.upMove)
         {
-            player.up(clearBomb);
-            clearBomb = 0;
+            player.up(bombPlace);
+            bombPlace = 0;
         }
         //Move player downwards
         else if (nunchuk->analogY < 100 && player.downMove)
         {
-            player.down(clearBomb);
-            clearBomb = 0;
+            player.down(bombPlace);
+            bombPlace = 0;
         }
         //Move player to the right
         else if (nunchuk->analogX > 155 && player.rightMove)
         {
-            player.right(clearBomb);
-            clearBomb = 0;
+            player.right(bombPlace);
+            bombPlace = 0;
         }
         //Move player to the left
         else if (nunchuk->analogX < 100 && player.leftMove)
         {
-            player.left(clearBomb);
-            clearBomb = 0;
+            player.left(bombPlace);
+            bombPlace = 0;
         }
 
-        for (uint8_t number = 0; number < OWNBOMBS; number++)
+        for (uint8_t bombPlace = 0; bombPlace < BOMBS; bombPlace++)
         {
             // Runs a timer and executes when timer reaches its limit
-            if (this->bombs[number] != NULL)
+
+            if (this->bombs[bombPlace]->checkDetonation() && !(this->bombs[bombPlace]->returnExploded()))
             {
-                if (this->bombs[number]->checkDetonation())
+                this->bombs[bombPlace]->setExploded(1);
+
+                // If there is a barrel on the right side of the Bomb
+                if (playMap.barrels[this->bombs[bombPlace]->returnXlocation() + 1][this->bombs[bombPlace]->returnYlocation()] == 1)
                 {
-                    this->bombs[number]->setExploded(1);
-
-                    // If there is a barrel on the right side of the Bomb
-                    if (playMap.barrels[this->bombs[number]->returnXlocation() + 1][this->bombs[number]->returnYlocation()] == 1)
+                    if (this->bombs[bombPlace]->returnXlocation() < 8)
                     {
-                        if (this->bombs[number]->returnXlocation() < 8)
-                        {
-                            playMap.deleteBarrels(this->bombs[number]->returnXlocation() + 1, this->bombs[number]->returnYlocation());
-                            score += 4;
-                        }
+                        playMap.deleteBarrels(this->bombs[bombPlace]->returnXlocation() + 1, this->bombs[bombPlace]->returnYlocation());
+                        score += 4;
                     }
-
-                    // If there is a barrel on the 2nd right side of the Bomb
-                    if (playMap.barrels[this->bombs[number]->returnXlocation() + 2][this->bombs[number]->returnYlocation()] == 1 && playMap.barrels[this->bombs[number]->returnXlocation() + 1][this->bombs[number]->returnYlocation()] != 2)
-                    {
-                        if (this->bombs[number]->returnXlocation() < 7)
-                        {
-                            playMap.deleteBarrels(this->bombs[number]->returnXlocation() + 2, this->bombs[number]->returnYlocation());
-                            score += 4;
-                        }
-                    }
-
-                    // If there is a barrel on the left side of the Bomb
-                    if (playMap.barrels[this->bombs[number]->returnXlocation() - 1][this->bombs[number]->returnYlocation()] == 1)
-                    {
-                        if (this->bombs[number]->returnXlocation())
-                        {
-                            playMap.deleteBarrels(this->bombs[number]->returnXlocation() - 1, this->bombs[number]->returnYlocation());
-                            score += 4;
-                        }
-                    }
-
-                    // If there is a barrel on the 2nd left side of the Bomb and there is no wall inbetween
-                    if (playMap.barrels[this->bombs[number]->returnXlocation() - 2][this->bombs[number]->returnYlocation()] == 1 && playMap.barrels[this->bombs[number]->returnXlocation() - 1][this->bombs[number]->returnYlocation()] != 2)
-                    {
-                        if (this->bombs[number]->returnXlocation())
-                        {
-                            playMap.deleteBarrels(this->bombs[number]->returnXlocation() - 2, this->bombs[number]->returnYlocation());
-                            score += 4;
-                        }
-                    }
-
-                    // If there is a barrel on the bottom side of the Bomb
-                    if (playMap.barrels[this->bombs[number]->returnXlocation()][this->bombs[number]->returnYlocation() + 1] == 1)
-                    {
-                        if (this->bombs[number]->returnYlocation() < 8)
-                        {
-                            playMap.deleteBarrels(this->bombs[number]->returnXlocation(), this->bombs[number]->returnYlocation() + 1);
-                            score += 4;
-                        }
-                    }
-                    // If there is a barrel on the 2nd bottom side of the Bomb and there is no wall inbetween
-                    if (playMap.barrels[this->bombs[number]->returnXlocation()][this->bombs[number]->returnYlocation() + 2] == 1 && playMap.barrels[this->bombs[number]->returnXlocation()][this->bombs[number]->returnYlocation() + 1] != 2)
-                    {
-                        if (this->bombs[number]->returnYlocation() < 7)
-                        {
-                            playMap.deleteBarrels(this->bombs[number]->returnXlocation(), this->bombs[number]->returnYlocation() + 2);
-                            score += 4;
-                        }
-                    }
-
-                    // If there is a barrel on the top side of the Bomb
-                    if (playMap.barrels[this->bombs[number]->returnXlocation()][this->bombs[number]->returnYlocation() - 1] == 1)
-                    {
-                        if (this->bombs[number]->returnYlocation())
-                        {
-                            playMap.deleteBarrels(this->bombs[number]->returnXlocation(), this->bombs[number]->returnYlocation() - 1);
-                            score += 4;
-                        }
-                    }
-
-                    // If there is a barrel on the 2nd top side of the Bomb and there is no wall inbetween
-                    if (playMap.barrels[this->bombs[number]->returnXlocation()][this->bombs[number]->returnYlocation() - 2] == 1 && playMap.barrels[this->bombs[number]->returnXlocation()][this->bombs[number]->returnYlocation() - 1] != 2)
-                    {
-                        if (this->bombs[number]->returnYlocation())
-                        {
-                            playMap.deleteBarrels(this->bombs[number]->returnXlocation(), this->bombs[number]->returnYlocation() - 2);
-                            score += 4;
-                        }
-                    }
-
-                    // Delete the bomb, make the bomb dissapear as a barrel instance and make bombPlaced 0
-                    deleteBomb(number);
-                    playMap.barrels[bombX][bombY] = 0;
-                    bombPlaced = 0;
-                    updateScore(score);
-                    updateLifes();
                 }
+
+                // If there is a barrel on the 2nd right side of the Bomb
+                if (playMap.barrels[this->bombs[bombPlace]->returnXlocation() + 2][this->bombs[bombPlace]->returnYlocation()] == 1 && playMap.barrels[this->bombs[bombPlace]->returnXlocation() + 1][this->bombs[bombPlace]->returnYlocation()] != 2)
+                {
+                    if (this->bombs[bombPlace]->returnXlocation() < 7)
+                    {
+                        playMap.deleteBarrels(this->bombs[bombPlace]->returnXlocation() + 2, this->bombs[bombPlace]->returnYlocation());
+                        score += 4;
+                    }
+                }
+
+                // If there is a barrel on the left side of the Bomb
+                if (playMap.barrels[this->bombs[bombPlace]->returnXlocation() - 1][this->bombs[bombPlace]->returnYlocation()] == 1)
+                {
+                    if (this->bombs[bombPlace]->returnXlocation())
+                    {
+                        playMap.deleteBarrels(this->bombs[bombPlace]->returnXlocation() - 1, this->bombs[bombPlace]->returnYlocation());
+                        score += 4;
+                    }
+                }
+
+                // If there is a barrel on the 2nd left side of the Bomb and there is no wall inbetween
+                if (playMap.barrels[this->bombs[bombPlace]->returnXlocation() - 2][this->bombs[bombPlace]->returnYlocation()] == 1 && playMap.barrels[this->bombs[bombPlace]->returnXlocation() - 1][this->bombs[bombPlace]->returnYlocation()] != 2)
+                {
+                    if (this->bombs[bombPlace]->returnXlocation() > 1)
+                    {
+                        playMap.deleteBarrels(this->bombs[bombPlace]->returnXlocation() - 2, this->bombs[bombPlace]->returnYlocation());
+                        score += 4;
+                    }
+                }
+
+                // If there is a barrel on the bottom side of the Bomb
+                if (playMap.barrels[this->bombs[bombPlace]->returnXlocation()][this->bombs[bombPlace]->returnYlocation() + 1] == 1)
+                {
+                    if (this->bombs[bombPlace]->returnYlocation() < 8)
+                    {
+                        playMap.deleteBarrels(this->bombs[bombPlace]->returnXlocation(), this->bombs[bombPlace]->returnYlocation() + 1);
+                        score += 4;
+                    }
+                }
+                // If there is a barrel on the 2nd bottom side of the Bomb and there is no wall inbetween
+                if (playMap.barrels[this->bombs[bombPlace]->returnXlocation()][this->bombs[bombPlace]->returnYlocation() + 2] == 1 && playMap.barrels[this->bombs[bombPlace]->returnXlocation()][this->bombs[bombPlace]->returnYlocation() + 1] != 2)
+                {
+                    if (this->bombs[bombPlace]->returnYlocation() < 7)
+                    {
+                        playMap.deleteBarrels(this->bombs[bombPlace]->returnXlocation(), this->bombs[bombPlace]->returnYlocation() + 2);
+                        score += 4;
+                    }
+                }
+
+                // If there is a barrel on the top side of the Bomb
+                if (playMap.barrels[this->bombs[bombPlace]->returnXlocation()][this->bombs[bombPlace]->returnYlocation() - 1] == 1)
+                {
+                    if (this->bombs[bombPlace]->returnYlocation())
+                    {
+                        playMap.deleteBarrels(this->bombs[bombPlace]->returnXlocation(), this->bombs[bombPlace]->returnYlocation() - 1);
+                        score += 4;
+                    }
+                }
+
+                // If there is a barrel on the 2nd top side of the Bomb and there is no wall inbetween
+                if (playMap.barrels[this->bombs[bombPlace]->returnXlocation()][this->bombs[bombPlace]->returnYlocation() - 2] == 1 && playMap.barrels[this->bombs[bombPlace]->returnXlocation()][this->bombs[bombPlace]->returnYlocation() - 1] != 2)
+                {
+                    if (this->bombs[bombPlace]->returnYlocation() > 1)
+                    {
+                        this->bombs[bombPlace]->setExploded(1);
+
+                        // If there is a barrel on the right side of the Bomb
+                        if (playMap.barrels[this->bombs[bombPlace]->returnXlocation() + 1][this->bombs[bombPlace]->returnYlocation()] == 1)
+                        {
+                            if (this->bombs[bombPlace]->returnXlocation() < 8)
+                            {
+                                playMap.deleteBarrels(this->bombs[bombPlace]->returnXlocation() + 1, this->bombs[bombPlace]->returnYlocation());
+                                score += 4;
+                            }
+                        }
+
+                        // If there is a barrel on the 2nd right side of the Bomb
+                        if (playMap.barrels[this->bombs[bombPlace]->returnXlocation() + 2][this->bombs[bombPlace]->returnYlocation()] == 1 && playMap.barrels[this->bombs[bombPlace]->returnXlocation() + 1][this->bombs[bombPlace]->returnYlocation()] != 2)
+                        {
+                            if (this->bombs[bombPlace]->returnXlocation() < 7)
+                            {
+                                playMap.deleteBarrels(this->bombs[bombPlace]->returnXlocation() + 2, this->bombs[bombPlace]->returnYlocation());
+                                score += 4;
+                            }
+                        }
+
+                        // If there is a barrel on the left side of the Bomb
+                        if (playMap.barrels[this->bombs[bombPlace]->returnXlocation() - 1][this->bombs[bombPlace]->returnYlocation()] == 1)
+                        {
+                            if (this->bombs[bombPlace]->returnXlocation())
+                            {
+                                playMap.deleteBarrels(this->bombs[bombPlace]->returnXlocation() - 1, this->bombs[bombPlace]->returnYlocation());
+                                score += 4;
+                            }
+                        }
+
+                        // If there is a barrel on the 2nd left side of the Bomb and there is no wall inbetween
+                        if (playMap.barrels[this->bombs[bombPlace]->returnXlocation() - 2][this->bombs[bombPlace]->returnYlocation()] == 1 && playMap.barrels[this->bombs[bombPlace]->returnXlocation() - 1][this->bombs[bombPlace]->returnYlocation()] != 2)
+                        {
+                            if (this->bombs[bombPlace]->returnXlocation())
+                            {
+                                playMap.deleteBarrels(this->bombs[bombPlace]->returnXlocation() - 2, this->bombs[bombPlace]->returnYlocation());
+                                score += 4;
+                            }
+                        }
+
+                        // If there is a barrel on the bottom side of the Bomb
+                        if (playMap.barrels[this->bombs[bombPlace]->returnXlocation()][this->bombs[bombPlace]->returnYlocation() + 1] == 1)
+                        {
+                            if (this->bombs[bombPlace]->returnYlocation() < 8)
+                            {
+                                playMap.deleteBarrels(this->bombs[bombPlace]->returnXlocation(), this->bombs[bombPlace]->returnYlocation() + 1);
+                                score += 4;
+                            }
+                        }
+                        // If there is a barrel on the 2nd bottom side of the Bomb and there is no wall inbetween
+                        if (playMap.barrels[this->bombs[bombPlace]->returnXlocation()][this->bombs[bombPlace]->returnYlocation() + 2] == 1 && playMap.barrels[this->bombs[bombPlace]->returnXlocation()][this->bombs[bombPlace]->returnYlocation() + 1] != 2)
+                        {
+                            if (this->bombs[bombPlace]->returnYlocation() < 7)
+                            {
+                                playMap.deleteBarrels(this->bombs[bombPlace]->returnXlocation(), this->bombs[bombPlace]->returnYlocation() + 2);
+                                score += 4;
+                            }
+                        }
+
+                        // If there is a barrel on the top side of the Bomb
+                        if (playMap.barrels[this->bombs[bombPlace]->returnXlocation()][this->bombs[bombPlace]->returnYlocation() - 1] == 1)
+                        {
+                            if (this->bombs[bombPlace]->returnYlocation())
+                            {
+                                playMap.deleteBarrels(this->bombs[bombPlace]->returnXlocation(), this->bombs[bombPlace]->returnYlocation() - 1);
+                                score += 4;
+                            }
+                        }
+
+                        // If there is a barrel on the 2nd top side of the Bomb and there is no wall inbetween
+                        if (playMap.barrels[this->bombs[bombPlace]->returnXlocation()][this->bombs[bombPlace]->returnYlocation() - 2] == 1 && playMap.barrels[this->bombs[bombPlace]->returnXlocation()][this->bombs[bombPlace]->returnYlocation() - 1] != 2)
+                        {
+                            if (this->bombs[bombPlace]->returnYlocation())
+                            {
+                                playMap.deleteBarrels(this->bombs[bombPlace]->returnXlocation(), this->bombs[bombPlace]->returnYlocation() - 2);
+                                score += 4;
+                            }
+                        }
+                    }
+                }
+                // Delete the bomb, make the bomb dissapear as a barrel instance and make bombPlaced 0
+                deleteBomb(bombPlace);
+                playMap.barrels[this->bombs[bombPlace]->returnXlocation()][this->bombs[bombPlace]->returnYlocation()] = 0;
+                updateScore(score);
+                updateLifes();
             }
         }
     }
 }
 
-void GameEngine::deleteBomb(uint8_t number)
+void GameEngine::deleteBomb(uint8_t bombPlace)
 {
-
     // Converting x and y position to lcd screen pixel position
-    int x = 120 + (this->bombs[number]->returnXlocation() * 21);
-    int y = 35 + (this->bombs[number]->returnYlocation() * 21);
+    int x = 120 + (this->bombs[bombPlace]->returnXlocation() * 21);
+    int y = 35 + (this->bombs[bombPlace]->returnYlocation() * 21);
     lcd.fillCircle(x, y, 8, RGB(29, 79, 22));
 
     // Checks if the location of the player is in the radius of the bomb
-    if (checkPlayerDamage(number))
+    if (checkPlayerDamage(bombPlace))
     {
         if (score - 13 < 0)
         {
@@ -351,47 +394,49 @@ void GameEngine::deleteBomb(uint8_t number)
         }
     }
 
+    playMap.barrels[this->bombs[bombPlace]->returnXlocation()][this->bombs[bombPlace]->returnYlocation()] = 0;
+
     // Setting bomb location to 15,15 so it's out of the radius
-    this->bombs[number]->setXlocation(15);
-    this->bombs[number]->setYlocation(15);
+    this->bombs[bombPlace]->setXlocation(15);
+    this->bombs[bombPlace]->setYlocation(15);
 }
 
-uint8_t GameEngine::checkPlayerDamage(uint8_t number)
+uint8_t GameEngine::checkPlayerDamage(uint8_t bombPlace)
 {
-    if (player.x == this->bombs[number]->returnXlocation() + 1 && player.y == this->bombs[number]->returnYlocation())
+    if (player.x == this->bombs[bombPlace]->returnXlocation() + 1 && player.y == this->bombs[bombPlace]->returnYlocation())
     {
         return 1;
     }
-    else if (player.x == this->bombs[number]->returnXlocation() - 1 && player.y == this->bombs[number]->returnYlocation())
+    else if (player.x == this->bombs[bombPlace]->returnXlocation() - 1 && player.y == this->bombs[bombPlace]->returnYlocation())
     {
         return 1;
     }
-    else if (player.x == this->bombs[number]->returnXlocation() && player.y == this->bombs[number]->returnYlocation())
+    else if (player.x == this->bombs[bombPlace]->returnXlocation() && player.y == this->bombs[bombPlace]->returnYlocation())
     {
         return 1;
     }
-    else if (player.x == this->bombs[number]->returnXlocation() && player.y == this->bombs[number]->returnYlocation() + 1)
+    else if (player.x == this->bombs[bombPlace]->returnXlocation() && player.y == this->bombs[bombPlace]->returnYlocation() + 1)
     {
         return 1;
     }
-    else if (player.x == this->bombs[number]->returnXlocation() && player.y == this->bombs[number]->returnYlocation() - 1)
+    else if (player.x == this->bombs[bombPlace]->returnXlocation() && player.y == this->bombs[bombPlace]->returnYlocation() - 1)
     {
         return 1;
     }
 
-    else if (player.x == this->bombs[number]->returnXlocation() - 2 && player.y == this->bombs[number]->returnYlocation() && playMap.barrels[this->bombs[number]->returnXlocation() - 1][this->bombs[number]->returnYlocation()] != 2)
+    else if (player.x == this->bombs[bombPlace]->returnXlocation() - 2 && player.y == this->bombs[bombPlace]->returnYlocation() && playMap.barrels[this->bombs[bombPlace]->returnXlocation() - 1][this->bombs[bombPlace]->returnYlocation()] != 2)
     {
         return 1;
     }
-    else if (player.x == this->bombs[number]->returnXlocation() + 2 && player.y == this->bombs[number]->returnYlocation() && playMap.barrels[this->bombs[number]->returnXlocation() + 1][this->bombs[number]->returnYlocation()] != 2)
+    else if (player.x == this->bombs[bombPlace]->returnXlocation() + 2 && player.y == this->bombs[bombPlace]->returnYlocation() && playMap.barrels[this->bombs[bombPlace]->returnXlocation() + 1][this->bombs[bombPlace]->returnYlocation()] != 2)
     {
         return 1;
     }
-    else if (player.x == this->bombs[number]->returnXlocation() && player.y == this->bombs[number]->returnYlocation() + 2 && playMap.barrels[this->bombs[number]->returnXlocation()][this->bombs[number]->returnYlocation() + 1] != 2)
+    else if (player.x == this->bombs[bombPlace]->returnXlocation() && player.y == this->bombs[bombPlace]->returnYlocation() + 2 && playMap.barrels[this->bombs[bombPlace]->returnXlocation()][this->bombs[bombPlace]->returnYlocation() + 1] != 2)
     {
         return 1;
     }
-    else if (player.x == this->bombs[number]->returnXlocation() && player.y == this->bombs[number]->returnYlocation() - 2 && playMap.barrels[this->bombs[number]->returnXlocation()][this->bombs[number]->returnYlocation() - 1] != 2)
+    else if (player.x == this->bombs[bombPlace]->returnXlocation() && player.y == this->bombs[bombPlace]->returnYlocation() - 2 && playMap.barrels[this->bombs[bombPlace]->returnXlocation()][this->bombs[bombPlace]->returnYlocation() - 1] != 2)
     {
         return 1;
     }
@@ -408,7 +453,6 @@ void GameEngine::readDataFromEEPROM()
 
 void GameEngine::writeScoreToEEPROM(int score)
 {
-
     // Initializes the used address
     int addr1 = 50;
 
@@ -418,25 +462,36 @@ void GameEngine::writeScoreToEEPROM(int score)
 
 void GameEngine::updateScore(int score)
 {
-    lcd.drawInteger(55, 130, score, DEC, RGB(31, 255, 0), RGB(0, 0, 0), 1);
+    lcd.drawInteger(62, 130, score, DEC, RGB(31, 255, 0), RGB(50, 50, 50), 1);
 }
 
 void GameEngine::updateLifes()
 {
-    lcd.drawInteger(55, 120, this->lifes, DEC, RGB(31, 255, 0), RGB(0, 0, 0), 1);
+    lcd.drawInteger(62, 120, this->lifes, DEC, RGB(31, 255, 0), RGB(50, 50, 50), 1);
 }
 
 uint8_t GameEngine::addBomb(uint8_t x, uint8_t y)
 {
-    for (uint8_t i = 0; i < OWNBOMBS; i++)
+    uint8_t bombPlace, placed;
+
+    for (uint8_t i = 0; i < BOMBS; i++)
     {
-        if (this->bombs[i]->returnExploded())
+        if ((this->bombs[i]->returnXlocation() == x) && (this->bombs[i]->returnYlocation() == y))
+        {
+            return i + 1;
+        }
+    }
+
+    for (uint8_t i = 0; i < BOMBS; i++)
+    {
+        if ((this->bombs[i]->readyForNew(x, y)))
         {
             this->bombs[i]->setXlocation(x);
             this->bombs[i]->setYlocation(y);
             this->bombs[i]->setTime(counterTimer2);
             this->bombs[i]->setExploded(0);
-            return 1;
+
+            return i + 1;
         }
     }
 

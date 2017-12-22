@@ -263,10 +263,6 @@ void Navigation::startBrightnessScreen()
         val = this->getAnalogVal();
         // val = analogRead(A0);
         val = map(val, 0, 1023, 0, 100);
-        if (val < 10)
-        {
-            val = 10;
-        }
         // Set brightness
         this->screen->setBrightness(val);
     }
@@ -316,7 +312,7 @@ void Navigation::startLevelScreen()
         {
         case 1:
             // Start game with 18 barrels
-            this->gameEngine->startGame(18);
+            this->startPlayerSelectScreen();
             this->drawLevelScreen();
             pressed = 0;
             break;
@@ -340,6 +336,63 @@ void Navigation::startLevelScreen()
     }
 }
 
+// Select payer
+void Navigation::drawPlayerSelectScreen()
+{
+    this->screen->drawHeader(F("SELECT PLAYER"));
+    this->screen->drawBackButton();
+    this->screen->drawButton(F("PLAYER 1"), 1, 110, 108);
+    this->screen->drawButton(F("PLAYER 2"), 2, 110, 147);
+}
+
+void Navigation::startPlayerSelectScreen()
+{
+    this->drawPlayerSelectScreen();
+
+    // Loop while nothing is pressed
+    uint8_t pressed = 0;
+    while (!pressed)
+    {
+        // Check for press
+        pressed = this->screen->checkTouchscreen();
+
+        // If anyting is pressed, delete Levels screen
+        if (pressed)
+        {
+            this->deleteLevelScreen();
+        }
+
+        // Check what is pressed
+        switch (pressed)
+        {
+        case 1:
+            // Start game with 18 barrels
+            this->gameEngine->startGame(18);
+            this->drawLevelScreen();
+            pressed = 0;
+            break;
+        case 2:
+            // Start game with 36 barrels
+            this->gameEngine->startGame(18);
+            this->drawLevelScreen();
+            pressed = 0;
+            break;
+        case 4:
+            // Go back
+            return;
+            break;
+        };
+    }
+}
+
+void Navigation::deletePlayerSelectScreen()
+{
+    this->screen->deleteBackButton();
+    this->screen->deleteHeader();
+    this->screen->deleteButton(1);
+    this->screen->deleteButton(2);
+}
+
 // Other
 int Navigation::getAnalogVal()
 {
@@ -348,7 +401,8 @@ int Navigation::getAnalogVal()
     ADCSRA |= (1 << ADSC);
     // Wait
     while (ADCSRA & (1 << ADSC))
-        ;
+    {
+    }
     result = ADC;
     return result;
 }

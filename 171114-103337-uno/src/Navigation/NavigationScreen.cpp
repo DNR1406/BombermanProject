@@ -105,7 +105,12 @@ void NavigationScreen::deleteBrightness()
 
 void NavigationScreen::setBrightness(int val)
 {
-  lcd.led(val);
+  if (val < 10)
+  {
+    val = 10;
+  }
+  lcd.led(val); 
+  Serial.println(val);
 }
 
 // Check for touchscreen presses
@@ -194,5 +199,5 @@ void NavigationScreen::deleteHighscoreButtons()
 {
   byte value = EEPROM.read(50);
   lcd.drawText(60, 50, "Player 1:", RGB(160, 182, 219), RGB(160, 182, 219), 2);
-  lcd.drawInteger(205, 50, value -1, DEC, RGB(160, 182, 219), RGB(160, 182, 219), 2);
+  lcd.drawInteger(205, 50, value - 1, DEC, RGB(160, 182, 219), RGB(160, 182, 219), 2);
 }

@@ -14,86 +14,68 @@ void Map::drawPlayMap()
 {
     // Delete menu with overwriting the background
     lcd.fillRect(89, 4, 231, 231, RGB(29, 79, 22));
-    lcd.fillRect(89, 0, 231, 4, RGB(0, 0, 0));
-    lcd.fillRect(89, 235, 231, 5, RGB(0, 0, 0));
+    lcd.fillRect(0, 0, 320, 4, RGB(0, 0, 0));
+    lcd.fillRect(0, 235, 320, 5, RGB(0, 0, 0));
 
-    lcd.drawText(5, 5, "Home", RGB(255, 0, 0), RGB(160, 182, 219), 1);
-    // Seperates the home button from the rest of the screen
-    lcd.fillRect(0, 40, 89, 4, RGB(255, 0, 0));
+    lcd.fillRect(0, 4, 89, 231, RGB(50, 50, 50));
 
-    // Draws playerbox
-    lcd.drawRect(0, 44, 89, 98, RGB(0, 0, 0));
-    lcd.drawRect(1, 45, 87, 96, RGB(0, 0, 0));
-    lcd.fillRect(2, 46, 85, 94, RGB(50, 50, 50));
-
-    lcd.drawRect(0, 142, 89, 98, RGB(0, 0, 0));
-    lcd.drawRect(1, 143, 87, 96, RGB(0, 0, 0));
-    lcd.fillRect(2, 144, 85, 94, RGB(50, 50, 50));
+    lcd.drawText(12, 10, "Home", RGB(255, 40, 40), RGB(50, 50, 50), 1);
 
     // Draws rectangle in playerbox
-    lcd.drawText(12, 54, "Player 1 ", RGB(255, 0, 0), RGB(50, 50, 50), 1);
+    lcd.drawText(12, 50, "Player 1 ", RGB(255, 40, 40), RGB(50, 50, 50), 1);
     lcd.fillRect(10, 64, 69, 50, RGB(15, 15, 15));
     lcd.fillCircle(44, 89, 12, RGB(14, 44, 135));
 
     // Draws lifes in Player one square
-    lcd.drawText(5, 120, "LIVES: ", RGB(0, 0, 0), RGB(50, 50, 50), 1);
+    lcd.drawText(12, 120, "LIVES: ", RGB(0, 0, 0), RGB(50, 50, 50), 1);
+
     // Draws score in Player one square
-    lcd.drawText(5, 130, "SCORE: ", RGB(0, 0, 0), RGB(50, 50, 50), 1);
+    lcd.drawText(12, 130, "SCORE: ", RGB(0, 0, 0), RGB(50, 50, 50), 1);
 
     // Draws rectangle in playerbox
-    lcd.drawText(12, 152, "Player 2 ", RGB(255, 0, 0), RGB(50, 50, 50), 1);
+    lcd.drawText(12, 148, "Player 2 ", RGB(255, 40, 40), RGB(50, 50, 50), 1);
     lcd.fillRect(10, 162, 69, 50, RGB(15, 15, 15));
     lcd.fillCircle(44, 187, 12, RGB(153, 12, 12));
 
     // Draws lifes in Player two square
-    lcd.drawText(5, 228, "LIVES: ", RGB(0, 0, 0), RGB(50, 50, 50), 1);
+    lcd.drawText(12, 220, "LIVES: ", RGB(0, 0, 0), RGB(50, 50, 50), 1);
 
-    // Going thru the horizontal grids. We have 4 of them. Per 4 horizontal points
-    // We draw 4 vertical squares the increment of the y1 and x1 are both 54 because
-    // Of one square being 26 by 26 squares, so we need to skip 54
-    int x1 = 131;
+    //Drawing the inside walls
+    int x = 131;
+    uint8_t y = 46;
     for (uint8_t i = 0; i < 4; i++)
     {
-        // Identifying the beginning y point
-        int y1 = 46;
+        y = 46;
         for (uint8_t j = 0; j < 4; j++)
         {
-            lcd.fillRect(x1, y1, 21, 21, RGB(0, 0, 0));
-            lcd.drawRect(x1, y1, 21, 21, RGB(50, 50, 50));
-            y1 += 42;
+            drawWalls(x, y);
+            y += 42;
         }
-        x1 += 42;
+        x += 42;
     }
 
-    // Identifying the beginning x point
-    x1 = 89;
+    // Drawing the outside walls
+    x = 89;
     for (uint8_t i = 0; i < 11; i++)
     {
-        int y = 4;
+        y = 4;
         for (uint8_t j = 0; j < 11; j++)
         {
             if (i == 0 || i == 10)
             {
-                lcd.fillRect(x1, y, 21, 21, RGB(0, 0, 0));
-                lcd.drawRect(x1, y, 21, 21, RGB(50, 50, 50));
+                drawWalls(x, y);
                 y += 21;
             }
-            if (j == 0)
+            else if (j == 0)
             {
-                lcd.fillRect(x1, y, 21, 21, RGB(0, 0, 0));
-                lcd.drawRect(x1, y, 21, 21, RGB(50, 50, 50));
+                drawWalls(x, y);
+            }
+            else if (j == 10)
+            {
+                drawWalls(x, 214);
             }
         }
-        x1 += 21;
-    }
-
-    x1 = 110;
-    for (uint8_t i = 0; i < 9; i++)
-    {
-        int y = 214;
-        lcd.fillRect(x1, y, 21, 21, RGB(0, 0, 0));
-        lcd.drawRect(x1, y, 21, 21, RGB(50, 50, 50));
-        x1 += 21;
+        x += 21;
     }
 }
 
@@ -103,8 +85,14 @@ void Map::drawBarrels(int x, int y)
     x = 21 * x + 110;
     y = 21 * y + 25;
 
-    lcd.fillRect(x, y, 21, 21, RGB(102, 38, 37));
+    lcd.fillRect(x + 1, y + 1, 20, 20, RGB(102, 38, 37));
     lcd.drawRect(x, y, 21, 21, RGB(20, 20, 20));
+}
+
+void Map::drawWalls(int x, uint8_t y)
+{
+    lcd.fillRect(x + 1, y + 1, 20, 20, RGB(0, 0, 0));
+    lcd.drawRect(x, y, 21, 21, RGB(50, 50, 50));
 }
 
 void Map::deleteBarrels(uint16_t x, uint8_t y)
@@ -117,21 +105,19 @@ void Map::deleteBarrels(uint16_t x, uint8_t y)
 
 void Map::declareBarrels(uint8_t amount)
 {
-    lcd.drawText(5, 25, "LEVEL: ", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+    lcd.drawText(12, 30, "LEVEL: ", RGB(0, 0, 0), RGB(50, 50, 50), 1);
     if (amount < 19)
     {
-        lcd.drawText(55, 25, "1", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+        lcd.drawText(62, 30, "1", RGB(0, 0, 0), RGB(50, 50, 50), 1);
     }
     else if (amount < 37)
     {
-        lcd.drawText(55, 25, "2", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+        lcd.drawText(62, 30, "2", RGB(0, 0, 0), RGB(50, 50, 50), 1);
     }
     else
     {
-        lcd.drawText(55, 25, "3", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+        lcd.drawText(62, 30, "3", RGB(0, 0, 0), RGB(50, 50, 50), 1);
     }
-
-    // lcd.drawInteger(0, 110, 50, amount, RGB(255,0,0), RGB(160,182,219), 1);
 
     for (uint8_t x = 0; x < 9; x++)
     {
@@ -177,8 +163,6 @@ void Map::placeBomb(uint16_t x, uint8_t y)
     x = 21 * x + 120;
     y = 21 * y + 35;
     lcd.fillCircle(x, y, 7, RGB(0, 0, 0));
-
-    // start timer
 }
 
 void Map::init_adc_single_sample()

@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include "include.h"
 
-#define OWNBOMBS 4
+#define BOMBS 6
 
 class ArduinoNunchuk;
 class Bomb;
@@ -33,7 +33,7 @@ public:
 private:
   MI0283QT9 lcd;
   ArduinoNunchuk *nunchuk;
-  Bomb *bombs[OWNBOMBS];
+  Bomb *bombs[BOMBS];
   int lifes = 3;
 
   uint8_t addBomb(uint8_t x, uint8_t y);

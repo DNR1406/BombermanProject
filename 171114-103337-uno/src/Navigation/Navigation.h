@@ -44,6 +44,12 @@ private:
   void drawHighscoreScreen();
   void startHighScoreScreen();
   void deleteHighScoreScreen();
+
+  // PlayerSElect
+  void drawPlayerSelectScreen();
+  void startPlayerSelectScreen();
+  void deletePlayerSelectScreen();
+
   // Other
   int getAnalogVal();
   void drawNotFinishedYet();
