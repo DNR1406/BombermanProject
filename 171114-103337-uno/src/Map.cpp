@@ -12,6 +12,31 @@ Map::Map()
 
 void Map::drawPlayMap()
 {
+    // Draw green background as "grass"
+    lcd.fillRect(89, 4, 231, 231, RGB(29, 79, 22));
+
+    // Black line at top and black line at bottom black
+    lcd.fillRect(0, 0, 320, 4, RGB(0, 0, 0));
+    lcd.fillRect(0, 235, 320, 5, RGB(0, 0, 0));
+
+    // Draw grey background at left side of screen
+    lcd.fillRect(0, 4, 89, 231, RGB(50, 50, 50));
+
+    // "Avatar"  of player 1
+    lcd.fillRect(10, 64, 69, 50, RGB(15, 15, 15));
+    lcd.fillCircle(44, 89, 12, RGB(14, 44, 135));
+
+    // "Avatar"  of player 2
+    lcd.fillRect(10, 162, 69, 50, RGB(15, 15, 15));
+    lcd.fillCircle(44, 187, 12, RGB(153, 12, 12));
+
+    // Draw all text
+    lcd.drawText(12, 10, "Home", RGB(255, 40, 40), RGB(50, 50, 50), 1);
+    lcd.drawText(12, 50, "Player 1 ", RGB(255, 40, 40), RGB(50, 50, 50), 1);
+    lcd.drawText(12, 120, "LIVES: ", RGB(0, 0, 0), RGB(50, 50, 50), 1);
+    lcd.drawText(12, 130, "SCORE: ", RGB(0, 0, 0), RGB(50, 50, 50), 1);
+    lcd.drawText(12, 148, "Player 2 ", RGB(255, 40, 40), RGB(50, 50, 50), 1);
+    lcd.drawText(12, 220, "LIVES: ", RGB(0, 0, 0), RGB(50, 50, 50), 1);
 
     //Drawing the inside walls
     int x = 131;
@@ -50,32 +75,6 @@ void Map::drawPlayMap()
         }
         x += 21;
     }
-
-    // Draw green background as "grass"
-    lcd.fillRect(89, 4, 231, 231, RGB(29, 79, 22));
-
-    // Black line at top and black line at bottom black
-    lcd.fillRect(0, 0, 320, 4, RGB(0, 0, 0));
-    lcd.fillRect(0, 235, 320, 5, RGB(0, 0, 0));
-
-    // Draw grey background at left side of screen
-    lcd.fillRect(0, 4, 89, 231, RGB(50, 50, 50));
-
-    // "Avatar"  of player 1
-    lcd.fillRect(10, 64, 69, 50, RGB(15, 15, 15));
-    lcd.fillCircle(44, 89, 12, RGB(14, 44, 135));
-
-    // "Avatar"  of player 2
-    lcd.fillRect(10, 162, 69, 50, RGB(15, 15, 15));
-    lcd.fillCircle(44, 187, 12, RGB(153, 12, 12));
-
-    // Draw all text
-    lcd.drawText(12, 10, "Home", RGB(255, 40, 40), RGB(50, 50, 50), 1);
-    lcd.drawText(12, 50, "Player 1 ", RGB(255, 40, 40), RGB(50, 50, 50), 1);
-    lcd.drawText(12, 120, "LIVES: ", RGB(0, 0, 0), RGB(50, 50, 50), 1);
-    lcd.drawText(12, 130, "SCORE: ", RGB(0, 0, 0), RGB(50, 50, 50), 1);
-    lcd.drawText(12, 148, "Player 2 ", RGB(255, 40, 40), RGB(50, 50, 50), 1);
-    lcd.drawText(12, 220, "LIVES: ", RGB(0, 0, 0), RGB(50, 50, 50), 1);
 }
 
 void Map::drawBarrels(int x, int y)
@@ -99,6 +98,90 @@ void Map::deleteBarrels(uint16_t x, uint8_t y)
     x = 21 * x + 110;
     y = 21 * y + 25;
     lcd.fillRect(x, y, 21, 21, RGB(29, 79, 22));
+}
+
+uint8_t Map::explosion(uint8_t x, uint8_t y)
+{
+    uint8_t score = 0;
+    // If there is a barrel on the right side of the Bomb
+    if (this->barrels[x + 1][y] == 1)
+    {
+        if (x < 8)
+        {
+            deleteBarrels(x + 1, y);
+            score += 4;
+        }
+    }
+
+    // If there is a barrel on the 2nd right side of the Bomb
+    if (this->barrels[x + 2][y] == 1 && this->barrels[x + 1][y] != 2)
+    {
+        if (x < 7)
+        {
+            deleteBarrels(x + 2, y);
+            score += 4;
+        }
+    }
+
+    // If there is a barrel on the left side of the Bomb
+    if (this->barrels[x - 1][y] == 1)
+    {
+        if (x)
+        {
+            deleteBarrels(x - 1, y);
+            score += 4;
+        }
+    }
+
+    // If there is a barrel on the 2nd left side of the Bomb and there is no wall inbetween
+    if (this->barrels[x - 2][y] == 1 && this->barrels[x - 1][y] != 2)
+    {
+        if (x > 1)
+        {
+            deleteBarrels(x - 2, y);
+            score += 4;
+        }
+    }
+
+    // If there is a barrel on the bottom side of the Bomb
+    if (this->barrels[x][y + 1] == 1)
+    {
+        if (y < 8)
+        {
+            deleteBarrels(x, y + 1);
+            score += 4;
+        }
+    }
+    // If there is a barrel on the 2nd bottom side of the Bomb and there is no wall inbetween
+    if (this->barrels[x][y + 2] == 1 && this->barrels[x][y + 1] != 2)
+    {
+        if (y < 7)
+        {
+            deleteBarrels(x, y + 2);
+            score += 4;
+        }
+    }
+
+    // If there is a barrel on the top side of the Bomb
+    if (this->barrels[x][y - 1] == 1)
+    {
+        if (y)
+        {
+            deleteBarrels(x, y - 1);
+            score += 4;
+        }
+    }
+
+    // If there is a barrel on the 2nd top side of the Bomb and there is no wall inbetween
+    if (this->barrels[x][y - 2] == 1 && this->barrels[x][y - 1] != 2)
+    {
+        if (y > 1)
+        {
+            deleteBarrels(x, y - 2);
+            score += 4;
+        }
+    }
+    return score;
 }
 
 void Map::declareBarrels(uint8_t amount)

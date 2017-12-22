@@ -261,8 +261,10 @@ void Navigation::startBrightnessScreen()
 
         // Read analog val
         val = this->getAnalogVal();
-        // val = analogRead(A0);
+
+        // Map value 
         val = map(val, 0, 1023, 0, 100);
+
         // Set brightness
         this->screen->setBrightness(val);
     }

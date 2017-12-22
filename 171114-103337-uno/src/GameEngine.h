@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include "include.h"
 
-#define BOMBS 6
+#define BOMBS 3
 
 class ArduinoNunchuk;
 class Bomb;
