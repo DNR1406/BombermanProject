@@ -167,7 +167,7 @@ void GameEngine::checkPlayerActions()
         }
 
         // Move player upwards
-        else if (nunchuk->analogY > 155 && player.upMove)
+        if (nunchuk->analogY > 155 && player.upMove)
         {
             player.up(clearBomb);
             clearBomb = 0;
@@ -195,85 +195,7 @@ void GameEngine::checkPlayerActions()
         if (bombPlayer1->checkDetonation() && bombPlaced)
         {
             this->bombPlayer1->setExploded(1);
-
-            // If there is a barrel on the right side of the Bomb
-            if (playMap.barrels[this->bombPlayer1->returnXlocation() + 1][this->bombPlayer1->returnYlocation()] == 1)
-            {
-                if (this->bombPlayer1->returnXlocation() < 8)
-                {
-                    playMap.deleteBarrels(this->bombPlayer1->returnXlocation() + 1, this->bombPlayer1->returnYlocation());
-                    score += 4;
-                }
-            }
-
-            // If there is a barrel on the 2nd right side of the Bomb
-            if (playMap.barrels[this->bombPlayer1->returnXlocation() + 2][this->bombPlayer1->returnYlocation()] == 1 && playMap.barrels[this->bombPlayer1->returnXlocation() + 1][this->bombPlayer1->returnYlocation()] != 2)
-            {
-                if (this->bombPlayer1->returnXlocation() < 7)
-                {
-                    playMap.deleteBarrels(this->bombPlayer1->returnXlocation() + 2, this->bombPlayer1->returnYlocation());
-                    score += 4;
-                }
-            }
-
-            // If there is a barrel on the left side of the Bomb
-            if (playMap.barrels[this->bombPlayer1->returnXlocation() - 1][this->bombPlayer1->returnYlocation()] == 1)
-            {
-                if (this->bombPlayer1->returnXlocation())
-                {
-                    playMap.deleteBarrels(this->bombPlayer1->returnXlocation() - 1, this->bombPlayer1->returnYlocation());
-                    score += 4;
-                }
-            }
-
-            // If there is a barrel on the 2nd left side of the Bomb and there is no wall inbetween
-            if (playMap.barrels[this->bombPlayer1->returnXlocation() - 2][this->bombPlayer1->returnYlocation()] == 1 && playMap.barrels[this->bombPlayer1->returnXlocation() - 1][this->bombPlayer1->returnYlocation()] != 2)
-            {
-                if (this->bombPlayer1->returnXlocation() > 1)
-                {
-                    playMap.deleteBarrels(this->bombPlayer1->returnXlocation() - 2, this->bombPlayer1->returnYlocation());
-                    score += 4;
-                }
-            }
-
-            // If there is a barrel on the bottom side of the Bomb
-            if (playMap.barrels[this->bombPlayer1->returnXlocation()][this->bombPlayer1->returnYlocation() + 1] == 1)
-            {
-                if (this->bombPlayer1->returnYlocation() < 8)
-                {
-                    playMap.deleteBarrels(this->bombPlayer1->returnXlocation(), this->bombPlayer1->returnYlocation() + 1);
-                    score += 4;
-                }
-            }
-            // If there is a barrel on the 2nd bottom side of the Bomb and there is no wall inbetween
-            if (playMap.barrels[this->bombPlayer1->returnXlocation()][this->bombPlayer1->returnYlocation() + 2] == 1 && playMap.barrels[this->bombPlayer1->returnXlocation()][this->bombPlayer1->returnYlocation() + 1] != 2)
-            {
-                if (this->bombPlayer1->returnYlocation() < 7)
-                {
-                    playMap.deleteBarrels(this->bombPlayer1->returnXlocation(), this->bombPlayer1->returnYlocation() + 2);
-                    score += 4;
-                }
-            }
-
-            // If there is a barrel on the top side of the Bomb
-            if (playMap.barrels[this->bombPlayer1->returnXlocation()][this->bombPlayer1->returnYlocation() - 1] == 1)
-            {
-                if (this->bombPlayer1->returnYlocation())
-                {
-                    playMap.deleteBarrels(this->bombPlayer1->returnXlocation(), this->bombPlayer1->returnYlocation() - 1);
-                    score += 4;
-                }
-            }
-
-            // If there is a barrel on the 2nd top side of the Bomb and there is no wall inbetween
-            if (playMap.barrels[this->bombPlayer1->returnXlocation()][this->bombPlayer1->returnYlocation() - 2] == 1 && playMap.barrels[this->bombPlayer1->returnXlocation()][this->bombPlayer1->returnYlocation() - 1] != 2)
-            {
-                if (this->bombPlayer1->returnYlocation() > 1)
-                {
-                    playMap.deleteBarrels(this->bombPlayer1->returnXlocation(), this->bombPlayer1->returnYlocation() - 2);
-                    score += 4;
-                }
-            }
+            score += playMap.explosion(bombX, bombY);
 
             // Delete the bomb, make the bomb dissapear as a barrel instance and make bombPlaced 0
             deleteBomb();
@@ -392,10 +314,10 @@ void GameEngine::writeScoreToEEPROM(int score)
 
 void GameEngine::updateScore(int score)
 {
-    lcd.drawInteger(62, 130, score, DEC, RGB(31, 255, 0), RGB(50,50,50), 1);
+    lcd.drawInteger(62, 130, score, DEC, RGB(31, 255, 0), RGB(50, 50, 50), 1);
 }
 
-void GameEngine::updateLifes() 
+void GameEngine::updateLifes()
 {
-    lcd.drawInteger(62, 120, this->lifes, DEC, RGB(31, 255, 0), RGB(50,50,50), 1);
+    lcd.drawInteger(62, 120, this->lifes, DEC, RGB(31, 255, 0), RGB(50, 50, 50), 1);
 }
