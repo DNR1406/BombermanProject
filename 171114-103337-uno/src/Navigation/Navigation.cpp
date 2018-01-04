@@ -86,13 +86,13 @@ void Navigation::drawOptionsScreen()
     screen->drawBackButton();
     screen->drawHeader(F("OPTIONS"));
 
-    // Draws start button
+    // Draws Brightness button
     screen->drawButton(F("BRIGHTNESS"), 1, 85, 108);
 
-    // Draws options button
+    // Draws Volume button
     screen->drawButton(F("VOLUME"), 2, 115, 147);
 
-    // Draws credits button
+    // Draws Highscore button
     screen->drawButton(F("HIGHSCORE"), 3, 90, 187);
 }
 
@@ -146,7 +146,7 @@ void Navigation::startOptionsScreen()
         case 3:
             // Highscore (Not finished)
             this->startHighScoreScreen();
-            this->drawOptionsScreen();
+            this->drawHighscoreScreen();
             pressed = 0;
             break;
         case 4:
@@ -177,7 +177,7 @@ void Navigation::startHighScoreScreen()
         //Go back
         if (pressed == 4)
         {
-            this->deleteHighScoreScreen();
+            deleteHighScoreScreen();
 
             return;
         }
@@ -196,6 +196,7 @@ void Navigation::deleteHighScoreScreen()
     this->screen->deleteBackButton();
     this->screen->deleteHeader();
     this->screen->deleteHighscoreButtons();
+    lcd.drawRect(60, 50, 170, 60, RGB(160, 182, 219));
 }
 void Navigation::deleteCreditsScreen()
 {
@@ -262,7 +263,7 @@ void Navigation::startBrightnessScreen()
         // Read analog val
         val = this->getAnalogVal();
 
-        // Map value 
+        // Map value
         val = map(val, 0, 1023, 0, 100);
 
         // Set brightness

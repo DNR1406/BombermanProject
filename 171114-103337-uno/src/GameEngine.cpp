@@ -124,13 +124,13 @@ void GameEngine::checkPlayerActions()
         else
         {
             // If player is on 9th (8) row from x they can never move right, or if there is a barrel on the right side of the player
-            if (player.x == 8 || playMap.barrels[player.x + 1][player.y] == 1|| playMap.barrels[player.x + 1][player.y] == 5)
+            if (player.x == 8 || playMap.barrels[player.x + 1][player.y] == 1 || playMap.barrels[player.x + 1][player.y] == 5)
             {
                 player.rightMove = false;
             }
 
             // If player is on 1st (0) row from x they can never move left or If there is a barrel on the left side of the player
-            if (!player.x || playMap.barrels[player.x - 1][player.y] == 1|| playMap.barrels[player.x - 1][player.y] == 5)
+            if (!player.x || playMap.barrels[player.x - 1][player.y] == 1 || playMap.barrels[player.x - 1][player.y] == 5)
             {
                 player.leftMove = false;
             }
@@ -158,13 +158,13 @@ void GameEngine::checkPlayerActions()
         }
 
         // Move player upwards
-        if (nunchuk->analogY > 155 && player.upMove)
+        if (nunchuk->analogY > 200 && player.upMove)
         {
             player.up(bombPlace);
             bombPlace = 0;
         }
         //Move player downwards
-        else if (nunchuk->analogY < 100 && player.downMove)
+        else if (nunchuk->analogY < 55 && player.downMove)
         {
             player.down(bombPlace);
             bombPlace = 0;
@@ -245,6 +245,8 @@ void GameEngine::deleteBomb(uint8_t bombPlace)
 
 uint8_t GameEngine::checkPlayerDamage(uint8_t bombPlace)
 {
+
+    // Checks if the player in within the range of the bombs at detonation
     if (player.x == this->bombs[bombPlace]->returnXlocation() + 1 && player.y == this->bombs[bombPlace]->returnYlocation())
     {
         return 1;
@@ -295,11 +297,28 @@ void GameEngine::readDataFromEEPROM()
 
 void GameEngine::writeScoreToEEPROM(int score)
 {
-    // Initializes the used address
-    int addr1 = 50;
 
-    // Writes each part of the score to their address
-    EEPROM.write(addr1, score + 1);
+    if (score > EEPROM.read(50))
+    {
+        EEPROM.write(52, EEPROM.read(51));
+        EEPROM.write(51, EEPROM.read(50));
+        EEPROM.write(50, score + 1);
+    }
+    else if (score > EEPROM.read(51))
+    {
+        EEPROM.write(52, EEPROM.read(51));  
+        EEPROM.write(51, score + 1);
+        }
+    else if (score > EEPROM.read(52))
+    {
+        EEPROM.write(51, score + 1);
+    }
+
+    // // Initializes the used address
+    // int addr1 = 50;
+
+    // // Writes each part of the score to their address
+    // EEPROM.write(addr1, score + 1);
 }
 
 void GameEngine::updateScore(int score)

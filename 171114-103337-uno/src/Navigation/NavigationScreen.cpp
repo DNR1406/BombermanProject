@@ -20,8 +20,10 @@ void NavigationScreen::startScreen()
 
   // Calibration
   lcd.touchRead();
+
   // Calibration data in EEPROM?
   // lcd.touchStartCal();
+
   if (lcd.touchZ() || readCalData())
   {
     // Write data to EEPROM
@@ -109,7 +111,7 @@ void NavigationScreen::setBrightness(int val)
   {
     val = 10;
   }
-  lcd.led(val); 
+  lcd.led(val);
   Serial.println(val);
 }
 
@@ -190,9 +192,16 @@ uint8_t NavigationScreen::readCalData()
 
 void NavigationScreen::readHighscoreFromEEPROM()
 {
-  byte value = EEPROM.read(50);
   lcd.drawText(60, 50, "Player 1:", RGB(0, 0, 0), RGB(160, 182, 219), 2);
+
+  byte value = EEPROM.read(50);
   lcd.drawInteger(205, 50, value - 1, DEC, RGB(0, 0, 0), RGB(160, 182, 219), 2);
+
+  value = EEPROM.read(51);
+  lcd.drawInteger(205, 70, value - 1, DEC, RGB(0, 0, 0), RGB(160, 182, 219), 2);
+
+  value = EEPROM.read(52);
+  lcd.drawInteger(205, 90, value - 1, DEC, RGB(0, 0, 0), RGB(160, 182, 219), 2);
 }
 
 void NavigationScreen::deleteHighscoreButtons()
