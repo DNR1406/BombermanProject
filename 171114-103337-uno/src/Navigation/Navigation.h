@@ -54,6 +54,8 @@ private:
   int getAnalogVal();
   void drawNotFinishedYet();
   void deleteNotFinishedYet();
+  void drawWaitingOnOponnentScreen();
+
 
   // Variablen
   GameEngine *gameEngine;

@@ -16,7 +16,14 @@ Bomb::Bomb(uint8_t x, uint8_t y, uint32_t startTime)
 // Wait 3 seconds for bomb countdown
 uint8_t Bomb::checkDetonation()
 {
-    return ((this->lastKnownTime + 500) < counterTimer2);
+    if (this->lastKnownTime == 0)
+    {
+        return 0;
+    }
+    else
+    {
+        return ((this->lastKnownTime + 20000) < counterTimer2);
+    }
 }
 
 void Bomb::setXlocation(uint8_t x)

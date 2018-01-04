@@ -8,6 +8,7 @@ class NavigationScreen
   public:
     // Startup
     NavigationScreen();
+    NavigationScreen(uint8_t zeven);
 
     // Headers
     void drawHeader(String text);

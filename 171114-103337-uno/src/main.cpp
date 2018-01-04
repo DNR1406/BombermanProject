@@ -1,9 +1,9 @@
 #include "include.h"
+#include "Communication/CommunicationIR.h"
 
 int main()
 {
     init_begin();
-    Serial.begin(9600);
 
     Navigation *navigation = new Navigation();
     navigation->startStartScreen();
@@ -14,6 +14,3 @@ int main()
 
     return 0;
 }
-
-
-

@@ -7,6 +7,12 @@ NavigationScreen::NavigationScreen()
   this->startScreen();
 }
 
+NavigationScreen::NavigationScreen(uint8_t zeven)
+{
+  // Start screen
+  // this->startScreen();
+}
+
 void NavigationScreen::startScreen()
 {
   // Start screen
@@ -109,7 +115,7 @@ void NavigationScreen::setBrightness(int val)
   {
     val = 10;
   }
-  lcd.led(val); 
+  lcd.led(val);
   Serial.println(val);
 }
 
@@ -201,3 +207,4 @@ void NavigationScreen::deleteHighscoreButtons()
   lcd.drawText(60, 50, "Player 1:", RGB(160, 182, 219), RGB(160, 182, 219), 2);
   lcd.drawInteger(205, 50, value - 1, DEC, RGB(160, 182, 219), RGB(160, 182, 219), 2);
 }
+

@@ -8,6 +8,13 @@
 // Map constructor
 Map::Map()
 {
+    for (int i = 0; i < 9; i++)
+    {
+        for (int j = 0; j < 9; j++)
+        {
+            this->barrels[i][j] = 0;
+        }
+    }
 }
 
 void Map::drawPlayMap()
@@ -108,6 +115,7 @@ uint8_t Map::explosion(uint8_t x, uint8_t y)
     {
         if (x < 8)
         {
+
             deleteBarrels(x + 1, y);
             score += 4;
         }
@@ -184,8 +192,8 @@ uint8_t Map::explosion(uint8_t x, uint8_t y)
     return score;
 }
 
-void Map::declareBarrels(uint8_t amount)
-{
+
+void Map::declareBarrels(uint8_t amount, uint8_t seed) {
     // Check level and print it out on the screen
     lcd.drawText(12, 30, "LEVEL: ", RGB(0, 0, 0), RGB(50, 50, 50), 1);
     if (amount < 19)
@@ -221,8 +229,7 @@ void Map::declareBarrels(uint8_t amount)
     this->barrels[1][1] = 2;
     this->barrels[7][7] = 2;
 
-    init_adc_single_sample();
-    srand(single_sample());
+    srand(seed);
 
     // Randomly generate an "amount" of barrels, draw them on the screen and put them in the array
     for (uint8_t i = 0; i < amount; i++)
@@ -259,9 +266,9 @@ void Map::init_adc_single_sample()
 }
 
 // Single sample of pin A0
-uint16_t Map::single_sample()
+uint8_t Map::single_sample()
 {
-    uint16_t result;
+    uint8_t result;
     ADCSRA |= (1 << ADSC); // Start conversion
     while (ADCSRA & (1 << ADSC))
         ; // Wait

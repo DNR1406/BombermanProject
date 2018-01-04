@@ -59,7 +59,7 @@ void Navigation::startStartScreen()
         {
         case 1:
             // Start game
-            this->startLevelScreen();
+            this->startPlayerSelectScreen();
             this->drawStartScreen();
             pressed = 0;
             break;
@@ -138,7 +138,6 @@ void Navigation::startOptionsScreen()
         case 2:
             // Volume (Not finished)
             this->drawNotFinishedYet();
-            delay(1000);
             this->deleteNotFinishedYet();
             this->drawOptionsScreen();
             pressed = 0;
@@ -221,7 +220,6 @@ void Navigation::startCreditScreen()
         if (pressed == 4)
         {
             this->deleteCreditsScreen();
-
             return;
         }
     }
@@ -262,8 +260,11 @@ void Navigation::startBrightnessScreen()
         // Read analog val
         val = this->getAnalogVal();
 
-        // Map value 
-        val = map(val, 0, 1023, 0, 100);
+        // Map value
+
+        //Source of map, could not fount the libary ;(
+        // val = map(val, 0, 1023, 0, 100);
+        val = (val - 0) * (100 - 0) / (1023 - 0) + 0;
 
         // Set brightness
         this->screen->setBrightness(val);
@@ -307,6 +308,7 @@ void Navigation::startLevelScreen()
         if (pressed)
         {
             this->deleteLevelScreen();
+            this->drawWaitingOnOponnentScreen();
         }
 
         // Check what is pressed
@@ -314,19 +316,19 @@ void Navigation::startLevelScreen()
         {
         case 1:
             // Start game with 18 barrels
-            this->startPlayerSelectScreen();
+            this->gameEngine->startGame(18, 36);
             this->drawLevelScreen();
             pressed = 0;
             break;
         case 2:
             // Start game with 36 barrels
-            this->gameEngine->startGame(36);
+            this->gameEngine->startGame(36, 36);
             this->drawLevelScreen();
             pressed = 0;
             break;
         case 3:
             // Start game with 55 barrels
-            this->gameEngine->startGame(55);
+            this->gameEngine->startGame(55, 36);
             this->drawLevelScreen();
             pressed = 0;
             break;
@@ -369,14 +371,15 @@ void Navigation::startPlayerSelectScreen()
         {
         case 1:
             // Start game with 18 barrels
-            this->gameEngine->startGame(18);
-            this->drawLevelScreen();
+            this->startLevelScreen();
+            this->drawPlayerSelectScreen();
             pressed = 0;
             break;
         case 2:
             // Start game with 36 barrels
-            this->gameEngine->startGame(18);
-            this->drawLevelScreen();
+            this->drawWaitingOnOponnentScreen();
+            this->gameEngine->startGame(56);
+            this->drawPlayerSelectScreen();
             pressed = 0;
             break;
         case 4:
@@ -418,4 +421,9 @@ void Navigation::drawNotFinishedYet()
 void Navigation::deleteNotFinishedYet()
 {
     this->screen->deleteHeader();
+}
+
+void Navigation::drawWaitingOnOponnentScreen()
+{
+    this->screen->drawHeader(F("Waiting..."));
 }

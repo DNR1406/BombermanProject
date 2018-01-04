@@ -1,11 +1,21 @@
-// Function to startup all initits
+#include <avr/interrupt.h>
+#include "Globals.h"
+
 void init_begin();
 
-// Function for in/output
+//function for in/output
 void init_in_out_put();
-// Function to init single sample
+//function to init single sample
 void init_single_Sample();
-// Function to startup timer
-void init_timer1();
-// Function to startup timer2
+
+//init timer 1 on 36 khz
+void timer1_36K();
+
+//init timer 1 on 56 khz
+void timer1_56k();
+
+//init interupt on pin 2
+void init_interuptPin2();
+
+//pos 100 micro
 void init_timer2();

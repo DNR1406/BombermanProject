@@ -3,8 +3,8 @@
 
 /*---------------------------------------------------------------------------
 If you create a header file, put it here: */
-#include "Communication/Communication.h"
-#include "Communication/CommunictaionIR.h"
+#include "Communication/CommunicationIR.h"
+#include "Communication/CommunicationIR.h"
 #include "Navigation/Navigation.h"
 #include "Navigation/NavigationScreen.h"
 
