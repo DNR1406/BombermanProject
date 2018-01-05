@@ -1,14 +1,16 @@
+// Other includes
 #include <Wire.h>
 #include <util/delay.h>
-#include "Globals.h"
 
-//#include "ArduinoNunchuk.h"
-#include "include.h"
+// Own includes
+#include "ArduinoNunchuk.hpp"
+
 #define ADDRESS 0x52
 
 ArduinoNunchuk::ArduinoNunchuk()
 {
 }
+
 void ArduinoNunchuk::init()
 {
   //start wire liberay
@@ -61,19 +63,14 @@ void ArduinoNunchuk::_sendByte(char data, char location)
 
   Wire.endTransmission();
 
-  // uint32_t nunchukDelay = counterTimer2; 
+  // uint32_t nunchukDelay = counterTimer2;
   // while(nunchukDelay + 30  < counterTimer2) {
-    
+
   // }
   // int i;
   // while(i < 1000){
   //   i++;
   // }
-  
 
   _delay_ms(100); // MOET VERVANGEN WORDEN DOOR TIMER!!
-  
-
-    
 }
-

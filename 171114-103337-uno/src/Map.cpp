@@ -1,9 +1,5 @@
-#include "include.h"
-#include <time.h>
-#include <stdlib.h>
-#include <avr/io.h>
-#include "wiring_private.h"
-#include "pins_arduino.h"
+// Own includes
+#include "Map.hpp"
 
 // Map constructor
 Map::Map()

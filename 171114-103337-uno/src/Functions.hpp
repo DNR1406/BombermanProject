@@ -1,6 +1,3 @@
-#include <avr/interrupt.h>
-#include "Globals.h"
-
 void init_begin();
 
 //function for in/output

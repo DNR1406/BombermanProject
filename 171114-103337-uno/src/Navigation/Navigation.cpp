@@ -1,6 +1,10 @@
-#include "NavigationScreen.h"
-#include "Navigation.h"
-#include "../Debug/Memory.h"
+// Own includes
+#include "NavigationScreen.hpp"
+#include "Navigation.hpp"
+#include "../GameEngine.hpp"
+
+// Other includes
+#include <stdint.h>
 
 // Constructor
 Navigation::Navigation()

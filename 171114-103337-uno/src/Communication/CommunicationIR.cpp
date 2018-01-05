@@ -1,11 +1,12 @@
+// Other includes
 #include <avr/interrupt.h>
-#include "Globals.h"
-#include "CommunicationIR.h"
-#include "Functions.h"
-#include <Arduino.h>
-#include "GameEngine.h"
-#include "Navigation/NavigationScreen.h"
-#include "Bomb.h"
+
+// Own includes
+#include "../Globals.hpp"
+#include "../Bomb.hpp"
+#include "../Functions.hpp"
+#include "../GameEngine.hpp"
+#include "CommunicationIR.hpp"
 
 // Counter for communication
 volatile uint8_t communicationTimer2;

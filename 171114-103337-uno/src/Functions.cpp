@@ -1,8 +1,11 @@
+//Includes
 #include <avr/interrupt.h>
 #include <Arduino.h>
-#include "Communication/CommunicationIR.h"
-#include "Functions.h"
-#include "Globals.h"
+
+// Own includes
+#include "Communication/CommunicationIR.hpp"
+#include "Functions.hpp"
+#include "Globals.hpp"
 
 void init_begin()
 {

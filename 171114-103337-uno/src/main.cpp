@@ -1,5 +1,5 @@
-#include "include.h"
-#include "Communication/CommunicationIR.h"
+#include "Navigation/Navigation.hpp"
+#include "Functions.hpp"
 
 int main()
 {

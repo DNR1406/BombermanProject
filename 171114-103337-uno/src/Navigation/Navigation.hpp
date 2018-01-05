@@ -1,7 +1,3 @@
-#include "NavigationScreen.h"
-#include "../GameEngine.h"
-#include <MI0283QT9.h>
-
 #ifndef Navigation_H
 #define Navigation_H
 
@@ -56,11 +52,9 @@ private:
   void deleteNotFinishedYet();
   void drawWaitingOnOponnentScreen();
 
-
   // Variablen
   GameEngine *gameEngine;
   NavigationScreen *screen;
-  MI0283QT9 lcd;
 };
 
 #endif

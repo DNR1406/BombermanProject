@@ -1,10 +1,17 @@
-#include "Map.h"
-#include "Screen.h"
-#include "PlayerMovement.h"
-#include "ArduinoNunchuk.h"
-#include <stdint.h>
-#include "Globals.h"
-#include <Arduino.h>
+// Own includes
+#include "Map.hpp"
+#include "Screen.hpp"
+#include "PlayerMovement.hpp"
+#include "Globals.hpp"
+#include "ArduinoNunchuk.hpp"
+#include "GameEngine.hpp"
+#include "Functions.hpp"
+#include "Bomb.hpp"
+#include "Communication/CommunicationIR.hpp"
+
+// Other includes
+#include <EEPROM.h>
+#include <avr/interrupt.h>
 
 GameEngine::GameEngine()
 {
@@ -254,7 +261,8 @@ void GameEngine::checkPlayerDamage(Bomb **bombs, uint8_t bombPlace, PlayerMoveme
 
 void GameEngine::readDataFromEEPROM()
 {
-    byte value = EEPROM.read(50);
+    //Niet gebruikt?
+    // byte value = EEPROM.read(50);
 }
 
 void GameEngine::writeScoreToEEPROM(int score)
@@ -269,8 +277,6 @@ void GameEngine::writeScoreToEEPROM(int score)
 // Function to add bomb, returns 0 if there is no bomb added, otherwise the location +1 of the bomb
 uint8_t GameEngine::addBomb(uint8_t x, uint8_t y)
 {
-    uint8_t bombPlace, placed;
-
     // Check if bomb is already placed
     for (uint8_t i = 0; i < BOMBS; i++)
     {
@@ -423,7 +429,7 @@ void GameEngine::updatePlayer2()
 {
     // Delete player
     this->player2->clearPlayer();
-    
+
     // Get new data
     getPlayer2(&this->player2->x, &this->player2->y);
 

@@ -1,7 +1,6 @@
-#include "PlayerMovement.h"
-#include "include.h"
-// Constructor
+#include "PlayerMovement.hpp"
 
+// Constructor
 PlayerMovement::PlayerMovement(uint8_t x, uint8_t y, uint8_t player)
 {
     //begin waardes, secs, this->x, this->y

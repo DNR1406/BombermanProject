@@ -1,9 +1,8 @@
-#include "include.h"
+#include "Screen.hpp"
 
 //constructor
 Screen::Screen() {
   // Start values for secs, x, y
-  this->seconds = 0;
   this->x = 160;
   this->y = 120;
   // RGB for color

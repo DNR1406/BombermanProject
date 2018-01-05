@@ -1,5 +1,6 @@
-#include "include.h"
-#include "Globals.h"
+// Includes
+#include "Bomb.hpp"
+#include "Globals.hpp"
 
 Bomb::Bomb()
 {
@@ -64,15 +65,4 @@ void Bomb::setTime(uint32_t time)
 uint8_t Bomb::readyForNew(uint8_t x, uint8_t y)
 {
     return (this->lastXlocation == 15 && this->lastYlocation == 15 && this->exploded == 1);
-}
-
-void Bomb::printBomb()
-{
-    Serial.println("BOMB");
-    Serial.print(this->lastXlocation);
-    Serial.print(" ");
-    Serial.println(this->lastYlocation);
-    Serial.println(this->lastKnownTime);
-    Serial.println(this->exploded);
-    Serial.println();
 }

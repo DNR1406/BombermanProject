@@ -1,5 +1,5 @@
+// Other includes
 #include <MI0283QT9.h>
-#include <stdint.h>
 
 #define BOMBS 3
 
@@ -43,9 +43,7 @@ private:
   Bomb *bombsPlayer1[BOMBS];
   Bomb *bombsPlayer2[BOMBS];
 
-
   uint8_t player;
-
 
   uint8_t addBomb(uint8_t x, uint8_t y);
 
