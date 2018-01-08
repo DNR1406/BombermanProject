@@ -1,6 +1,8 @@
 // Includes
 #include "Bomb.hpp"
 #include "Globals.hpp"
+#include "Drawings.hpp"
+#include <Arduino.h>
 
 Bomb::Bomb()
 {
@@ -15,7 +17,7 @@ Bomb::Bomb(uint8_t x, uint8_t y, uint32_t startTime)
 }
 
 // Wait 3 seconds for bomb countdown
-uint8_t Bomb::checkDetonation()
+uint8_t Bomb::checkDetonation(uint8_t barrels[9][9])
 {
     if (this->lastKnownTime == 0)
     {
@@ -23,6 +25,18 @@ uint8_t Bomb::checkDetonation()
     }
     else
     {
+        uint32_t bombTime = ((this->lastKnownTime + 20000) - counterTimer2);
+
+       
+
+        if (bombTime > 5000)
+        {
+            updateWick(this->lastXlocation, this->lastYlocation, bombTime);
+        }
+        else
+        {
+            explodeBomb(this->lastXlocation, this->lastYlocation, bombTime, barrels);
+        }
         return ((this->lastKnownTime + 20000) < counterTimer2);
     }
 }

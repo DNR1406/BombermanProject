@@ -17,6 +17,7 @@ public:
   void drawWalls(int x, uint8_t y);
   uint8_t explosion(uint8_t x, uint8_t y);
   void declareBarrels(uint8_t amount, uint8_t seed);
+  void drawGrass(uint16_t x, uint16_t y);
 
   uint8_t barrels[9][9];
 

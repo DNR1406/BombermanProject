@@ -8,7 +8,7 @@ class Bomb
 public:
   Bomb();
   Bomb(uint8_t x, uint8_t y, uint32_t startTime);
-  uint8_t checkDetonation();
+  uint8_t checkDetonation(uint8_t barrels[9][9]);
   uint8_t returnXlocation();
   uint8_t returnYlocation();
   uint8_t returnExploded();
