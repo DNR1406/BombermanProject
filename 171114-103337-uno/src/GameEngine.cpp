@@ -51,8 +51,12 @@ void GameEngine::startGame(int amount, uint8_t frequenty)
         level = 2;
     }
 
+#ifndef SINGLEPLAYER
+
     while (!sendMap(seed, level))
         ;
+
+#endif
 
     // draws playMap on screen
     this->playMap->drawPlayMap();
@@ -136,12 +140,16 @@ void GameEngine::checkPlayerActions()
     {
         // Update player 1
         this->updatePlayer1();
-        // Update player 2
+// Update player 2
+#ifndef SINGLEPLAYER
         this->updatePlayer2();
+#endif
         // Check if bombs are exploded
         this->checkBombs();
-        // Send location of own player
+// Send location of own player
+#ifndef SINGLEPLAYER
         setPlayer1(this->player1->x, this->player1->y);
+#endif
     }
 }
 
@@ -286,8 +294,10 @@ uint8_t GameEngine::addBomb(uint8_t x, uint8_t y)
         }
     }
 
+#ifndef SINGLEPLAYER
     // Send bomb to opponent
     setBombPlayer2(x, y);
+#endif
 
     for (uint8_t i = 0; i < BOMBS; i++)
     {

@@ -188,8 +188,8 @@ uint8_t Map::explosion(uint8_t x, uint8_t y)
     return score;
 }
 
-
-void Map::declareBarrels(uint8_t amount, uint8_t seed) {
+void Map::declareBarrels(uint8_t amount, uint8_t seed)
+{
     // Check level and print it out on the screen
     lcd.drawText(12, 30, "LEVEL: ", RGB(0, 0, 0), RGB(50, 50, 50), 1);
     if (amount < 19)
