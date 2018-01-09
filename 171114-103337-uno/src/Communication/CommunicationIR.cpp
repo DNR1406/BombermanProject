@@ -155,7 +155,7 @@ void setBombPlayer2(uint8_t x, uint8_t y)
 
     // Wait 54000 micro senconds to make sure the data is received
     uint32_t now = counterTimer2;
-    while (counterTimer2 < (now + 270))
+    while (counterTimer2 < (now + 400))
         ;
 
     // Set to

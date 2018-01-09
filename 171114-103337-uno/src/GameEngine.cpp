@@ -79,8 +79,8 @@ void GameEngine::startGame(int amount, uint8_t frequenty)
     this->player2 = new PlayerMovement(8, 8, 2);
 
     // Draw player one
-    this->player1->draw(1);
-    this->player2->draw(2);
+    this->player1->draw(1, 3);
+    this->player2->draw(2, 3);
 
     // Check what the player is doing, i.e. moving the joystick, pressing buttons, etc.
     this->checkPlayerActions();
@@ -117,8 +117,8 @@ void GameEngine::startGame(uint8_t frequenty)
     this->player2 = new PlayerMovement(0, 0, 2);
 
     // Draw player one
-    this->player1->draw(1);
-    this->player2->draw(2);
+    this->player1->draw(1, 3);
+    this->player2->draw(2, 3);
 
     // Check what the player is doing, i.e. moving the joystick, pressing buttons, etc.
     this->checkPlayerActions();
@@ -454,9 +454,40 @@ void GameEngine::updatePlayer2()
     // Get new data
     getPlayer2(&this->player2->x, &this->player2->y);
 
+    
+
+    if (this->oldXPlayer2 > this->player2->x)
+    {
+        sidePlayer2 = 4;
+    }
+    else if (this->oldXPlayer2 < this->player2->x)
+    {
+        sidePlayer2 = 2;
+    }
+    else if (this->oldYPlayer2 < this->player2->y)
+    {
+        sidePlayer2 = 3;
+    }
+    else if (this->oldYPlayer2 > this->player2->y)
+    {
+        sidePlayer2 = 1;
+    }
+
+    Serial.println(sidePlayer2);
+
     // Draw player 2
-    this->player2->draw(2);
+    this->player2->draw(2, sidePlayer2);
+
+    this->oldXPlayer2 = this->player2->x;
+    this->oldYPlayer2 = this->player2->y;
 
     // Get bombs from opponent, put them in this->bombsPlayer2
     getBombsPlayer2(this->bombsPlayer2);
+
+    for(uint8_t bombPlace = 0; bombPlace < BOMBS; bombPlace ++) {
+        this->playMap->barrels[this->bombsPlayer2[bombPlace]->returnXlocation()][this->bombsPlayer2[bombPlace]->returnYlocation()] = 5;
+    }
+    
+
+
 }

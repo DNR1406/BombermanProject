@@ -1,4 +1,5 @@
 #include "PlayerMovement.hpp"
+#include "Drawings.hpp"
 
 // Constructor
 PlayerMovement::PlayerMovement(uint8_t x, uint8_t y, uint8_t player)
@@ -17,26 +18,17 @@ PlayerMovement::PlayerMovement(uint8_t x, uint8_t y, uint8_t player)
 // Clears current player location
 void PlayerMovement::clearPlayer()
 {
-    int x = 120 + (this->x * 21);
-    int y = 35 + (this->y * 21);
-    lcd.fillCircle(x, y, 7, RGB(29, 79, 22));
+    // int x = 120 + (this->x * 21);
+    // int y = 35 + (this->y * 21);
+    // lcd.fillCircle(x, y, 7, RGB(29, 79, 22));
+
+    deletePlayer(this->x, this->y);
 }
 
 //Draws nethis->xt player location
-void PlayerMovement::draw(uint8_t player)
+void PlayerMovement::draw(uint8_t player, uint8_t side)
 {
-    if (player == 2)
-    {
-        int x = 120 + (this->x * 21);
-        int y = 35 + (this->y * 21);
-        lcd.fillCircle(x, y, 7, RGB(255, 40, 40));
-    }
-    else if (player == 1)
-    {
-        int x = 120 + (this->x * 21);
-        int y = 35 + (this->y * 21);
-        lcd.fillCircle(x, y, 7, RGB(14, 44, 135));
-    }
+    drawPlayer(this->x, this->y, side, player);
 }
 
 //PLayer moves to the left
@@ -50,7 +42,7 @@ void PlayerMovement::left(uint8_t bombPlaced, uint8_t playerOverWalk, uint8_t pl
 
     if (!playerOverWalk)
     {
-        draw(player);
+        draw(player, 4);
     }
 }
 
@@ -62,7 +54,7 @@ void PlayerMovement::right(uint8_t bombPlaced, uint8_t playerOverWalk, uint8_t p
         clearPlayer();
     }
     this->x++;
-    draw(player);
+    draw(player, 2);
 }
 
 //zelfde functie als left, alleen voor down
@@ -73,7 +65,7 @@ void PlayerMovement::down(uint8_t bombPlaced, uint8_t playerOverWalk, uint8_t pl
         clearPlayer();
     }
     this->y++;
-    draw(player);
+    draw(player, 3);
 }
 
 //zelfde functie als left, alleen voor up
@@ -84,7 +76,7 @@ void PlayerMovement::up(uint8_t bombPlaced, uint8_t playerOverWalk, uint8_t play
         clearPlayer();
     }
     this->y--;
-    draw(player);
+    draw(player, 1);
 }
 
 uint8_t PlayerMovement::getXLocation()

@@ -8,21 +8,21 @@ const uint8_t bomb[441] PROGMEM =
         ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,  // 1
         ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,  // 2
         ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,  // 3
-        ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, _____GREY2, _____GREY2, _____GREY2, _____GREY2, _____GREY2, _____GREY2, _____GREY2, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,  // 4
-        ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, _____GREY2, _____GREY2, _____GREY2, _____GREY2, _____GREY2, _____GREY2, _____GREY2, _____GREY2, _____GREY2, _____GREY2, _____GREY2, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,  // 5
-        ______NONE, ______NONE, ______NONE, ______NONE, _____GREY2, _____GREY2, _____GREY2, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____GREY1, _____BLACK, _____GREY2, _____GREY2, _____GREY2, ______NONE, ______NONE, ______NONE, ______NONE,  // 6
-        ______NONE, ______NONE, ______NONE, ______NONE, _____GREY2, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, ______RED2, _____GREY2, _____BLACK, _____BLACK, _____BLACK, _____GREY2, ______NONE, ______NONE, ______NONE, ______NONE,  // 7
-        ______NONE, ______NONE, ______NONE, _____GREY2, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____GREY2, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____GREY2, ______NONE, ______NONE, ______NONE,  // 8
-        ______NONE, ______NONE, ______NONE, _____GREY2, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____GREY2, ______NONE, ______NONE, ______NONE,  // 9
+        ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,  // 4
+        ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,  // 5
+        ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____GREY1, _____BLACK, _____BLACK, _____BLACK, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,  // 6
+        ______NONE, ______NONE, ______NONE, ______NONE, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, ______RED2, _____GREY2, _____BLACK, _____BLACK, _____BLACK, _____BLACK, ______NONE, ______NONE, ______NONE, ______NONE,  // 7
+        ______NONE, ______NONE, ______NONE, ______NONE, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____GREY2, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, ______NONE, ______NONE, ______NONE, ______NONE,  // 8
+        ______NONE, ______NONE, ______NONE, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, ______NONE, ______NONE, ______NONE, ______NONE,  // 9
         ______NONE, ______NONE, ______NONE, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, ______NONE, ______NONE, ______NONE,  // 10
         ______NONE, ______NONE, ______NONE, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, ______NONE, ______NONE, ______NONE,  // 11
         ______NONE, ______NONE, ______NONE, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, ______NONE, ______NONE, ______NONE,  // 12
-        ______NONE, ______NONE, ______NONE, _____GREY2, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____GREY2, ______NONE, ______NONE, ______NONE,  // 13
-        ______NONE, ______NONE, ______NONE, _____GREY2, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____GREY2, ______NONE, ______NONE, ______NONE,  // 14
-        ______NONE, ______NONE, ______NONE, ______NONE, _____GREY2, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____GREY2, ______NONE, ______NONE, ______NONE, ______NONE,  // 15
-        ______NONE, ______NONE, ______NONE, ______NONE, _____GREY2, _____GREY2, _____GREY2, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____GREY2, _____GREY2, _____GREY2, ______NONE, ______NONE, ______NONE, ______NONE,  // 16
-        ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, _____GREY2, _____GREY2, _____GREY2, _____GREY2, _____GREY2, _____GREY2, _____GREY2, _____GREY2, _____GREY2, _____GREY2, _____GREY2, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,  // 17
-        ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, _____GREY2, _____GREY2, _____GREY2, _____GREY2, _____GREY2, _____GREY2, _____GREY2, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,  // 18
+        ______NONE, ______NONE, ______NONE, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, ______NONE, ______NONE, ______NONE,  // 13
+        ______NONE, ______NONE, ______NONE, ______NONE, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, ______NONE, ______NONE, ______NONE, ______NONE,  // 14
+        ______NONE, ______NONE, ______NONE, ______NONE, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, ______NONE, ______NONE, ______NONE, ______NONE,  // 15
+        ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,  // 16
+        ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, _____BLACK, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,  // 17
+        ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, _____BLACK, _____BLACK, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,  // 18
         ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,  // 19
         ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,  // 20
         ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE}; // 21
@@ -110,6 +110,242 @@ const uint8_t bombExplosion2[588] PROGMEM =
         ______NONE, ______NONE, ______NONE, ___YELLOW2, ______RED1, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______RED1, ___YELLOW2, ______NONE, ______NONE, ______NONE,  // 26
         ______NONE, ______NONE, ______NONE, ______RED1, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______RED1, ______NONE, ______NONE, ______NONE,  // 27
         ______NONE, ______NONE, ______NONE, ______RED1, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______RED1, ______NONE, ______NONE, ______NONE}; //28
+
+// Front, walking upwards
+const uint8_t player3[441] PROGMEM = {
+    ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10000000, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, 0b10101010, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, 0b10101010, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, 0b10000000, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, 0b10101010, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, 0b10000000, _____WHITE, _____WHITE, 0b10110001, 0b10110001, 0b10110001, 0b10110001, 0b10110001, 0b10110001, 0b10110001, 0b10110001, 0b10110001, _____WHITE, 0b10101010, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, 0b10000000, _____WHITE, _____WHITE, 0b10110001, 0b10111000, 0b10000000, 0b10111000, 0b10111000, 0b10111000, 0b10000000, 0b10111000, 0b10110001, _____WHITE, 0b10101010, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, 0b10000000, _____WHITE, _____WHITE, 0b10110001, 0b10111000, 0b10000000, 0b10111000, 0b10111000, 0b10111000, 0b10000000, 0b10111000, 0b10110001, _____WHITE, 0b10101010, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, 0b10000000, _____WHITE, _____WHITE, 0b10110001, 0b10111000, 0b10000000, 0b10111000, 0b10111000, 0b10111000, 0b10000000, 0b10111000, 0b10110001, _____WHITE, 0b10101010, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, _____WHITE, _____WHITE, 0b10110001, 0b10110001, 0b10110001, 0b10110001, 0b10110001, 0b10110001, 0b10110001, _____WHITE, 0b10101010, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10000000, 0b10101010, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, 0b10101010, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, _____WHITE, 0b10000111, 0b10001011, 0b10001011, 0b10001011, 0b10000111, 0b10000111, 0b10000111, ______NONE, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, ______NONE, 0b10000000, 0b10000111, _____WHITE, 0b10011111, 0b10001011, 0b10001011, 0b10000111, 0b10000111, 0b10000000, ______NONE, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, 0b10000000, 0b10110001, 0b10110001, 0b10000000, 0b10000000, 0b10000000, 0b10111000, 0b10111000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10110001, 0b10110001, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, 0b10000000, 0b10110001, 0b10100000, 0b10000000, 0b10000111, 0b10011111, 0b10011111, 0b10001011, 0b10001011, 0b10000111, 0b10000111, 0b10000000, 0b10110001, 0b10100000, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10000000, 0b10000000, 0b10000111, 0b10000111, 0b10001011, 0b10001011, 0b10000111, 0b10000111, 0b10000111, 0b10000000, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10000000, _____WHITE, _____WHITE, 0b10000000, 0b10000000, 0b10101010, _____WHITE, _____WHITE, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10000000, 0b10100000, 0b10111011, 0b10110001, 0b10000000, 0b10000000, 0b10100000, 0b10111011, 0b10110001, 0b10100000, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10100000, 0b10111011, 0b10110001, 0b10110001, 0b10000000, 0b10000000, 0b10100000, 0b10110001, 0b10110001, 0b10100000, 0b10100000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE};
+
+// Back, walking downwards
+const uint8_t player1[441] PROGMEM = {
+    ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10110001, 0b10100000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10000000, 0b10000000, 0b10110001, 0b10100000, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, 0b10000000, 0b10000000, 0b10101010, _____WHITE, _____WHITE, 0b10101010, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, 0b10000000, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, 0b10000000, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, 0b10101010, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, 0b10000000, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, 0b10101010, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, 0b10000000, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, 0b10101010, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, 0b10000000, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, 0b10101010, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, 0b10000000, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, 0b10101010, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, 0b10000000, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, 0b10101010, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10000000, 0b10101010, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, 0b10101010, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, _____WHITE, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, _____WHITE, 0b10000111, 0b10001011, 0b10011111, 0b10001011, 0b10000111, 0b10000111, 0b10000111, _____WHITE, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, _____WHITE, 0b10000000, 0b10000111, _____WHITE, 0b10011111, 0b10001011, 0b10001011, 0b10000111, 0b10000111, 0b10000000, _____WHITE, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, 0b10000000, 0b10110001, 0b10110001, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10110001, 0b10110001, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, 0b10000000, 0b10110001, 0b10100000, 0b10000000, 0b10000111, 0b10011111, 0b10011111, 0b10011111, 0b10001011, 0b10000111, 0b10000111, 0b10000000, 0b10110001, 0b10100000, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10000000, 0b10000000, 0b10000111, 0b10000111, 0b10001011, 0b10001011, 0b10000111, 0b10000111, 0b10000111, 0b10000000, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, _____WHITE, 0b10000000, 0b10000000, _____WHITE, _____WHITE, 0b10101010, 0b10000000, 0b10101010, _____WHITE, _____WHITE, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10000000, 0b10100000, 0b10110001, 0b10110001, 0b10100000, 0b10000000, 0b10100000, 0b10110001, 0b10110001, 0b10100000, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10000000, 0b10000000, 0b10100000, 0b10110001, 0b10100000, 0b10000000, 0b10100000, 0b10110001, 0b10100000, 0b10000000, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE};
+
+// Left
+const uint8_t player4[441] PROGMEM = {
+    ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10111011, 0b10110001, 0b10100000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, _____WHITE, _____WHITE, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10100000, 0b10100000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, 0b10101010, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, 0b10000000, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, 0b10101010, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, 0b10000000, 0b10110001, 0b10110001, 0b10110001, 0b10110001, 0b10110001, 0b10110001, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, 0b10101010, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, 0b10000000, 0b10111000, 0b10111000, 0b10111000, 0b10000000, 0b10111000, 0b10111000, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, 0b10101010, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, 0b10000000, 0b10111000, 0b10111000, 0b10111000, 0b10000000, 0b10111000, 0b10111000, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, 0b10101010, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, 0b10000000, 0b10111000, 0b10111000, 0b10111000, 0b10000000, 0b10111000, 0b10111000, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, 0b10101010, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, 0b10000000, 0b10111000, 0b10111000, 0b10111000, 0b10000000, 0b10111000, 0b10111000, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, 0b10101010, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10000000, 0b10101010, _____WHITE, _____WHITE, _____WHITE, _____WHITE, 0b10101010, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10000000, 0b10000000, _____WHITE, 0b10000000, 0b10000111, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10111011, 0b10110001, 0b10100000, 0b10000000, 0b10000111, 0b10000111, 0b10000111, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10110001, 0b10110001, 0b10100000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000111, 0b10000111, 0b10000111, 0b10000111, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, 0b10000000, 0b10100000, 0b10000000, 0b10000000, 0b10000111, 0b10001011, 0b10001011, 0b10000111, 0b10000111, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10100000, 0b10100000, 0b10100000, 0b10000000, 0b10000000, _____WHITE, 0b10100000, 0b10100000, 0b10000000, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10000000, 0b10100000, 0b10000000, 0b10000000, 0b10000000, 0b10110001, 0b10110001, 0b10100000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10110001, 0b10100000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE};
+
+// Right
+const uint8_t player2[441] PROGMEM = {
+    ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, 0b10000000, 0b10111011, 0b10110001, 0b10100000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, 0b10000000, 0b10100000, 0b10100000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, 0b10101010, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, 0b10000000, 0b10101010, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, 0b10101010, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, 0b10000000, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, 0b10110001, 0b10110001, 0b10110001, 0b10110001, 0b10100000, 0b10100000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, 0b10000000, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, 0b10111000, 0b10111000, 0b10000000, 0b10111000, 0b10110100, 0b10110100, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, 0b10000000, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, 0b10111000, 0b10111000, 0b10000000, 0b10111000, 0b10110100, 0b10110100, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, 0b10000000, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, 0b10111000, 0b10111000, 0b10000000, 0b10111000, 0b10110100, 0b10110100, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, 0b10000000, 0b10101010, _____WHITE, _____WHITE, _____WHITE, _____WHITE, _____WHITE, 0b10111000, 0b10111000, 0b10000000, 0b10111000, 0b10110100, 0b10110100, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10000000, 0b10101010, _____WHITE, _____WHITE, _____WHITE, _____WHITE, 0b10101010, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10001011, 0b10000000, _____WHITE, 0b10000000, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10001011, _____WHITE, 0b10011111, 0b10000000, 0b10111011, 0b10110001, 0b10100000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10110001, 0b10110001, 0b10100000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10001011, 0b10011111, 0b10001011, 0b10000111, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10000111, 0b10001011, 0b10000111, 0b10000111, 0b10000111, 0b10000000, 0b10000000, 0b10100000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10000000, 0b10000000, 0b10111011, 0b10110001, _____WHITE, 0b10000000, 0b10000000, 0b10100000, 0b10100000, 0b10100000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10110001, 0b10110001, 0b10110001, 0b10000000, 0b10000000, 0b10000000, 0b10100000, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10100000, 0b10100000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
+    ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE};
+
+void drawPlayer(uint8_t x, uint8_t y, uint8_t side, uint8_t player)
+{
+
+    uint16_t xForDraw = 21 * x + 110;
+    uint16_t yforDraw = 21 * y + 25;
+
+    uint16_t number = 0;
+
+    uint8_t red = 0, green = 0, blue = 0;
+    for (uint8_t i = 0; i < 21; i++)
+    {
+        for (uint8_t j = 0; j < 21; j++)
+        {
+
+            if (side == 4)
+            {
+
+                uint8_t draw = ((pgm_read_word_near(player4 + number) & 192) >> 7);
+                if (draw)
+                {
+
+                    red = (((pgm_read_word_near(player4 + number) & 48) >> 4));
+                    red *= 85;
+                    green = (((pgm_read_word_near(player4 + number) & 12) >> 2));
+                    green *= 85;
+                    blue = ((pgm_read_word_near(player4 + number) & 3));
+                    blue *= 85;
+
+                    if (player == 1)
+                    {
+                        lcdTEST.drawPixel(xForDraw, yforDraw, RGB(red, green, blue));
+                    }
+                    else if (player == 2)
+                    {
+                        lcdTEST.drawPixel(xForDraw, yforDraw, RGB(green, blue, red));
+                    }
+                }
+            }
+            else if (side == 3)
+            {
+                uint8_t draw = ((pgm_read_word_near(player3 + number) & 192) >> 7);
+                if (draw)
+                {
+
+                    red = (((pgm_read_word_near(player3 + number) & 48) >> 4));
+                    red *= 85;
+                    green = (((pgm_read_word_near(player3 + number) & 12) >> 2));
+                    green *= 85;
+                    blue = ((pgm_read_word_near(player3 + number) & 3));
+                    blue *= 85;
+                    if (player == 1)
+                    {
+                        lcdTEST.drawPixel(xForDraw, yforDraw, RGB(red, green, blue));
+                    }
+                    else if (player == 2)
+                    {
+                        lcdTEST.drawPixel(xForDraw, yforDraw, RGB(green, blue, red));
+                    }
+                }
+            }
+            else if (side == 2)
+            {
+                uint8_t draw = ((pgm_read_word_near(player2 + number) & 192) >> 7);
+                if (draw)
+                {
+
+                    red = (((pgm_read_word_near(player2 + number) & 48) >> 4));
+                    red *= 85;
+                    green = (((pgm_read_word_near(player2 + number) & 12) >> 2));
+                    green *= 85;
+                    blue = ((pgm_read_word_near(player2 + number) & 3));
+                    blue *= 85;
+                    if (player == 1)
+                    {
+                        lcdTEST.drawPixel(xForDraw, yforDraw, RGB(red, green, blue));
+                    }
+                    else if (player == 2)
+                    {
+                       lcdTEST.drawPixel(xForDraw, yforDraw, RGB(green, blue, red));
+                    }
+                }
+            }
+            else
+            {
+                uint8_t draw = ((pgm_read_word_near(player1 + number) & 192) >> 7);
+                if (draw)
+                {
+
+                    red = (((pgm_read_word_near(player1 + number) & 48) >> 4));
+                    red *= 85;
+                    green = (((pgm_read_word_near(player1 + number) & 12) >> 2));
+                    green *= 85;
+                    blue = ((pgm_read_word_near(player1 + number) & 3));
+                    blue *= 85;
+                    if (player == 1)
+                    {
+                        lcdTEST.drawPixel(xForDraw, yforDraw, RGB(red, green, blue));
+                    }
+                    else if (player == 2)
+                    {
+                        lcdTEST.drawPixel(xForDraw, yforDraw, RGB(green, blue, red));
+                    }
+                }
+            }
+
+            number++;
+            xForDraw++;
+        }
+        yforDraw++;
+        xForDraw -= 21;
+    }
+}
+
+void deletePlayer(uint8_t x, uint8_t y)
+{
+    uint16_t xForDraw = 21 * x + 110;
+    uint16_t yForDraw = 21 * y + 25;
+
+    uint16_t number = 0;
+
+    for (uint8_t i = 0; i < 21; i++)
+    {
+        for (uint8_t j = 0; j < 21; j++)
+        {
+            // uint8_t draw = ((pgm_read_word_near(player1 + number) & 192) >> 7);
+
+            // if (draw)
+            // {
+            //     lcdTEST.drawPixel(xForDraw, yForDraw, RGB(29, 79, 22));
+            // }
+
+            // number++;
+            lcdTEST.drawPixel(xForDraw, yForDraw, RGB(29, 79, 22));
+            xForDraw++;
+        }
+        yForDraw++;
+        xForDraw -= 21;
+    }
+}
 
 void drawBombAdSCreen(uint16_t x, uint16_t y)
 {
