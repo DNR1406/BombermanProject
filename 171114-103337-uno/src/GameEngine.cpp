@@ -65,15 +65,6 @@ void GameEngine::startGame(int amount, uint8_t frequenty)
     // Declare the barrels and draw them on the screen
     this->playMap->declareBarrels(amount, seed);
 
-    // for (int i = 0; i < 9; i++)
-    // {
-    //     for (int j = 0; j < 9; j++)
-    //     {
-    //         Serial.print(this->playMap->barrels[i][j]);
-    //         Serial.print(" ");
-    //     }
-    //     Serial.println();
-    // }
 
     this->player1 = new PlayerMovement(0, 0, 1);
     this->player2 = new PlayerMovement(8, 8, 2);
@@ -473,7 +464,6 @@ void GameEngine::updatePlayer2()
         sidePlayer2 = 1;
     }
 
-    Serial.println(sidePlayer2);
 
     // Draw player 2
     this->player2->draw(2, sidePlayer2);

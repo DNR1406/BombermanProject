@@ -62,15 +62,15 @@ const uint8_t bombExplosion1[441] PROGMEM =
         ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,  // 3
         ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, _____GREY2, _____GREY2, ______RED1, ______RED1, _____GREY2, _____GREY2, _____GREY2, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,  // 4
         ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, _____GREY2, _____GREY2, ___YELLOW2, ___YELLOW2, ______RED1, ___YELLOW2, _____GREY2, ___YELLOW2, ___YELLOW2, _____GREY2, _____GREY2, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,  // 5
-        ______NONE, ______NONE, ______NONE, ______NONE, _____GREY2, ___YELLOW2, ___YELLOW2, ___YELLOW2, ______RED1, ___YELLOW2, ______RED1, ___YELLOW2, ______RED1, ___YELLOW2, _____GREY2, _____GREY2, _____GREY2, ______NONE, ______NONE, ______NONE, ______NONE,  // 6
+        ______NONE, ______NONE, ______NONE, ______NONE, _____GREY2, ___YELLOW2, ___YELLOW2, _____WHITE, ______RED1, ___YELLOW2, ______RED1, ___YELLOW2, ______RED1, ___YELLOW2, _____GREY2, _____GREY2, _____GREY2, ______NONE, ______NONE, ______NONE, ______NONE,  // 6
         ______NONE, ______NONE, ______NONE, ______NONE, ___YELLOW2, ______RED1, ___YELLOW2, ______RED1, ___YELLOW1, ______RED1, ___YELLOW1, _____WHITE, ___YELLOW1, ______RED1, ___YELLOW1, ______RED1, _____GREY2, ______NONE, ______NONE, ______NONE, ______NONE,  // 7
         ______NONE, ______NONE, ______NONE, _____GREY2, ______RED1, ___YELLOW1, ______RED1, ___YELLOW1, ______RED1, ___YELLOW2, ______RED1, ___YELLOW1, ______RED1, ___YELLOW2, ______RED1, ___YELLOW1, ______RED1, _____GREY2, ______NONE, ______NONE, ______NONE,  // 8
-        ______NONE, ______NONE, ______NONE, _____GREY2, ___YELLOW2, ______RED1, ___YELLOW1, ______RED1, ___YELLOW2, ______RED1, ___YELLOW2, _____WHITE, _____WHITE, ______RED1, ___YELLOW2, ______RED1, ___YELLOW2, _____GREY2, ______NONE, ______NONE, ______NONE,  // 9
-        ______NONE, ______NONE, ______NONE, ___YELLOW2, ______RED1, ___YELLOW2, ______RED1, ___YELLOW2, ______RED1, ___YELLOW2, _____WHITE, ___YELLOW2, ______RED1, ___YELLOW2, ______RED1, ___YELLOW2, ______RED1, ___YELLOW2, ______NONE, ______NONE, ______NONE,  // 10
+        ______NONE, ______NONE, ______NONE, _____GREY2, ___YELLOW2, ______RED1, _____WHITE, ______RED1, ___YELLOW2, ______RED1, ___YELLOW2, _____WHITE, _____WHITE, ______RED1, ___YELLOW2, ______RED1, ___YELLOW2, _____GREY2, ______NONE, ______NONE, ______NONE,  // 9
+        ______NONE, ______NONE, ______NONE, ___YELLOW2, ______RED1, ___YELLOW2, ______RED1, ___YELLOW2, _____WHITE, ___YELLOW2, _____WHITE, ___YELLOW2, ______RED1, ___YELLOW2, ______RED1, ___YELLOW2, ______RED1, ___YELLOW2, ______NONE, ______NONE, ______NONE,  // 10
         ______NONE, ______NONE, ______NONE, ______RED1, ___YELLOW1, ______RED1, ___YELLOW1, ______RED1, ___YELLOW1, ______RED1, ___YELLOW1, _____WHITE, ___YELLOW1, _____WHITE, ___YELLOW1, ______RED1, ___YELLOW1, ______RED1, ______NONE, ______NONE, ______NONE,  // 11
         ______NONE, ______NONE, ______NONE, ___YELLOW1, ______RED1, ___YELLOW1, ______RED1, ___YELLOW1, ______RED1, ___YELLOW1, ______RED1, ___YELLOW2, ______RED1, ___YELLOW1, ______RED1, ___YELLOW1, ______RED1, ___YELLOW1, ______NONE, ______NONE, ______NONE,  // 12
         ______NONE, ______NONE, ______NONE, _____GREY2, ___YELLOW2, ______RED1, ___YELLOW2, ______RED1, ___YELLOW2, ______RED1, ___YELLOW2, ______RED1, ___YELLOW1, ______RED1, ___YELLOW1, ______RED1, ___YELLOW1, _____GREY2, ______NONE, ______NONE, ______NONE,  // 13
-        ______NONE, ______NONE, ______NONE, _____GREY2, ______RED1, ___YELLOW2, ______RED1, ___YELLOW1, ______RED1, ___YELLOW2, ______RED1, ___YELLOW2, _____WHITE, ___YELLOW2, ______RED1, ___YELLOW2, ______RED1, _____GREY2, ______NONE, ______NONE, ______NONE,  // 14
+        ______NONE, ______NONE, ______NONE, _____GREY2, ______RED1, ___YELLOW2, ______RED1, ___YELLOW1, _____WHITE, ___YELLOW2, ______RED1, ___YELLOW2, _____WHITE, ___YELLOW2, ______RED1, ___YELLOW2, ______RED1, _____GREY2, ______NONE, ______NONE, ______NONE,  // 14
         ______NONE, ______NONE, ______NONE, ______NONE, ___YELLOW2, ______RED1, ___YELLOW1, ______RED1, ___YELLOW1, ______RED1, ___YELLOW1, ______RED1, ___YELLOW2, ______RED1, ___YELLOW2, ______RED1, ___YELLOW2, ______NONE, ______NONE, ______NONE, ______NONE,  // 15
         ______NONE, ______NONE, ______NONE, ______NONE, _____GREY2, ___YELLOW2, ___YELLOW2, ___YELLOW1, ______RED1, ___YELLOW1, ______RED1, _____WHITE, ______RED1, ___YELLOW1, ___YELLOW2, ___YELLOW2, _____GREY2, ______NONE, ______NONE, ______NONE, ______NONE,  // 16
         ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, _____GREY2, _____GREY2, ___YELLOW2, ___YELLOW2, ______RED1, ______RED1, _____GREY2, _____GREY2, ___YELLOW2, _____GREY2, _____GREY2, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,  // 17
@@ -88,25 +88,25 @@ const uint8_t bombExplosion2[588] PROGMEM =
         ______NONE, ______NONE, _____GREY2, ______NONE, ______NONE, ______NONE, ______NONE, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,  // 4
         ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ___YELLOW1, ___YELLOW1, ___YELLOW2, ___YELLOW1, ___YELLOW1, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,  // 5
         ______NONE, ______NONE, ______NONE, ______NONE, ______RED1, ______RED1, ___YELLOW1, ___YELLOW2, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______NONE, ______NONE, ______NONE, ______NONE,  // 6
-        ______NONE, ______NONE, ______NONE, ______NONE, ______RED1, ______RED1, ___YELLOW1, ___YELLOW1, ___YELLOW2, ___YELLOW2, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______NONE, ______NONE, ______NONE, ______NONE,  // 7
-        ______NONE, ______NONE, ______NONE, ______RED1, ______RED1, ______RED1, ___YELLOW1, ___YELLOW1, ___YELLOW1, ___YELLOW2, ______RED1, ______RED1, ______RED1, ___YELLOW1, ______RED1, _____GREY2, ______RED1, ______RED1, ______NONE, ______NONE, ______NONE,  // 8
-        ______NONE, ______NONE, ______NONE, ______RED1, ______RED1, ______RED1, ___YELLOW1, ___YELLOW2, ______RED1, ___YELLOW2, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______NONE, ______NONE, ______NONE,  // 9
-        ______NONE, ______NONE, ______NONE, ______RED1, ______RED1, ______RED1, ___YELLOW1, ___YELLOW1, ___YELLOW1, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______NONE, ______NONE, ______NONE,  // 10
-        ______NONE, ______NONE, ______NONE, ______RED1, ______RED1, ______RED1, ___YELLOW1, ___YELLOW1, ______RED1, ___YELLOW2, _____GREY2, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______NONE, ______NONE, ______NONE,  // 11
-        ______NONE, ______NONE, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ___YELLOW1, ___YELLOW2, ___YELLOW2, ______RED1, ______RED1, ______RED1, ______RED1, ___YELLOW1, ______RED1, ______RED1, ______RED1, ______NONE, ______NONE, ______NONE,  // 12
-        ______NONE, ______NONE, ______NONE, ______RED1, _____GREY2, ______RED1, ___YELLOW1, ___YELLOW1, ______RED1, ______RED1, ___YELLOW2, _____GREY2, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______NONE, ______NONE, ______NONE,  // 13
-        ______NONE, ______NONE, ______NONE, ______RED1, ______RED1, ______RED1, ___YELLOW1, ______RED1, ___YELLOW2, ___YELLOW1, ___YELLOW1, ___YELLOW2, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______NONE, ______NONE, ______NONE,  // 14
-        ______NONE, ______NONE, ______NONE, ______RED1, ______RED1, ______RED1, ___YELLOW1, ___YELLOW2, ______RED1, ______RED1, ___YELLOW1, ______RED1, _____GREY2, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______NONE, ______NONE, ______NONE,  // 15
-        ______NONE, ______NONE, ______NONE, ______RED1, ______RED1, ______RED1, ___YELLOW1, ___YELLOW2, ___YELLOW1, ______RED1, ______RED1, ______RED1, _____GREY2, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______NONE, ______NONE, ______NONE,  // 16
-        ______NONE, ______NONE, ______NONE, ______RED1, ______RED1, ______RED1, ___YELLOW2, ______RED1, ___YELLOW2, ______RED1, ___YELLOW1, ___YELLOW1, ___YELLOW1, ______RED1, ___YELLOW1, ______RED1, ______RED1, ______RED1, ______NONE, ______NONE, ______NONE,  // 17
-        ______NONE, ______NONE, ______NONE, ______RED1, ______RED1, ______RED1, ___YELLOW2, ___YELLOW1, ___YELLOW1, ___YELLOW1, ___YELLOW2, _____GREY2, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______NONE, ______NONE, ______NONE,  // 18
-        ______NONE, ______RED1, ______NONE, ______RED1, ______RED1, ______RED1, ___YELLOW1, ______RED1, ______RED1, ______RED1, ___YELLOW2, ___YELLOW2, ___YELLOW1, ______RED1, _____GREY2, ______RED1, ______RED1, ______RED1, ______NONE, ______RED1, ______NONE,  // 19
-        ______NONE, ______NONE, ______NONE, ______RED1, ______RED1, ___YELLOW1, _____GREY2, ___YELLOW1, ______RED1, ___YELLOW1, _____GREY2, ______RED1, ___YELLOW2, _____GREY2, _____GREY2, ______RED1, ______RED1, ______RED1, ______NONE, ______NONE, ______NONE,  // 20
-        ______NONE, ______NONE, ______NONE, ______RED1, ______RED1, ___YELLOW1, ___YELLOW2, ___YELLOW2, ___YELLOW2, ___YELLOW1, ___YELLOW2, ___YELLOW1, ______RED1, ___YELLOW1, _____GREY2, ___YELLOW1, ______RED1, ______RED1, ______NONE, ______NONE, ______NONE,  // 21
+        ______NONE, ______NONE, ______NONE, ______NONE, ______RED1, ______RED1, ___YELLOW1, ___YELLOW1, ___YELLOW2, ___YELLOW2, ___YELLOW2, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______NONE, ______NONE, ______NONE, ______NONE,  // 7
+        ______NONE, ______NONE, ______NONE, ______RED1, ______RED1, ______RED1, ___YELLOW1, ___YELLOW1, ___YELLOW1, ___YELLOW2, ______RED1, ______RED1, ______RED1, ___YELLOW1, ______RED1, _____GREY2, ______RED1, ______NONE, ______NONE, ______NONE, ______NONE,  // 8
+        ______NONE, ______NONE, ______NONE, ______RED1, ______RED1, ______RED1, ___YELLOW1, ___YELLOW2, ______RED1, ___YELLOW2, ______RED1, ___YELLOW2, ___YELLOW2, ______RED1, ______RED1, ______RED1, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,  // 9
+        ______NONE, ______NONE, ______NONE, ______RED1, ______RED1, ______RED1, ___YELLOW1, ___YELLOW1, ___YELLOW1, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______NONE, ______NONE, ______NONE, ______NONE,  // 10
+        ______NONE, ______NONE, ______NONE, ______RED1, ______RED1, ______RED1, ___YELLOW1, ___YELLOW1, ______RED1, ___YELLOW2, _____GREY2, ______RED1, ___YELLOW2, ______RED1, ______RED1, ______RED1, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,  // 11
+        ______NONE, ______NONE, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ___YELLOW1, ___YELLOW2, ___YELLOW2, ______RED1, ______RED1, ______RED1, ______RED1, ___YELLOW1, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,  // 12
+        ______NONE, ______NONE, ______NONE, ______RED1, _____GREY2, ______RED1, ___YELLOW1, ___YELLOW1, ______RED1, ______RED1, ___YELLOW2, _____GREY2, ______RED1, ______RED1, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,  // 13
+        ______NONE, ______NONE, ______NONE, ______NONE, ______RED1, ______RED1, ___YELLOW1, ______RED1, ___YELLOW2, ___YELLOW1, ___YELLOW1, ___YELLOW2, ______RED1, ______RED1, ______RED1, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,  // 14
+        ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______RED1, ______NONE, ______NONE, ______RED1, ______RED1, ___YELLOW1, ______RED1, _____GREY2, ______RED1, ______RED1, ______RED1, ______RED1, ______NONE, ______NONE, ______NONE, ______NONE,  // 15
+        ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______RED1, ______NONE, ___YELLOW2, ___YELLOW1, ______RED1, ______RED1, ______RED1, _____GREY2, ______RED1, ______RED1, ______RED1, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,  // 16
+        ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______RED1, ______NONE, ______RED1, ___YELLOW2, ______RED1, ___YELLOW1, ___YELLOW1, ___YELLOW1, ______RED1, ___YELLOW1, ______RED1, ______RED1, ______NONE, ______NONE, ______NONE, ______NONE,  // 17
+        ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______RED1, ___YELLOW2, ___YELLOW1, ___YELLOW1, ___YELLOW1, ___YELLOW2, _____GREY2, ______RED1, ______RED1, ______RED1, ______RED1, ______RED1, ______NONE, ______NONE, ______NONE, ______NONE,  // 18
+        ______NONE, ______RED1, ______NONE, ______NONE, ______RED1, ______RED1, ___YELLOW1, ______RED1, ______RED1, ______RED1, ___YELLOW2, ___YELLOW2, ___YELLOW1, ______RED1, _____GREY2, ______RED1, ______RED1, ______NONE, ______NONE, ______RED1, ______NONE,  // 19
+        ______NONE, ______NONE, ______NONE, ______NONE, ______RED1, ___YELLOW1, _____GREY2, ___YELLOW1, ______RED1, ___YELLOW1, _____GREY2, ______RED1, ___YELLOW2, _____GREY2, _____GREY2, ______RED1, ______RED1, ______RED1, ______NONE, ______NONE, ______NONE,  // 20
+        ______NONE, ______NONE, ______NONE, ______NONE, ______RED1, ___YELLOW1, ___YELLOW2, ___YELLOW2, ___YELLOW2, ___YELLOW1, ___YELLOW2, ___YELLOW1, ______RED1, ___YELLOW1, _____GREY2, ___YELLOW1, ______RED1, ______RED1, ______NONE, ______NONE, ______NONE,  // 21
         ______NONE, ______NONE, ______NONE, ______RED1, ___YELLOW1, ___YELLOW2, ___YELLOW2, ___YELLOW2, ______RED1, ___YELLOW2, ______RED1, ___YELLOW2, ______RED1, ___YELLOW2, _____GREY2, _____GREY2, _____GREY2, ______RED1, ______NONE, ______NONE, ______NONE,  // 22
         ______NONE, ______NONE, ______NONE, ______RED1, ___YELLOW2, ______RED1, ___YELLOW2, ______RED1, ___YELLOW1, ______RED1, ___YELLOW1, ______RED1, ___YELLOW1, ______RED1, ___YELLOW1, ______RED1, ___YELLOW2, ______RED1, ______NONE, ______NONE, ______NONE,  // 23
-        ______NONE, ______NONE, ______NONE, ___YELLOW1, ______RED1, ___YELLOW1, ______RED1, ___YELLOW1, ______RED1, ___YELLOW2, ______RED1, ___YELLOW1, ______RED1, ___YELLOW2, ______RED1, ___YELLOW1, ______RED1, ___YELLOW2, ______NONE, ______NONE, ______NONE,  // 24
-        ______NONE, ______NONE, ______NONE, ___YELLOW1, ___YELLOW2, ______RED1, ___YELLOW1, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ___YELLOW2, ______RED1, ___YELLOW2, ___YELLOW2, ______NONE, ______NONE, ______NONE,  // 25
+        ______NONE, ______NONE, ______NONE, ______NONE, ______RED1, ___YELLOW1, ______RED1, ___YELLOW1, ______RED1, ___YELLOW2, ______RED1, ___YELLOW1, ______RED1, ___YELLOW2, ______RED1, ___YELLOW1, ______RED1, ___YELLOW2, ______NONE, ______NONE, ______NONE,  // 24
+        ______NONE, ______NONE, ______NONE, ______NONE, ___YELLOW2, ______RED1, ___YELLOW1, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ___YELLOW2, ______RED1, ___YELLOW2, ___YELLOW2, ______NONE, ______NONE, ______NONE,  // 25
         ______NONE, ______NONE, ______NONE, ___YELLOW2, ______RED1, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______RED1, ___YELLOW2, ______NONE, ______NONE, ______NONE,  // 26
         ______NONE, ______NONE, ______NONE, ______RED1, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______RED1, ______NONE, ______NONE, ______NONE,  // 27
         ______NONE, ______NONE, ______NONE, ______RED1, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______RED1, ______NONE, ______NONE, ______NONE}; //28
@@ -207,12 +207,22 @@ const uint8_t player2[441] PROGMEM = {
     ______NONE, ______NONE, ______NONE, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10100000, 0b10100000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,
     ______NONE, ______NONE, ______NONE, ______NONE, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE};
 
-void drawPlayer(uint8_t x, uint8_t y, uint8_t side, uint8_t player)
+
+void drawPlayer(uint16_t x, uint16_t y, uint8_t side, uint8_t player, uint8_t map)
+{
+    
+
+    if (map)
+    {
+        drawPlayerOnScreen((21 * x + 110), (21 * y + 25), side, player);
+    } else {
+        drawPlayerOnScreen(x, y, side, player);
+    }
+}
+void drawPlayerOnScreen(uint16_t xForDraw, uint16_t yforDraw, uint8_t side, uint8_t player)
 {
 
-    uint16_t xForDraw = 21 * x + 110;
-    uint16_t yforDraw = 21 * y + 25;
-
+    
     uint16_t number = 0;
 
     uint8_t red = 0, green = 0, blue = 0;
@@ -247,6 +257,7 @@ void drawPlayer(uint8_t x, uint8_t y, uint8_t side, uint8_t player)
             }
             else if (side == 3)
             {
+
                 uint8_t draw = ((pgm_read_word_near(player3 + number) & 192) >> 7);
                 if (draw)
                 {
@@ -285,7 +296,7 @@ void drawPlayer(uint8_t x, uint8_t y, uint8_t side, uint8_t player)
                     }
                     else if (player == 2)
                     {
-                       lcdTEST.drawPixel(xForDraw, yforDraw, RGB(green, blue, red));
+                        lcdTEST.drawPixel(xForDraw, yforDraw, RGB(green, blue, red));
                     }
                 }
             }

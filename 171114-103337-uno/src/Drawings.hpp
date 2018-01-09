@@ -28,7 +28,8 @@ void drawBombAdSCreen(uint16_t x, uint16_t y);
 void deleteBombFromScreen(uint16_t x, uint16_t y, uint8_t barrels[9][9]);
 void updateWick(uint16_t x, uint16_t y, uint32_t bombTime);
 void explodeBomb(uint16_t x, uint16_t y, uint32_t bombTime, uint8_t barrels[9][9]);
-void drawPlayer(uint8_t x, uint8_t y, uint8_t side, uint8_t player);
+void drawPlayerOnScreen(uint16_t xForDraw, uint16_t yforDraw, uint8_t side, uint8_t player);
+void drawPlayer(uint16_t x, uint16_t y, uint8_t side, uint8_t player, uint8_t map);
 void deletePlayer(uint8_t x, uint8_t y);
 
 #endif

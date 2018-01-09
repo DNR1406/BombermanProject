@@ -28,7 +28,7 @@ void PlayerMovement::clearPlayer()
 //Draws nethis->xt player location
 void PlayerMovement::draw(uint8_t player, uint8_t side)
 {
-    drawPlayer(this->x, this->y, side, player);
+    drawPlayer(this->x, this->y, side, player, 1);
 }
 
 //PLayer moves to the left

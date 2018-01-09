@@ -30,11 +30,14 @@ void Map::drawPlayMap()
 
     // "Avatar"  of player 1
     lcd.fillRect(10, 64, 69, 50, RGB(15, 15, 15));
-    lcd.fillCircle(44, 89, 12, RGB(14, 44, 135));
+    drawPlayer(35, 78, 3, 1, 0);
+
 
     // "Avatar"  of player 2
     lcd.fillRect(10, 162, 69, 50, RGB(15, 15, 15));
-    lcd.fillCircle(44, 187, 12, RGB(153, 12, 12));
+    drawPlayer(35, 178, 3, 2, 0);
+
+
 
     // Draw all text
     lcd.drawText(12, 10, "Home", RGB(255, 40, 40), RGB(50, 50, 50), 1);
