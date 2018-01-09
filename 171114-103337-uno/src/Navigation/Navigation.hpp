@@ -51,6 +51,8 @@ private:
   void drawNotFinishedYet();
   void deleteNotFinishedYet();
   void drawWaitingOnOponnentScreen();
+
+  // Splashscreen
   void splashScreen();
   void deleteSplashScreen();
 

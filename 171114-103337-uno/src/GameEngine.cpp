@@ -271,6 +271,12 @@ void GameEngine::readDataFromEEPROM()
     // byte value = EEPROM.read(50);
 }
 
+void GameEngine::deleteScoreFromEEPROM(){
+    EEPROM.write(50,1);
+    EEPROM.write(51,1);
+    EEPROM.write(52,1);
+}
+
 void GameEngine::writeScoreToEEPROM(int score)
 {
 

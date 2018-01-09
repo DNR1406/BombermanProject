@@ -29,6 +29,7 @@ public:
   void deleteBomb(Bomb **bombs, uint8_t bombPlace, PlayerMovement *player);
   void endGameScreenSplashScreen();
   void endOfGame();
+  void deleteScoreFromEEPROM();
   void readDataFromEEPROM();
   void writeScoreToEEPROM(int score);
   void showPlayerOneInfo();
