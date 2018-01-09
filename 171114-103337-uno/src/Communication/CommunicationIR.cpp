@@ -1,6 +1,5 @@
 // Other includes
 #include <avr/interrupt.h>
-#include <Arduino.h>
 
 // Own includes
 #include "../Globals.hpp"

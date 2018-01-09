@@ -16,13 +16,13 @@ PlayerMovement::PlayerMovement(uint8_t x, uint8_t y, uint8_t player)
 }
 
 // Clears current player location
-void PlayerMovement::clearPlayer()
+void PlayerMovement::clearPlayer(uint8_t x, uint8_t y)
 {
     // int x = 120 + (this->x * 21);
     // int y = 35 + (this->y * 21);
     // lcd.fillCircle(x, y, 7, RGB(29, 79, 22));
 
-    deletePlayer(this->x, this->y);
+    deletePlayer(x, y);
 }
 
 //Draws nethis->xt player location
@@ -36,7 +36,7 @@ void PlayerMovement::left(uint8_t bombPlaced, uint8_t playerOverWalk, uint8_t pl
 {
     if (!bombPlaced)
     {
-        clearPlayer();
+        clearPlayer(this->x, this->y);
     }
     this->x--;
 
@@ -51,7 +51,7 @@ void PlayerMovement::right(uint8_t bombPlaced, uint8_t playerOverWalk, uint8_t p
 {
     if (!bombPlaced)
     {
-        clearPlayer();
+        clearPlayer(this->x, this->y);
     }
     this->x++;
     draw(player, 2);
@@ -62,7 +62,7 @@ void PlayerMovement::down(uint8_t bombPlaced, uint8_t playerOverWalk, uint8_t pl
 {
     if (!bombPlaced)
     {
-        clearPlayer();
+        clearPlayer(this->x, this->y);
     }
     this->y++;
     draw(player, 3);
@@ -73,7 +73,7 @@ void PlayerMovement::up(uint8_t bombPlaced, uint8_t playerOverWalk, uint8_t play
 {
     if (!bombPlaced)
     {
-        clearPlayer();
+        clearPlayer(this->x, this->y);
     }
     this->y--;
     draw(player, 1);

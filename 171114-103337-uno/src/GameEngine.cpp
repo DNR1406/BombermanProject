@@ -14,7 +14,6 @@
 // Other includes
 #include <EEPROM.h>
 #include <avr/interrupt.h>
-#include <Arduino.h>
 
 GameEngine::GameEngine()
 {
@@ -271,10 +270,11 @@ void GameEngine::readDataFromEEPROM()
     // byte value = EEPROM.read(50);
 }
 
-void GameEngine::deleteScoreFromEEPROM(){
-    EEPROM.write(50,1);
-    EEPROM.write(51,1);
-    EEPROM.write(52,1);
+void GameEngine::deleteScoreFromEEPROM()
+{
+    EEPROM.write(50, 1);
+    EEPROM.write(51, 1);
+    EEPROM.write(52, 1);
 }
 
 void GameEngine::writeScoreToEEPROM(int score)
@@ -469,11 +469,11 @@ void GameEngine::updatePlayer1()
 // Get data of opponent
 void GameEngine::updatePlayer2()
 {
-    // Delete player
-    this->player2->clearPlayer();
 
     // Get new data
     getPlayer2(&this->player2->x, &this->player2->y);
+
+    sidePlayer2 = 0;
 
     if (this->oldXPlayer2 > this->player2->x)
     {
@@ -494,8 +494,13 @@ void GameEngine::updatePlayer2()
     // Draw player 2
     if (sidePlayer2)
     {
+        // Delete player
+        this->player2->clearPlayer(this->oldXPlayer2, this->oldYPlayer2);
         this->player2->draw(2, sidePlayer2);
     }
+
+
+
     this->oldXPlayer2 = this->player2->x;
     this->oldYPlayer2 = this->player2->y;
 
