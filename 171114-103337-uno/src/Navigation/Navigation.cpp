@@ -376,7 +376,7 @@ void Navigation::startPlayerSelectScreen()
 void Navigation::deletePlayerSelectScreen()
 {
     this->screen->deleteBackButton();
-    this->screen->deleteHeader(F("SELECT PLAYER     "));
+    this->screen->deleteHeader(F("                  "));
     this->screen->deleteButton(1);
     this->screen->deleteButton(2);
 }
@@ -408,7 +408,7 @@ void Navigation::deleteNotFinishedYet()
 
 void Navigation::drawWaitingOnOponnentScreen()
 {
-    this->screen->drawHeader(F("Waiting..."));
+    this->screen->drawHeader(F("Waiting...     "));
 }
 
 void Navigation::splashScreen()

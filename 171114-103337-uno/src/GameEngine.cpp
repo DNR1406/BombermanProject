@@ -67,7 +67,6 @@ void GameEngine::startGame(int amount, uint8_t frequenty)
     // Declare the barrels and draw them on the screen
     this->playMap->declareBarrels(amount, seed);
 
-
     this->player1 = new PlayerMovement(0, 0, 1);
     this->player2 = new PlayerMovement(8, 8, 2);
 
@@ -82,7 +81,6 @@ void GameEngine::startGame(int amount, uint8_t frequenty)
 }
 void GameEngine::endGameScreenSplashScreen()
 {
-
 }
 // startGame function
 void GameEngine::startGame(uint8_t frequenty)
@@ -307,9 +305,26 @@ uint8_t GameEngine::addBomb(uint8_t x, uint8_t y)
 
 #ifndef SINGLEPLAYER
     // Send bomb to opponent
-    setBombPlayer2(x, y);
-#endif
 
+    if (setBombPlayer2(x, y))
+    {
+
+        for (uint8_t i = 0; i < BOMBS; i++)
+        {
+            if ((this->bombsPlayer1[i]->readyForNew(x, y)))
+            {
+                this->bombsPlayer1[i]->setXlocation(x);
+                this->bombsPlayer1[i]->setYlocation(y);
+                this->bombsPlayer1[i]->setTime(counterTimer2);
+                this->bombsPlayer1[i]->setExploded(0);
+
+                return i + 1;
+            }
+        }
+    }
+#else
+
+#endif
     for (uint8_t i = 0; i < BOMBS; i++)
     {
         if ((this->bombsPlayer1[i]->readyForNew(x, y)))
@@ -322,7 +337,6 @@ uint8_t GameEngine::addBomb(uint8_t x, uint8_t y)
             return i + 1;
         }
     }
-
     return 0;
 }
 
@@ -455,8 +469,6 @@ void GameEngine::updatePlayer2()
     // Get new data
     getPlayer2(&this->player2->x, &this->player2->y);
 
-    
-
     if (this->oldXPlayer2 > this->player2->x)
     {
         sidePlayer2 = 4;
@@ -473,33 +485,34 @@ void GameEngine::updatePlayer2()
     {
         sidePlayer2 = 1;
     }
-
-
     // Draw player 2
-    this->player2->draw(2, sidePlayer2);
-
+    if (sidePlayer2)
+    {
+        this->player2->draw(2, sidePlayer2);
+    }
     this->oldXPlayer2 = this->player2->x;
     this->oldYPlayer2 = this->player2->y;
 
     // Get bombs from opponent, put them in this->bombsPlayer2
     getBombsPlayer2(this->bombsPlayer2);
 
-    for(uint8_t bombPlace = 0; bombPlace < BOMBS; bombPlace ++) {
+    for (uint8_t bombPlace = 0; bombPlace < BOMBS; bombPlace++)
+    {
         this->playMap->barrels[this->bombsPlayer2[bombPlace]->returnXlocation()][this->bombsPlayer2[bombPlace]->returnYlocation()] = 5;
     }
-    
-
-
 }
 
-uint8_t GameEngine::getPlayerLifes() {
+uint8_t GameEngine::getPlayerLifes()
+{
     return this->player1->lifes;
 }
- 
-uint8_t GameEngine::getPlayer2Lifes() {
+
+uint8_t GameEngine::getPlayer2Lifes()
+{
     return this->player2->lifes;
 }
 
-uint8_t GameEngine::getPlayer1Score() {
+uint8_t GameEngine::getPlayer1Score()
+{
     return this->player1->score;
-} 
+}

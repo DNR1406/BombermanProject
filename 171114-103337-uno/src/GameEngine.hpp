@@ -3,7 +3,7 @@
 
 
 #define BOMBS 3
-#define SINGLEPLAYER 1
+// #define SINGLEPLAYER 1
 
 class ArduinoNunchuk;
 class Bomb;
