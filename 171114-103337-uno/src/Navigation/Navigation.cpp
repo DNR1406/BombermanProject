@@ -155,8 +155,8 @@ void Navigation::drawHighscoreScreen()
 {
     this->screen->drawHeader(F("HIGHSCORE"));
     this->screen->drawBackButton();
+    this->screen->drawButton(F("Delete High"), 3, 80, 187);
     this->screen->readHighscoreFromEEPROM();
-
 }
 
 void Navigation::startHighScoreScreen()
@@ -164,17 +164,23 @@ void Navigation::startHighScoreScreen()
     this->drawHighscoreScreen();
     // Loop while nothing is pressed
     uint8_t pressed = 0;
-    while (pressed != 4)
+    while (!pressed)
     {
         // Check for new press
         pressed = this->screen->checkTouchscreen();
-        if (pressed == 4)
+        switch (pressed)
         {
-            deleteHighScoreScreen();
-            return;
-        }
+        case 3:
+            this->gameEngine->deleteScoreFromEEPROM();
+            this->deleteHighScoreScreen();
+            break;
+        case 4:
+            this->deleteHighScoreScreen();
+            break;
+        };
     }
 }
+
 // Credits screen
 void Navigation::drawCreditsScreen()
 {
@@ -196,6 +202,7 @@ void Navigation::deleteHighScoreScreen()
 {
     this->screen->deleteHeader(F("HIGHSCORE   "));
     this->screen->deleteBackButton();
+    this->screen->deleteButton(3);
     this->screen->deleteHighscoreButtons();
 }
 
@@ -434,5 +441,5 @@ void Navigation::splashScreen()
     }
     this->screen->deleteBackButton();
     this->screen->deleteHeader(F("           "));
-    this->screen->lcd.fillRect(50,50,270,20,RGB(160,182,219));
+    this->screen->lcd.fillRect(50, 50, 270, 20, RGB(160, 182, 219));
 }

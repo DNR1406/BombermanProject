@@ -273,6 +273,12 @@ void GameEngine::readDataFromEEPROM()
     // byte value = EEPROM.read(50);
 }
 
+void GameEngine::deleteScoreFromEEPROM(){
+    EEPROM.write(50,1);
+    EEPROM.write(51,1);
+    EEPROM.write(52,1);
+}
+
 void GameEngine::writeScoreToEEPROM(int score)
 {
 
@@ -487,9 +493,6 @@ void GameEngine::updatePlayer2()
     for(uint8_t bombPlace = 0; bombPlace < BOMBS; bombPlace ++) {
         this->playMap->barrels[this->bombsPlayer2[bombPlace]->returnXlocation()][this->bombsPlayer2[bombPlace]->returnYlocation()] = 5;
     }
-    
-
-
 }
 
 uint8_t GameEngine::getPlayerLifes() {
