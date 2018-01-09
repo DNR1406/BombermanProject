@@ -49,6 +49,7 @@ private:
 
   Bomb *bombsPlayer1[BOMBS];
   Bomb *bombsPlayer2[BOMBS];
+  uint8_t oldXPlayer2, oldYPlayer2, sidePlayer2;
 
   uint8_t player;
 

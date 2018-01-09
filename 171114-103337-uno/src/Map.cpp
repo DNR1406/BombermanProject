@@ -1,5 +1,8 @@
 // Own includes
 #include "Map.hpp"
+#include "Drawings.hpp"
+
+#include <Arduino.h>
 
 // Map constructor
 Map::Map()
@@ -27,11 +30,14 @@ void Map::drawPlayMap()
 
     // "Avatar"  of player 1
     lcd.fillRect(10, 64, 69, 50, RGB(15, 15, 15));
-    lcd.fillCircle(44, 89, 12, RGB(14, 44, 135));
+    drawPlayer(35, 78, 3, 1, 0);
+
 
     // "Avatar"  of player 2
     lcd.fillRect(10, 162, 69, 50, RGB(15, 15, 15));
-    lcd.fillCircle(44, 187, 12, RGB(153, 12, 12));
+    drawPlayer(35, 178, 3, 2, 0);
+
+
 
     // Draw all text
     lcd.drawText(12, 10, "Home", RGB(255, 40, 40), RGB(50, 50, 50), 1);
@@ -78,6 +84,12 @@ void Map::drawPlayMap()
         }
         x += 21;
     }
+}
+
+void Map::drawGrass(uint16_t x, uint16_t y)
+{
+    lcd.fillRect(x + 1, y + 1, 20, 20, RGB(29, 79, 22));
+    lcd.drawRect(x, y, 21, 21, RGB(29, 79, 22));
 }
 
 void Map::drawBarrels(int x, int y)
@@ -247,10 +259,17 @@ void Map::declareBarrels(uint8_t amount, uint8_t seed)
 
 void Map::placeBomb(uint16_t x, uint8_t y)
 {
+    if (x == 15 && y == 15)
+    {
+        return;
+    }
+
     // Draw bomb
-    x = 21 * x + 120;
-    y = 21 * y + 35;
-    lcd.fillCircle(x, y, 7, RGB(0, 0, 0));
+    x = 21 * x + 110;
+    y = 21 * y + 25;
+    // lcd.fillCircle(x, y, 7, RGB(0, 0, 0));
+    this->drawGrass(x, y);
+    drawBombAdSCreen(x, y);
 }
 
 void Map::init_adc_single_sample()

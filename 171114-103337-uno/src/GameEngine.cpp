@@ -9,10 +9,12 @@
 #include "Bomb.hpp"
 #include "Communication/CommunicationIR.hpp"
 #include "Navigation/NavigationScreen.hpp"
+#include "Drawings.hpp"
 
 // Other includes
 #include <EEPROM.h>
 #include <avr/interrupt.h>
+#include <Arduino.h>
 
 GameEngine::GameEngine()
 {
@@ -65,12 +67,13 @@ void GameEngine::startGame(int amount, uint8_t frequenty)
     // Declare the barrels and draw them on the screen
     this->playMap->declareBarrels(amount, seed);
 
+
     this->player1 = new PlayerMovement(0, 0, 1);
     this->player2 = new PlayerMovement(8, 8, 2);
 
     // Draw player one
-    this->player1->draw(1);
-    this->player2->draw(2);
+    this->player1->draw(1, 3);
+    this->player2->draw(2, 3);
 
     // Check what the player is doing, i.e. moving the joystick, pressing buttons, etc.
     this->checkPlayerActions();
@@ -110,8 +113,8 @@ void GameEngine::startGame(uint8_t frequenty)
     this->player2 = new PlayerMovement(0, 0, 2);
 
     // Draw player one
-    this->player1->draw(1);
-    this->player2->draw(2);
+    this->player1->draw(1, 3);
+    this->player2->draw(2, 3);
 
     // Check what the player is doing, i.e. moving the joystick, pressing buttons, etc.
     this->checkPlayerActions();
@@ -158,7 +161,7 @@ void GameEngine::checkBombs()
     for (uint8_t bombPlace = 0; bombPlace < BOMBS; bombPlace++)
     {
         // If bomb can be deleted
-        if (this->bombsPlayer1[bombPlace]->checkDetonation())
+        if (this->bombsPlayer1[bombPlace]->checkDetonation(this->playMap->barrels))
         {
             // Delete the bomb, make the bomb dissapear as a barrel instance and make bombPlaced 0
             deleteBomb(this->bombsPlayer1, bombPlace, this->player1);
@@ -171,7 +174,7 @@ void GameEngine::checkBombs()
         this->playMap->placeBomb(this->bombsPlayer2[bombPlace]->returnXlocation(), this->bombsPlayer2[bombPlace]->returnYlocation());
 
         // Check if bomb can be deleted
-        if (this->bombsPlayer2[bombPlace]->checkDetonation())
+        if (this->bombsPlayer2[bombPlace]->checkDetonation(this->playMap->barrels))
         {
             // Delete the bomb, make the bomb dissapear as a barrel instance and make bombPlaced 0
             deleteBomb(this->bombsPlayer2, bombPlace, this->player2);
@@ -186,9 +189,7 @@ void GameEngine::deleteBomb(Bomb **bombs, uint8_t bombPlace, PlayerMovement *pla
     player->updateScore();
 
     // Converting x and y position to lcd screen pixel  position
-    int x = 120 + (bombs[bombPlace]->returnXlocation() * 21);
-    int y = 35 + (bombs[bombPlace]->returnYlocation() * 21);
-    lcd.fillCircle(x, y, 8, RGB(29, 79, 22));
+    deleteBombFromScreen(bombs[bombPlace]->returnXlocation(), bombs[bombPlace]->returnYlocation(), this->playMap->barrels);
 
     // Checks if the location of the player is in the radius of the bomb
     checkPlayerDamage(bombs, bombPlace, this->player1);
@@ -386,6 +387,7 @@ void GameEngine::updatePlayer1()
     //Place bomb if zButton has been pressed
     if (nunchuk->zButton)
     {
+
         bombPlace = this->addBomb(this->player1->x, this->player1->y);
 
         if (bombPlace)
@@ -453,11 +455,41 @@ void GameEngine::updatePlayer2()
     // Get new data
     getPlayer2(&this->player2->x, &this->player2->y);
 
+    
+
+    if (this->oldXPlayer2 > this->player2->x)
+    {
+        sidePlayer2 = 4;
+    }
+    else if (this->oldXPlayer2 < this->player2->x)
+    {
+        sidePlayer2 = 2;
+    }
+    else if (this->oldYPlayer2 < this->player2->y)
+    {
+        sidePlayer2 = 3;
+    }
+    else if (this->oldYPlayer2 > this->player2->y)
+    {
+        sidePlayer2 = 1;
+    }
+
+
     // Draw player 2
-    this->player2->draw(2);
+    this->player2->draw(2, sidePlayer2);
+
+    this->oldXPlayer2 = this->player2->x;
+    this->oldYPlayer2 = this->player2->y;
 
     // Get bombs from opponent, put them in this->bombsPlayer2
     getBombsPlayer2(this->bombsPlayer2);
+
+    for(uint8_t bombPlace = 0; bombPlace < BOMBS; bombPlace ++) {
+        this->playMap->barrels[this->bombsPlayer2[bombPlace]->returnXlocation()][this->bombsPlayer2[bombPlace]->returnYlocation()] = 5;
+    }
+    
+
+
 }
 
 uint8_t GameEngine::getPlayerLifes() {

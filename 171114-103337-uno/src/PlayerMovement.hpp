@@ -13,7 +13,7 @@ public:
   void up(uint8_t bombPlaced, uint8_t playerOverWalk, uint8_t player);
   void right(uint8_t bombPlaced, uint8_t playerOverWalk, uint8_t player);
   void clearPlayer();
-  void draw(uint8_t player);
+  void draw(uint8_t player, uint8_t side);
   uint8_t getXLocation();
   uint8_t getYLocation();
   uint8_t getScore();
