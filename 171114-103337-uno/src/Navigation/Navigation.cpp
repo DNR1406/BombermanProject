@@ -1,6 +1,10 @@
-#include "NavigationScreen.h"
-#include "Navigation.h"
-#include "../Debug/Memory.h"
+// Own includes
+#include "NavigationScreen.hpp"
+#include "Navigation.hpp"
+#include "../GameEngine.hpp"
+
+// Other includes
+#include <stdint.h>
 
 // Constructor
 Navigation::Navigation()
@@ -29,7 +33,7 @@ void Navigation::drawStartScreen()
 void Navigation::deleteStartScreen()
 {
     // delete header of start screen
-    this->screen->deleteHeader();
+    this->screen->deleteHeader(F("Bomberman"));
     // delete buttons
     this->screen->deleteButton(1);
     this->screen->deleteButton(2);
@@ -59,7 +63,7 @@ void Navigation::startStartScreen()
         {
         case 1:
             // Start game
-            this->startLevelScreen();
+            this->startPlayerSelectScreen();
             this->drawStartScreen();
             pressed = 0;
             break;
@@ -84,16 +88,13 @@ void Navigation::drawOptionsScreen()
 {
     //header and back button
     screen->drawBackButton();
-    screen->drawHeader(F("OPTIONS"));
+    screen->drawHeader(F("  OPTIONS"));
 
     // Draws Brightness button
     screen->drawButton(F("BRIGHTNESS"), 1, 85, 108);
 
-    // Draws Volume button
-    screen->drawButton(F("VOLUME"), 2, 115, 147);
-
     // Draws Highscore button
-    screen->drawButton(F("HIGHSCORE"), 3, 90, 187);
+    screen->drawButton(F("HIGHSCORE"), 2, 92, 147);
 }
 
 void Navigation::deleteOptionsScreen()
@@ -101,7 +102,7 @@ void Navigation::deleteOptionsScreen()
     // delete home button in corner of screen.
     this->screen->deleteBackButton();
     // delete headeer from options screen
-    this->screen->deleteHeader();
+    this->screen->deleteHeader(F("OPTIONS"));
     // delete buttons
     this->screen->deleteButton(1);
     this->screen->deleteButton(2);
@@ -136,18 +137,12 @@ void Navigation::startOptionsScreen()
             pressed = 0;
             break;
         case 2:
-            // Volume (Not finished)
-            this->drawNotFinishedYet();
-            delay(1000);
-            this->deleteNotFinishedYet();
+            // Highscore
+            this->startHighScoreScreen();
             this->drawOptionsScreen();
             pressed = 0;
             break;
         case 3:
-            // Highscore (Not finished)
-            this->startHighScoreScreen();
-            this->drawHighscoreScreen();
-            pressed = 0;
             break;
         case 4:
             // Go back
@@ -161,24 +156,21 @@ void Navigation::drawHighscoreScreen()
     this->screen->drawHeader(F("HIGHSCORE"));
     this->screen->drawBackButton();
     this->screen->readHighscoreFromEEPROM();
+
 }
 
 void Navigation::startHighScoreScreen()
 {
     this->drawHighscoreScreen();
-
     // Loop while nothing is pressed
     uint8_t pressed = 0;
-    while (!pressed)
+    while (pressed != 4)
     {
         // Check for new press
         pressed = this->screen->checkTouchscreen();
-
-        //Go back
         if (pressed == 4)
         {
             deleteHighScoreScreen();
-
             return;
         }
     }
@@ -191,19 +183,20 @@ void Navigation::drawCreditsScreen()
     this->screen->drawHeader(F("CREDITS"));
     this->screen->drawCredits();
 }
-void Navigation::deleteHighScoreScreen()
-{
-    this->screen->deleteBackButton();
-    this->screen->deleteHeader();
-    this->screen->deleteHighscoreButtons();
-    lcd.drawRect(60, 50, 170, 60, RGB(160, 182, 219));
-}
+
 void Navigation::deleteCreditsScreen()
 {
     // Delete buttons
     this->screen->deleteBackButton();
-    this->screen->deleteHeader();
+    this->screen->deleteHeader(F("CREDITS"));
     this->screen->deleteCredits();
+}
+
+void Navigation::deleteHighScoreScreen()
+{
+    this->screen->deleteHeader(F("HIGHSCORE   "));
+    this->screen->deleteBackButton();
+    this->screen->deleteHighscoreButtons();
 }
 
 void Navigation::startCreditScreen()
@@ -213,19 +206,12 @@ void Navigation::startCreditScreen()
 
     // Loop while nothing is pressed
     uint8_t pressed = 0;
-    while (!pressed)
+    while (pressed != 4)
     {
         // Check for new press
         pressed = this->screen->checkTouchscreen();
-
-        //Go back
-        if (pressed == 4)
-        {
-            this->deleteCreditsScreen();
-
-            return;
-        }
     }
+    this->deleteCreditsScreen();
 }
 
 // Brightness
@@ -240,7 +226,7 @@ void Navigation::drawBrightnessScreen()
 void Navigation::deleteBrightnessScreen()
 {
     // Delete brightness screen
-    this->screen->deleteHeader();
+    this->screen->deleteHeader(F("BRIGHTNESS"));
     this->screen->deleteBackButton();
     this->screen->deleteBrightness();
 }
@@ -252,7 +238,7 @@ void Navigation::startBrightnessScreen()
 
     // variablen for pressed and value
     uint8_t pressed = 0;
-    uint16_t val = 0;
+    long val = 0;
 
     // Loop while nothing is pressed
     while (pressed != 4)
@@ -261,10 +247,7 @@ void Navigation::startBrightnessScreen()
         pressed = this->screen->checkTouchscreen();
 
         // Read analog val
-        val = this->getAnalogVal();
-
-        // Map value
-        val = map(val, 0, 1023, 0, 100);
+        val = this->getAnalogVal() / 10;
 
         // Set brightness
         this->screen->setBrightness(val);
@@ -286,7 +269,7 @@ void Navigation::drawLevelScreen()
 void Navigation::deleteLevelScreen()
 {
     this->screen->deleteBackButton();
-    this->screen->deleteHeader();
+    this->screen->deleteHeader(F("SELECT LEVEL"));
     this->screen->deleteButton(1);
     this->screen->deleteButton(2);
     this->screen->deleteButton(3);
@@ -308,6 +291,7 @@ void Navigation::startLevelScreen()
         if (pressed)
         {
             this->deleteLevelScreen();
+            this->drawWaitingOnOponnentScreen();
         }
 
         // Check what is pressed
@@ -315,20 +299,23 @@ void Navigation::startLevelScreen()
         {
         case 1:
             // Start game with 18 barrels
-            this->startPlayerSelectScreen();
-            this->drawLevelScreen();
+            this->gameEngine->startGame(18, 36);
+            this->splashScreen();
+            this->startStartScreen();
             pressed = 0;
             break;
         case 2:
             // Start game with 36 barrels
-            this->gameEngine->startGame(36);
-            this->drawLevelScreen();
+            this->gameEngine->startGame(36, 36);
+            this->splashScreen();
+            this->startStartScreen();
             pressed = 0;
             break;
         case 3:
             // Start game with 55 barrels
-            this->gameEngine->startGame(55);
-            this->drawLevelScreen();
+            this->gameEngine->startGame(55, 36);
+            this->splashScreen();
+            this->startStartScreen();
             pressed = 0;
             break;
         case 4:
@@ -369,15 +356,13 @@ void Navigation::startPlayerSelectScreen()
         switch (pressed)
         {
         case 1:
-            // Start game with 18 barrels
-            this->gameEngine->startGame(18);
-            this->drawLevelScreen();
+            this->startLevelScreen();
+            this->drawPlayerSelectScreen();
             pressed = 0;
             break;
         case 2:
-            // Start game with 36 barrels
-            this->gameEngine->startGame(18);
-            this->drawLevelScreen();
+            this->drawWaitingOnOponnentScreen();
+            this->gameEngine->startGame(56);
             pressed = 0;
             break;
         case 4:
@@ -391,7 +376,7 @@ void Navigation::startPlayerSelectScreen()
 void Navigation::deletePlayerSelectScreen()
 {
     this->screen->deleteBackButton();
-    this->screen->deleteHeader();
+    this->screen->deleteHeader(F("SELECT PLAYER     "));
     this->screen->deleteButton(1);
     this->screen->deleteButton(2);
 }
@@ -418,5 +403,36 @@ void Navigation::drawNotFinishedYet()
 
 void Navigation::deleteNotFinishedYet()
 {
-    this->screen->deleteHeader();
+    this->screen->deleteHeader(F(""));
+}
+
+void Navigation::drawWaitingOnOponnentScreen()
+{
+    this->screen->drawHeader(F("Waiting..."));
+}
+
+void Navigation::splashScreen()
+{
+    this->screen->lcd.fillRect(0, 0, 320, 240, RGB(160, 182, 219));
+    this->screen->drawBackButton();
+
+    if (this->gameEngine->getPlayerLifes() == 0)
+    {
+        this->screen->drawHeader(F("YOU LOSE!"));
+        this->screen->lcd.drawText(50, 50, "Your score:", RGB(26, 47, 197), RGB(160, 182, 219), 2);
+        this->screen->lcd.drawInteger(230, 50, this->gameEngine->getPlayer1Score(), DEC, RGB(26, 47, 197), RGB(160, 182, 219), 2);
+    }
+    else
+    {
+        this->screen->drawHeader(F("YOU WIN!"));
+    }
+    uint8_t pressed = 0;
+    while (pressed != 4)
+    {
+
+        pressed = this->screen->checkTouchscreen();
+    }
+    this->screen->deleteBackButton();
+    this->screen->deleteHeader(F("           "));
+    this->screen->lcd.fillRect(50,50,270,20,RGB(160,182,219));
 }

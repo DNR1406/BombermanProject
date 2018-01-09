@@ -1,9 +1,8 @@
-#include "include.h"
+#include "Screen.hpp"
 
 //constructor
 Screen::Screen() {
   // Start values for secs, x, y
-  this->seconds = 0;
   this->x = 160;
   this->y = 120;
   // RGB for color
@@ -61,14 +60,6 @@ void Screen::up() {
   draw();
 }
 
-//kleur veranderen met random functie
-void Screen::changeColor() {
-  clear();
-  r = rand() % 255;
-  g = rand() % 255;
-  b = rand() % 255;
-  draw();
-}
 
 
 

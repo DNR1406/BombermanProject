@@ -1,6 +1,13 @@
-#include "../include.h"
+// Own includes
+#include "NavigationScreen.hpp"
+
+// Other includes
+#include <EEPROM.h> 
 
 // Startup
+NavigationScreen::NavigationScreen(uint8_t antal) {
+
+}
 NavigationScreen::NavigationScreen()
 {
   // Start screen
@@ -41,10 +48,10 @@ void NavigationScreen::drawHeader(String text)
 {
   this->lcd.drawText(80, 20, text, RGB(0, 0, 0), RGB(160, 182, 219), 2);
 }
-
-void NavigationScreen::deleteHeader()
+ 
+void NavigationScreen::deleteHeader(String text)
 {
-  this->lcd.drawText(80, 20, "                ", RGB(0, 0, 0), RGB(160, 182, 219), 2);
+  this->lcd.drawText(80, 20, text, RGB(160, 182, 219), RGB(160, 182, 219), 2);
 }
 
 // Back button
@@ -59,14 +66,14 @@ void NavigationScreen::deleteBackButton()
 }
 
 // Draw normal button
-void NavigationScreen::drawButton(String text, int number, int textX, int textY)
+void NavigationScreen::drawButton(String text, uint8_t number, uint8_t textX, uint8_t textY)
 {
   lcd.fillRoundRect(40, (60 + (number * 40)), 250, 30, 5, RGB(0, 100, 100));
   lcd.drawRoundRect(40, (60 + (number * 40)), 250, 30, 5, RGB(0, 0, 0));
   lcd.drawText(textX, textY, text, RGB(255, 0, 0), RGB(0, 100, 100), 2);
 }
 
-void NavigationScreen::deleteButton(int number)
+void NavigationScreen::deleteButton(uint8_t number)
 {
   lcd.fillRoundRect(40, (60 + (number * 40)), 250, 30, 5, RGB(160, 182, 219));
 }
@@ -75,17 +82,14 @@ void NavigationScreen::deleteButton(int number)
 void NavigationScreen::drawCredits()
 {
   lcd.drawText(30, 60, "Arno van de Munt (Waarborger)", RGB(0, 0, 0), RGB(160, 182, 219), 1);
-  lcd.drawText(30, 100, "Antal van Ravensteijn (troll meister)", RGB(0, 0, 0), RGB(160, 182, 219), 1);
+  lcd.drawText(30, 100, "Antal van Ravensteijn (Waarborger)", RGB(0, 0, 0), RGB(160, 182, 219), 1);
   lcd.drawText(30, 140, "Delano Remy (Notaris)", RGB(0, 0, 0), RGB(160, 182, 219), 1);
   lcd.drawText(30, 180, "Matthijs Koudijs (Scrum Master)", RGB(0, 0, 0), RGB(160, 182, 219), 1);
 }
 
 void NavigationScreen::deleteCredits()
 {
-  lcd.drawText(30, 60, "Arno van de Munt (Waarborger)", RGB(160, 182, 219), RGB(160, 182, 219), 1);
-  lcd.drawText(30, 100, "Antal van Ravensteijn (troll meister)", RGB(160, 182, 219), RGB(160, 182, 219), 1);
-  lcd.drawText(30, 140, "Delano Remy (Notaris)", RGB(160, 182, 219), RGB(160, 182, 219), 1);
-  lcd.drawText(30, 180, "Matthijs Koudijs (Scrum Master)", RGB(160, 182, 219), RGB(160, 182, 219), 1);
+  lcd.fillRect(30,60,290,130,RGB(160,182,219));
 }
 
 // Brightnes
@@ -99,24 +103,24 @@ void NavigationScreen::drawBrightness()
 
 void NavigationScreen::deleteBrightness()
 {
-  lcd.drawText(20, 100, "Turn potentiometer knob to change the ", RGB(160, 182, 219), RGB(160, 182, 219), 1);
-  lcd.drawText(20, 110, "brightness of the screen.", RGB(160, 182, 219), RGB(160, 182, 219), 1);
-  lcd.drawText(20, 120, "After you're done, press the screen", RGB(160, 182, 219), RGB(160, 182, 219), 1);
-  lcd.drawText(20, 130, "to go back.", RGB(160, 182, 219), RGB(160, 182, 219), 1);
+  lcd.fillRect(20, 100, 300, 40, RGB(160, 182, 219));
 }
 
-void NavigationScreen::setBrightness(int val)
+void NavigationScreen::setBrightness(uint8_t val)
 {
   if (val < 10)
   {
     val = 10;
   }
+  else if (val > 100)
+  {
+    val = 100;
+  }
   lcd.led(val);
-  Serial.println(val);
 }
 
 // Check for touchscreen presses
-int NavigationScreen::checkTouchscreen()
+uint8_t NavigationScreen::checkTouchscreen()
 {
   // Start read
   lcd.touchRead();
@@ -154,7 +158,7 @@ int NavigationScreen::checkTouchscreen()
 }
 
 // Other
-void NavigationScreen::writeCalData(void)
+void NavigationScreen::writeCalData()
 {
   uint16_t i, addr = 0;
   uint8_t *ptr;
@@ -193,20 +197,12 @@ uint8_t NavigationScreen::readCalData()
 void NavigationScreen::readHighscoreFromEEPROM()
 {
   lcd.drawText(60, 50, "Player 1:", RGB(0, 0, 0), RGB(160, 182, 219), 2);
-
-  byte value = EEPROM.read(50);
-  lcd.drawInteger(205, 50, value - 1, DEC, RGB(0, 0, 0), RGB(160, 182, 219), 2);
-
-  value = EEPROM.read(51);
-  lcd.drawInteger(205, 70, value - 1, DEC, RGB(0, 0, 0), RGB(160, 182, 219), 2);
-
-  value = EEPROM.read(52);
-  lcd.drawInteger(205, 90, value - 1, DEC, RGB(0, 0, 0), RGB(160, 182, 219), 2);
+  lcd.drawInteger(205, 50, EEPROM.read(50) - 1, DEC, RGB(0, 0, 0), RGB(160, 182, 219), 2);
+  lcd.drawInteger(205, 70, EEPROM.read(51) - 1, DEC, RGB(0, 0, 0), RGB(160, 182, 219), 2);
+  lcd.drawInteger(205, 90, EEPROM.read(52) - 1, DEC, RGB(0, 0, 0), RGB(160, 182, 219), 2);
 }
 
 void NavigationScreen::deleteHighscoreButtons()
 {
-  byte value = EEPROM.read(50);
-  lcd.drawText(60, 50, "Player 1:", RGB(160, 182, 219), RGB(160, 182, 219), 2);
-  lcd.drawInteger(205, 50, value - 1, DEC, RGB(160, 182, 219), RGB(160, 182, 219), 2);
+   lcd.fillRect(30,50,290,130,RGB(160,182,219));
 }
