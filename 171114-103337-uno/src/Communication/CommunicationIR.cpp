@@ -151,12 +151,13 @@ uint8_t setBombPlayer2(uint8_t x, uint8_t y)
 
     // Wait till message is confirmed to make sure you didn't miss a bomb
     confirmed = 0;
-    uint32_t timeOver = counterTimer2 + 5000;
+    uint32_t timeOver = counterTimer2 + 10000;
     while (!confirmed && (counterTimer2 < timeOver))
         ;
 
     if (!confirmed)
     {
+        newDataSend = 0;
         return 0;
     }
     // After message is confirmed, you make a note that you are sending new data( the 1 on the second place from the right)
@@ -182,6 +183,7 @@ void getBombsPlayer2(Bomb **bombs)
         uint32_t timeOver = counterTimer2 + 5000;
         while (confirm && (counterTimer2 < timeOver))
             ;
+
 
         if (!confirmed)
         {

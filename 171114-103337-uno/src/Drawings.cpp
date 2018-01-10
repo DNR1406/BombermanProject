@@ -1,7 +1,7 @@
 #include "Drawings.hpp"
-#include <Arduino.h>
-MI0283QT9 lcdTEST;
+MI0283QT9 lcd;
 
+//Bitmap for bomb
 const uint8_t bomb[441] PROGMEM =
     {
         //1         2           3           4           5          6            7           8           9           10          11    *     12          13          14          15   *      16          17          18          19          20          21
@@ -27,33 +27,27 @@ const uint8_t bomb[441] PROGMEM =
         ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,  // 20
         ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE}; // 21
 
+//Bitmap for wick long wick
 const uint8_t wick1[25] PROGMEM =
     {
         //1         2           3           4           5
         ______NONE, ______NONE, ______NONE, ______RED1, ______NONE,  // 1
         ______NONE, ______NONE, ______RED1, _____GREY1, ______RED1,  // 2
-        ______NONE, _____GREY2, _____GREY1, ______RED1, ______NONE,  // 3
+        ______NONE, _____GREY2, _____GREY1, _____GREY1, ______NONE,  // 3
         _____GREY2, _____GREY1, ______NONE, ______NONE, ______NONE,  // 4
         ______NONE, _____GREY2, ______NONE, ______NONE, ______NONE}; // 5
 
+//Bitmap for wick shorter wick
 const uint8_t wick2[25] PROGMEM =
     {
         //1         2           3           4           5
-        ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,  // 1
+        ______RED1, ______RED1, ______NONE, ______RED1, ______RED1,  // 1
         ______NONE, ______NONE, ______RED1, ______NONE, ______NONE,  // 2
-        ______NONE, ______RED1, _____GREY1, ______RED1, ______NONE,  // 3
+        ______NONE, ______RED1, _____GREY1, ______RED1, ______RED1,  // 3
         _____GREY2, _____GREY1, ______RED1, ______RED1, ______NONE,  // 4
         ______NONE, _____GREY2, ______NONE, ______NONE, ______NONE}; // 5
 
-const uint8_t wick3[25] PROGMEM =
-    {
-        //1         2           3           4           5
-        ______NONE, ______RED1, ______NONE, ______NONE, ______RED1,  // 1
-        ______NONE, ______NONE, ______RED1, ______NONE, ______NONE,  // 2
-        ______NONE, ______RED1, ______NONE, ______RED1, ______NONE,  // 3
-        ______RED1, _____GREY1, ______RED1, ______NONE, ______NONE,  // 4
-        ______NONE, ______RED1, ______NONE, ______RED1, ______RED1}; // 5
-
+//Bitmap for if bomb is exploding
 const uint8_t bombExplosion1[441] PROGMEM =
     {
         //1         2           3           4           5          6            7           8           9           10          11    *     12          13          14          15   *      16          17          18          19          20          21
@@ -79,6 +73,7 @@ const uint8_t bombExplosion1[441] PROGMEM =
         ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE,  // 20
         ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE, ______NONE}; // 21
 
+//Bitmap for if bomb is exploding on the sides
 const uint8_t bombExplosion2[588] PROGMEM =
     {
         //1         2           3           4           5          6            7           8           9           10          11    *     12          13          14          15   *      16          17          18          19          20          21
@@ -206,6 +201,7 @@ const uint8_t player2[294] PROGMEM = {
     0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10100000, 0b10100000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, ______NONE,
     ______NONE, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, 0b10000000, ______NONE, ______NONE};
 
+//Void to draw player, if map is zero, it is drawed in the map, else on the x, y location
 void drawPlayer(uint16_t x, uint16_t y, uint8_t side, uint8_t player, uint8_t map)
 {
 
@@ -218,25 +214,34 @@ void drawPlayer(uint16_t x, uint16_t y, uint8_t side, uint8_t player, uint8_t ma
         drawPlayerOnScreen(x, y, side, player);
     }
 }
+
+// Void to draw player
 void drawPlayerOnScreen(uint16_t xForDraw, uint16_t yforDraw, uint8_t side, uint8_t player)
 {
 
+    //Number to remember which pixel to draw
     uint16_t number = 0;
-    xForDraw+=3;
+    xForDraw += 3;
 
+    // Colors
     uint8_t red = 0, green = 0, blue = 0;
+
+    // Loop trough y
     for (uint8_t i = 0; i < 21; i++)
     {
+        // Loop trough x
         for (uint8_t j = 3; j < 17; j++)
         {
 
+            // If player is walking left
             if (side == 4)
             {
 
+                // Check for pixel to draw
                 uint8_t draw = ((pgm_read_word_near(player4 + number) & 192) >> 7);
                 if (draw)
                 {
-
+                    // RGB values
                     red = (((pgm_read_word_near(player4 + number) & 48) >> 4));
                     red *= 85;
                     green = (((pgm_read_word_near(player4 + number) & 12) >> 2));
@@ -244,131 +249,151 @@ void drawPlayerOnScreen(uint16_t xForDraw, uint16_t yforDraw, uint8_t side, uint
                     blue = ((pgm_read_word_near(player4 + number) & 3));
                     blue *= 85;
 
+                    // Check which player to draw
                     if (player == 1)
                     {
-                        lcdTEST.drawPixel(xForDraw, yforDraw, RGB(red, green, blue));
+                        lcd.drawPixel(xForDraw, yforDraw, RGB(red, green, blue));
                     }
                     else if (player == 2)
                     {
-                        lcdTEST.drawPixel(xForDraw, yforDraw, RGB(green, blue, red));
+                        lcd.drawPixel(xForDraw, yforDraw, RGB(green, blue, red));
                     }
                 }
             }
+
+            // If player walkes downwards
             else if (side == 3)
             {
-
+                // CHeck if player must be drawed
                 uint8_t draw = ((pgm_read_word_near(player3 + number) & 192) >> 7);
                 if (draw)
                 {
-
+                    // RGB values
                     red = (((pgm_read_word_near(player3 + number) & 48) >> 4));
                     red *= 85;
                     green = (((pgm_read_word_near(player3 + number) & 12) >> 2));
                     green *= 85;
                     blue = ((pgm_read_word_near(player3 + number) & 3));
                     blue *= 85;
+
+                    // Check which player needs to draw
                     if (player == 1)
                     {
-                        lcdTEST.drawPixel(xForDraw, yforDraw, RGB(red, green, blue));
+                        lcd.drawPixel(xForDraw, yforDraw, RGB(red, green, blue));
                     }
                     else if (player == 2)
                     {
-                        lcdTEST.drawPixel(xForDraw, yforDraw, RGB(green, blue, red));
+                        lcd.drawPixel(xForDraw, yforDraw, RGB(green, blue, red));
                     }
                 }
             }
+            // If player walkes to the right
             else if (side == 2)
             {
+                // Check if pixel needs to draw
                 uint8_t draw = ((pgm_read_word_near(player2 + number) & 192) >> 7);
                 if (draw)
                 {
-
+                    // RGB values
                     red = (((pgm_read_word_near(player2 + number) & 48) >> 4));
                     red *= 85;
                     green = (((pgm_read_word_near(player2 + number) & 12) >> 2));
                     green *= 85;
                     blue = ((pgm_read_word_near(player2 + number) & 3));
                     blue *= 85;
+
+                    // Check which player needs to draw
                     if (player == 1)
                     {
-                        lcdTEST.drawPixel(xForDraw, yforDraw, RGB(red, green, blue));
+                        lcd.drawPixel(xForDraw, yforDraw, RGB(red, green, blue));
                     }
                     else if (player == 2)
                     {
-                        lcdTEST.drawPixel(xForDraw, yforDraw, RGB(green, blue, red));
+                        lcd.drawPixel(xForDraw, yforDraw, RGB(green, blue, red));
                     }
                 }
             }
+            // If player walkes upwards
             else
             {
+                // CHeck for draw
                 uint8_t draw = ((pgm_read_word_near(player1 + number) & 192) >> 7);
                 if (draw)
                 {
-
+                    // RGB
                     red = (((pgm_read_word_near(player1 + number) & 48) >> 4));
                     red *= 85;
                     green = (((pgm_read_word_near(player1 + number) & 12) >> 2));
                     green *= 85;
                     blue = ((pgm_read_word_near(player1 + number) & 3));
                     blue *= 85;
+                    // Check which player
                     if (player == 1)
                     {
-                        lcdTEST.drawPixel(xForDraw, yforDraw, RGB(red, green, blue));
+                        lcd.drawPixel(xForDraw, yforDraw, RGB(red, green, blue));
                     }
                     else if (player == 2)
                     {
-                        lcdTEST.drawPixel(xForDraw, yforDraw, RGB(green, blue, red));
+                        lcd.drawPixel(xForDraw, yforDraw, RGB(green, blue, red));
                     }
                 }
             }
-
+            // New pixel to draw, new x location to draw
             number++;
             xForDraw++;
         }
+        // New x, y position to draw
         yforDraw++;
         xForDraw -= 14;
     }
 }
 
+// Void to delete player
 void deletePlayer(uint8_t x, uint8_t y)
-{
+{   
+    // Convert x, y position to positions on the screen
     uint16_t xForDraw = 21 * x + 110;
     uint16_t yForDraw = 21 * y + 25;
 
-    uint16_t number = 0;
-
+    // Loop trough y location
     for (uint8_t i = 0; i < 21; i++)
     {
+        // Loop trough x location
         for (uint8_t j = 0; j < 21; j++)
         {
-            // uint8_t draw = ((pgm_read_word_near(player1 + number) & 192) >> 7);
-
-            // if (draw)
-            // {
-            //     lcdTEST.drawPixel(xForDraw, yForDraw, RGB(29, 79, 22));
-            // }
-
-            // number++;
-            lcdTEST.drawPixel(xForDraw, yForDraw, RGB(29, 79, 22));
+            // Draw grass
+            lcd.drawPixel(xForDraw, yForDraw, RGB(29, 79, 22));
+            // New x location
             xForDraw++;
         }
+        // New x, y location
         yForDraw++;
         xForDraw -= 21;
     }
+
+
+    // lcd.fillRect(xForDraw, yForDraw, 20, 20, RGB(29, 79, 22));
+    // lcd.drawRect(xForDraw, yForDraw, 21, 21, RGB(29, 79, 22));
 }
 
+// Mthod to add bomb to screen
 void drawBombAdSCreen(uint16_t x, uint16_t y)
 {
+    // Next pixel to draw
     uint16_t number = 0;
 
+    // Loop trough y locations
     for (uint8_t i = 0; i < 21; i++)
     {
+        // Loop trough x locations
         for (uint8_t j = 0; j < 21; j++)
         {
+            // CHeck if pixel needs to draw
             uint8_t draw = ((pgm_read_word_near(bomb + number) & 192) >> 7);
 
             if (draw)
             {
+                // RGB values
                 uint8_t red = (((pgm_read_word_near(bomb + number) & 48) >> 4));
                 red *= 85;
                 uint8_t green = (((pgm_read_word_near(bomb + number) & 12) >> 2));
@@ -376,7 +401,8 @@ void drawBombAdSCreen(uint16_t x, uint16_t y)
                 uint8_t blue = ((pgm_read_word_near(bomb + number) & 3));
                 blue *= 85;
 
-                lcdTEST.drawPixel(x, y, RGB(red, green, blue));
+                // draw pixel 
+                lcd.drawPixel(x, y, RGB(red, green, blue));
             }
 
             number++;
@@ -389,106 +415,106 @@ void drawBombAdSCreen(uint16_t x, uint16_t y)
 
 void updateWick(uint16_t x, uint16_t y, uint32_t bombTime)
 {
+    // Convert to x, y location
     x = 21 * x + 121;
     y = 21 * y + 29;
 
-    uint16_t number = 0, numberOld = 73, counter = 0;
+    // numer is location of wick, number Old is location of bomb
+    uint16_t number = 0, numberOld = 73;
 
+    // Loop trough y locations
     for (uint8_t i = 0; i < 5; i++)
     {
+        // Loop trough x locations
         for (uint8_t j = 0; j < 5; j++)
         {
-            if ((bombTime > 15000) && (bombTime < 20000))
+            // If time is between ....
+            // if ((bombTime > 15000) && (bombTime < 20000))
+            if(bombTime & (1 << 11))
             {
+                // Check for draw
                 uint8_t draw = ((pgm_read_word_near(wick1 + number) & 192) >> 7);
                 if (draw)
                 {
-                    lcdTEST.drawPixel(x, y, RGB((((pgm_read_word_near(wick1 + number) & 48) >> 4) * 85), (((pgm_read_word_near(wick1 + number) & 12) >> 2) * 85), ((pgm_read_word_near(wick1 + number) & 3) * 85)));
+                    // draw pixel and get RGB
+                    lcd.drawPixel(x, y, RGB((((pgm_read_word_near(wick1 + number) & 48) >> 4) * 85), (((pgm_read_word_near(wick1 + number) & 12) >> 2) * 85), ((pgm_read_word_near(wick1 + number) & 3) * 85)));
                 }
                 else
                 {
+                    // Draw old pixel, pixel of bomb
                     if (pgm_read_word_near(bomb + numberOld) != ______NONE)
                     {
-                        lcdTEST.drawPixel(x, y, RGB((((pgm_read_word_near(bomb + numberOld) & 48) >> 4) * 85), (((pgm_read_word_near(bomb + numberOld) & 12) >> 2) * 85), ((pgm_read_word_near(bomb + numberOld) & 3) * 85)));
+                        lcd.drawPixel(x, y, RGB((((pgm_read_word_near(bomb + numberOld) & 48) >> 4) * 85), (((pgm_read_word_near(bomb + numberOld) & 12) >> 2) * 85), ((pgm_read_word_near(bomb + numberOld) & 3) * 85)));
                     }
                     else
                     {
-                        lcdTEST.drawPixel(x, y, RGB(29, 79, 22));
+                        // If nothing needs to draw, draw grass
+                        lcd.drawPixel(x, y, RGB(29, 79, 22));
                     }
                 }
             }
-            else if ((bombTime > 10000) && (bombTime < 15000))
+            // Second bomb time, same story as first
+            else
             {
                 uint8_t draw = ((pgm_read_word_near(wick2 + number) & 192) >> 7);
                 if (draw)
                 {
-                    lcdTEST.drawPixel(x, y, RGB((((pgm_read_word_near(wick2 + number) & 48) >> 4) * 85), (((pgm_read_word_near(wick2 + number) & 12) >> 2) * 85), ((pgm_read_word_near(wick2 + number) & 3) * 85)));
+                    lcd.drawPixel(x, y, RGB((((pgm_read_word_near(wick2 + number) & 48) >> 4) * 85), (((pgm_read_word_near(wick2 + number) & 12) >> 2) * 85), ((pgm_read_word_near(wick2 + number) & 3) * 85)));
                 }
                 else
                 {
                     if (pgm_read_word_near(bomb + numberOld) != ______NONE)
                     {
-                        lcdTEST.drawPixel(x, y, RGB((((pgm_read_word_near(bomb + numberOld) & 48) >> 4) * 85), (((pgm_read_word_near(bomb + numberOld) & 12) >> 2) * 85), ((pgm_read_word_near(bomb + numberOld) & 3) * 85)));
+                        lcd.drawPixel(x, y, RGB((((pgm_read_word_near(bomb + numberOld) & 48) >> 4) * 85), (((pgm_read_word_near(bomb + numberOld) & 12) >> 2) * 85), ((pgm_read_word_near(bomb + numberOld) & 3) * 85)));
                     }
                     else
                     {
-                        lcdTEST.drawPixel(x, y, RGB(29, 79, 22));
-                    }
-                }
-            }
-            else if ((bombTime > 5000) && (bombTime < 10000))
-            {
-                uint8_t draw = ((pgm_read_word_near(wick3 + number) & 192) >> 7);
-                if (draw)
-                {
-                    lcdTEST.drawPixel(x, y, RGB((((pgm_read_word_near(wick3 + number) & 48) >> 4) * 85), (((pgm_read_word_near(wick3 + number) & 12) >> 2) * 85), ((pgm_read_word_near(wick3 + number) & 3) * 85)));
-                }
-                else
-                {
-                    counter++;
-                    if (pgm_read_word_near(bomb + numberOld) != ______NONE)
-                    {
-                        lcdTEST.drawPixel(x, y, RGB((((pgm_read_word_near(bomb + numberOld) & 48) >> 4) * 85), (((pgm_read_word_near(bomb + numberOld) & 12) >> 2) * 85), ((pgm_read_word_near(bomb + numberOld) & 3) * 85)));
-                    }
-                    else
-                    {
-                        lcdTEST.drawPixel(x, y, RGB(29, 79, 22));
+                        lcd.drawPixel(x, y, RGB(29, 79, 22));
                     }
                 }
             }
 
+            // New pixels to draw
             numberOld++;
             number++;
+            // New x location to draw
             x++;
         }
 
+        // New pixel to draw
         numberOld += 16;
+        // New x, y location
         y++;
         x -= 5;
     }
 }
 
+// Method to delete bomb from screen
 void deleteBombFromScreen(uint16_t x, uint16_t y, uint8_t barrels[9][9])
 {
+    // Next pixel to draw, x, y locations
     uint16_t number = 0;
-
     uint16_t xforDraw = 110 + (x * 21);
     uint16_t yforDraw = 25 + (y * 21);
 
+    // Y location to draw, delete Explosion
     for (uint8_t i = 0; i < 21; i++)
     {
+        // X location to draw
         for (uint8_t j = 0; j < 21; j++)
         {
+            // Draw pixel if nessersery
             uint8_t draw = ((pgm_read_word_near(bombExplosion1 + number) & 192) >> 7);
-
             if (draw)
             {
-                lcdTEST.drawPixel(xforDraw, yforDraw, RGB(29, 79, 22));
+                lcd.drawPixel(xforDraw, yforDraw, RGB(29, 79, 22));
             }
 
+            // New pixel, new x to draw
             number++;
             xforDraw++;
         }
+        // New location to draw
         yforDraw++;
         xforDraw -= 21;
     }
@@ -508,7 +534,7 @@ void deleteBombFromScreen(uint16_t x, uint16_t y, uint8_t barrels[9][9])
 
                 if (draw)
                 {
-                    lcdTEST.drawPixel(xforDraw, yforDraw, RGB(29, 79, 22));
+                    lcd.drawPixel(xforDraw, yforDraw, RGB(29, 79, 22));
                 }
 
                 number++;
@@ -533,7 +559,7 @@ void deleteBombFromScreen(uint16_t x, uint16_t y, uint8_t barrels[9][9])
 
                 if (draw)
                 {
-                    lcdTEST.drawPixel(xforDraw, yforDraw, RGB(29, 79, 22));
+                    lcd.drawPixel(xforDraw, yforDraw, RGB(29, 79, 22));
                 }
 
                 number++;
@@ -558,7 +584,7 @@ void deleteBombFromScreen(uint16_t x, uint16_t y, uint8_t barrels[9][9])
 
                 if (draw)
                 {
-                    lcdTEST.drawPixel(xforDraw, yforDraw, RGB(29, 79, 22));
+                    lcd.drawPixel(xforDraw, yforDraw, RGB(29, 79, 22));
                 }
 
                 number--;
@@ -582,7 +608,7 @@ void deleteBombFromScreen(uint16_t x, uint16_t y, uint8_t barrels[9][9])
 
                 if (draw)
                 {
-                    lcdTEST.drawPixel(xforDraw, yforDraw, RGB(29, 79, 22));
+                    lcd.drawPixel(xforDraw, yforDraw, RGB(29, 79, 22));
                 }
 
                 number--;
@@ -608,7 +634,7 @@ void deleteBombFromScreen(uint16_t x, uint16_t y, uint8_t barrels[9][9])
 
                 if (draw)
                 {
-                    lcdTEST.drawPixel(xforDraw, yforDraw, RGB(29, 79, 22));
+                    lcd.drawPixel(xforDraw, yforDraw, RGB(29, 79, 22));
                 }
 
                 number += 21;
@@ -635,7 +661,7 @@ void deleteBombFromScreen(uint16_t x, uint16_t y, uint8_t barrels[9][9])
 
                 if (draw)
                 {
-                    lcdTEST.drawPixel(xforDraw, yforDraw, RGB(29, 79, 22));
+                    lcd.drawPixel(xforDraw, yforDraw, RGB(29, 79, 22));
                 }
 
                 number += 21;
@@ -662,7 +688,7 @@ void deleteBombFromScreen(uint16_t x, uint16_t y, uint8_t barrels[9][9])
 
                 if (draw)
                 {
-                    lcdTEST.drawPixel(xforDraw, yforDraw, RGB(29, 79, 22));
+                    lcd.drawPixel(xforDraw, yforDraw, RGB(29, 79, 22));
                 }
 
                 number -= 21;
@@ -689,7 +715,7 @@ void deleteBombFromScreen(uint16_t x, uint16_t y, uint8_t barrels[9][9])
 
                 if (draw)
                 {
-                    lcdTEST.drawPixel(xforDraw, yforDraw, RGB(29, 79, 22));
+                    lcd.drawPixel(xforDraw, yforDraw, RGB(29, 79, 22));
                 }
 
                 number -= 21;
@@ -702,11 +728,14 @@ void deleteBombFromScreen(uint16_t x, uint16_t y, uint8_t barrels[9][9])
     }
 }
 
+// Void to draw bomb explosion
 void explodeBomb(uint16_t x, uint16_t y, uint32_t bombTime, uint8_t barrels[9][9])
 {
+    // X, y location of explosion
     uint16_t xforDraw = 21 * x + 110;
     uint16_t yforDraw = 21 * y + 26;
 
+    // 
     uint16_t number = 0;
 
     for (uint8_t i = 0; i < 21; i++)
@@ -724,7 +753,7 @@ void explodeBomb(uint16_t x, uint16_t y, uint32_t bombTime, uint8_t barrels[9][9
                 uint8_t blue = ((pgm_read_word_near(bombExplosion1 + number) & 3));
                 blue *= 85;
 
-                lcdTEST.drawPixel(xforDraw, yforDraw, RGB(red, green, blue));
+                lcd.drawPixel(xforDraw, yforDraw, RGB(red, green, blue));
             }
 
             number++;
@@ -756,7 +785,7 @@ void explodeBomb(uint16_t x, uint16_t y, uint32_t bombTime, uint8_t barrels[9][9
                     uint8_t blue = ((pgm_read_word_near(bombExplosion2 + number) & 3));
                     blue *= 85;
 
-                    lcdTEST.drawPixel(xforDraw, yforDraw, RGB(red, green, blue));
+                    lcd.drawPixel(xforDraw, yforDraw, RGB(red, green, blue));
                 }
 
                 number++;
@@ -788,7 +817,7 @@ void explodeBomb(uint16_t x, uint16_t y, uint32_t bombTime, uint8_t barrels[9][9
                     uint8_t blue = ((pgm_read_word_near(bombExplosion2 + number) & 3));
                     blue *= 85;
 
-                    lcdTEST.drawPixel(xforDraw, yforDraw, RGB(red, green, blue));
+                    lcd.drawPixel(xforDraw, yforDraw, RGB(red, green, blue));
                 }
 
                 number++;
@@ -820,7 +849,7 @@ void explodeBomb(uint16_t x, uint16_t y, uint32_t bombTime, uint8_t barrels[9][9
                     uint8_t blue = ((pgm_read_word_near(bombExplosion2 + number) & 3));
                     blue *= 85;
 
-                    lcdTEST.drawPixel(xforDraw, yforDraw, RGB(red, green, blue));
+                    lcd.drawPixel(xforDraw, yforDraw, RGB(red, green, blue));
                 }
 
                 number--;
@@ -851,7 +880,7 @@ void explodeBomb(uint16_t x, uint16_t y, uint32_t bombTime, uint8_t barrels[9][9
                     uint8_t blue = ((pgm_read_word_near(bombExplosion2 + number) & 3));
                     blue *= 85;
 
-                    lcdTEST.drawPixel(xforDraw, yforDraw, RGB(red, green, blue));
+                    lcd.drawPixel(xforDraw, yforDraw, RGB(red, green, blue));
                 }
 
                 number--;
@@ -884,7 +913,7 @@ void explodeBomb(uint16_t x, uint16_t y, uint32_t bombTime, uint8_t barrels[9][9
                     uint8_t blue = ((pgm_read_word_near(bombExplosion2 + number) & 3));
                     blue *= 85;
 
-                    lcdTEST.drawPixel(xforDraw, yforDraw, RGB(red, green, blue));
+                    lcd.drawPixel(xforDraw, yforDraw, RGB(red, green, blue));
                 }
 
                 number += 21;
@@ -918,7 +947,7 @@ void explodeBomb(uint16_t x, uint16_t y, uint32_t bombTime, uint8_t barrels[9][9
                     uint8_t blue = ((pgm_read_word_near(bombExplosion2 + number) & 3));
                     blue *= 85;
 
-                    lcdTEST.drawPixel(xforDraw, yforDraw, RGB(red, green, blue));
+                    lcd.drawPixel(xforDraw, yforDraw, RGB(red, green, blue));
                 }
 
                 number += 21;
@@ -952,7 +981,7 @@ void explodeBomb(uint16_t x, uint16_t y, uint32_t bombTime, uint8_t barrels[9][9
                     uint8_t blue = ((pgm_read_word_near(bombExplosion2 + number) & 3));
                     blue *= 85;
 
-                    lcdTEST.drawPixel(xforDraw, yforDraw, RGB(red, green, blue));
+                    lcd.drawPixel(xforDraw, yforDraw, RGB(red, green, blue));
                 }
 
                 number -= 21;
@@ -986,7 +1015,7 @@ void explodeBomb(uint16_t x, uint16_t y, uint32_t bombTime, uint8_t barrels[9][9
                     uint8_t blue = ((pgm_read_word_near(bombExplosion2 + number) & 3));
                     blue *= 85;
 
-                    lcdTEST.drawPixel(xforDraw, yforDraw, RGB(red, green, blue));
+                    lcd.drawPixel(xforDraw, yforDraw, RGB(red, green, blue));
                 }
 
                 number -= 21;

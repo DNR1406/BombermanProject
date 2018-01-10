@@ -370,6 +370,7 @@ void Navigation::startPlayerSelectScreen()
         case 2:
             this->drawWaitingOnOponnentScreen();
             this->gameEngine->startGame(56);
+            this->splashScreen();
             pressed = 0;
             break;
         case 4:
@@ -432,7 +433,10 @@ void Navigation::splashScreen()
     else
     {
         this->screen->drawHeader(F("YOU WIN!"));
+        this->screen->lcd.drawText(50, 50, "Your score:", RGB(26, 47, 197), RGB(160, 182, 219), 2);
+        this->screen->lcd.drawInteger(230, 50, this->gameEngine->getPlayer1Score(), DEC, RGB(26, 47, 197), RGB(160, 182, 219), 2);
     }
+    
     uint8_t pressed = 0;
     while (pressed != 4)
     {

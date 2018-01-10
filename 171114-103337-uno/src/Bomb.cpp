@@ -25,7 +25,7 @@ uint8_t Bomb::checkDetonation(uint8_t barrels[9][9])
     }
     else
     {
-        uint32_t bombTime = ((this->lastKnownTime + 20000) - counterTimer2);
+        uint32_t bombTime = ((this->lastKnownTime + 35000) - counterTimer2);
 
        
 
@@ -37,7 +37,7 @@ uint8_t Bomb::checkDetonation(uint8_t barrels[9][9])
         {
             explodeBomb(this->lastXlocation, this->lastYlocation, bombTime, barrels);
         }
-        return ((this->lastKnownTime + 20000) < counterTimer2);
+        return ((this->lastKnownTime + 35000) < counterTimer2);
     }
 }
 
