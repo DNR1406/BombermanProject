@@ -18,10 +18,6 @@ PlayerMovement::PlayerMovement(uint8_t x, uint8_t y, uint8_t player)
 // Clears current player location
 void PlayerMovement::clearPlayer()
 {
-    // int x = 120 + (this->x * 21);
-    // int y = 35 + (this->y * 21);
-    // lcd.fillCircle(x, y, 7, RGB(29, 79, 22));
-
     deletePlayer(this->x, this->y);
 }
 

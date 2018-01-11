@@ -30,7 +30,6 @@ public:
   void endGameScreenSplashScreen();
   void endOfGame();
   void deleteScoreFromEEPROM();
-  void readDataFromEEPROM();
   void writeScoreToEEPROM(int score);
   void showPlayerOneInfo();
   void showPlayerTwoInfo();

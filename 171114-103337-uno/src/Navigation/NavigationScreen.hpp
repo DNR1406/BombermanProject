@@ -46,8 +46,6 @@ public:
 private:
   // Startup
   void startScreen();
-
-  // Variablen
 };
 
 #endif

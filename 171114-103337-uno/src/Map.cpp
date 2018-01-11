@@ -7,6 +7,8 @@
 // Map constructor
 Map::Map()
 {
+    // Resetting the map for if it's the second time it got made
+
     for (int i = 0; i < 9; i++)
     {
         for (int j = 0; j < 9; j++)
@@ -32,12 +34,9 @@ void Map::drawPlayMap()
     lcd.fillRect(10, 64, 69, 50, RGB(15, 15, 15));
     drawPlayer(35, 78, 3, 1, 0);
 
-
     // "Avatar"  of player 2
     lcd.fillRect(10, 162, 69, 50, RGB(15, 15, 15));
     drawPlayer(35, 178, 3, 2, 0);
-
-
 
     // Draw all text
     lcd.drawText(12, 10, "Home", RGB(255, 40, 40), RGB(50, 50, 50), 1);
@@ -86,12 +85,15 @@ void Map::drawPlayMap()
     }
 }
 
+// This will be needed if a barrel has exploded.
+// The grass will have to be redrawn (again)
 void Map::drawGrass(uint16_t x, uint16_t y)
 {
     lcd.fillRect(x + 1, y + 1, 20, 20, RGB(29, 79, 22));
     lcd.drawRect(x, y, 21, 21, RGB(29, 79, 22));
 }
 
+// Will draw the barrel, needed when they're declaring the random map
 void Map::drawBarrels(int x, int y)
 {
     x = 21 * x + 110;
@@ -101,12 +103,15 @@ void Map::drawBarrels(int x, int y)
     lcd.drawRect(x, y, 21, 21, RGB(20, 20, 20));
 }
 
+// Will draw the walls
 void Map::drawWalls(int x, uint8_t y)
 {
     lcd.fillRect(x + 1, y + 1, 20, 20, RGB(0, 0, 0));
     lcd.drawRect(x, y, 21, 21, RGB(50, 50, 50));
 }
 
+// Will delete the barrel, and redraw the green grass
+// The barrel will be deleted in this->barrels[x][y] by setting it to zero
 void Map::deleteBarrels(uint16_t x, uint8_t y)
 {
     this->barrels[x][y] = 0;
@@ -118,12 +123,14 @@ void Map::deleteBarrels(uint16_t x, uint8_t y)
 uint8_t Map::explosion(uint8_t x, uint8_t y)
 {
     uint8_t score = 0;
+
     // If there is a barrel on the right side of the Bomb
     if (this->barrels[x + 1][y] == 1)
     {
+        /* If the bomb is on the most right side of the board, i.e. x = 8
+        They can't delete a barrel on the right side of it "x+1"*/
         if (x < 8)
         {
-
             deleteBarrels(x + 1, y);
             score += 4;
         }
@@ -132,6 +139,8 @@ uint8_t Map::explosion(uint8_t x, uint8_t y)
     // If there is a barrel on the 2nd right side of the Bomb
     if (this->barrels[x + 2][y] == 1 && this->barrels[x + 1][y] != 2)
     {
+        /* If the bomb is on the second right side of the board, i.e. x = 7
+        They can't delete a barrel on the second right side of it "x+2"*/
         if (x < 7)
         {
             deleteBarrels(x + 2, y);
@@ -142,6 +151,8 @@ uint8_t Map::explosion(uint8_t x, uint8_t y)
     // If there is a barrel on the left side of the Bomb
     if (this->barrels[x - 1][y] == 1)
     {
+        /* If the bomb is on the most left side of the board, i.e. x = 0
+        They can't delete a barrel on the left side of it */
         if (x)
         {
             deleteBarrels(x - 1, y);
@@ -152,6 +163,8 @@ uint8_t Map::explosion(uint8_t x, uint8_t y)
     // If there is a barrel on the 2nd left side of the Bomb and there is no wall inbetween
     if (this->barrels[x - 2][y] == 1 && this->barrels[x - 1][y] != 2)
     {
+        /* If the bomb is on the second most left side of the board, i.e. x = 0
+        They can't delete a barrel on the second most left side of it */
         if (x > 1)
         {
             deleteBarrels(x - 2, y);
@@ -162,6 +175,8 @@ uint8_t Map::explosion(uint8_t x, uint8_t y)
     // If there is a barrel on the bottom side of the Bomb
     if (this->barrels[x][y + 1] == 1)
     {
+        /* If there bomb is on  the lowest row, i.e. y = 8
+        They can't delete a barrel on the bottom side of it*/
         if (y < 8)
         {
             deleteBarrels(x, y + 1);
@@ -171,6 +186,8 @@ uint8_t Map::explosion(uint8_t x, uint8_t y)
     // If there is a barrel on the 2nd bottom side of the Bomb and there is no wall inbetween
     if (this->barrels[x][y + 2] == 1 && this->barrels[x][y + 1] != 2)
     {
+        /* If there bomb is on  the second lowest row, i.e. y = 8
+        They can't delete a barrel on the second bottom side of it*/
         if (y < 7)
         {
             deleteBarrels(x, y + 2);
@@ -181,6 +198,8 @@ uint8_t Map::explosion(uint8_t x, uint8_t y)
     // If there is a barrel on the top side of the Bomb
     if (this->barrels[x][y - 1] == 1)
     {
+        /* If there bomb is on  the highest row, i.e. y = 0
+        They can't delete a barrel on the top side of it*/
         if (y)
         {
             deleteBarrels(x, y - 1);
@@ -191,6 +210,8 @@ uint8_t Map::explosion(uint8_t x, uint8_t y)
     // If there is a barrel on the 2nd top side of the Bomb and there is no wall inbetween
     if (this->barrels[x][y - 2] == 1 && this->barrels[x][y - 1] != 2)
     {
+        /* If there bomb is on  the second highest row, i.e. y = 1
+        They can't delete a barrel on the second top side of it*/
         if (y > 1)
         {
             deleteBarrels(x, y - 2);
@@ -217,26 +238,32 @@ void Map::declareBarrels(uint8_t amount, uint8_t seed)
         lcd.drawText(62, 30, "3", RGB(0, 0, 0), RGB(50, 50, 50), 1);
     }
 
-    // Make sure these squares are already taken, so no barrels can be placed there
+    /* Following is the declaration of the walls, or "pillars" if you may, so that
+    no barrel can be placed there, and that the walls are indestructable */
     for (uint8_t x = 0; x < 9; x++)
     {
         for (uint8_t y = 0; y < 9; y++)
         {
+            /* If x and y are odd, or when x and y are both 7, or when x and y are both 1
+            there will be a placed 2, for declaring the walls. There walls can't explode after a bomb
+            but still block the barrels from randomly spawning there */
+
             if ((x % 2 && y % 2) || (x == 7 && y == 7) || (x == 1 && y == 1))
             {
                 this->barrels[x][y] = 2;
             }
+
+            /* This declaration is for the places (right bottom corner, and left top corner)
+            where the player can still walk, but where can't be placed any barrels */
+
             if (x + y <= 2 || x + y >= 14)
             {
-                // 3 means that no barrels can be placed there, but the player can still walk on it
                 this->barrels[x][y] = 3;
             }
         }
     }
 
-    this->barrels[1][1] = 2;
-    this->barrels[7][7] = 2;
-
+    /* generate random seed using a floating pin*/
     srand(seed);
 
     // Randomly generate an "amount" of barrels, draw them on the screen and put them in the array

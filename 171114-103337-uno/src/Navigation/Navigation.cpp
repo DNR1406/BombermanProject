@@ -392,12 +392,16 @@ void Navigation::deletePlayerSelectScreen()
 int Navigation::getAnalogVal()
 {
     uint16_t result;
+
     // Start conversion
     ADCSRA |= (1 << ADSC);
-    // Wait
+
+    // Wait until data is received
     while (ADCSRA & (1 << ADSC))
     {
     }
+
+    // Put ADC value in result
     result = ADC;
     return result;
 }
@@ -423,12 +427,14 @@ void Navigation::splashScreen()
     this->screen->lcd.fillRect(0, 0, 320, 240, RGB(160, 182, 219));
     this->screen->drawBackButton();
 
+    // If player has no life left they'll receive the "YOU LOSE" screen
     if (this->gameEngine->getPlayerLifes() == 0)
     {
         this->screen->drawHeader(F("YOU LOSE!"));
         this->screen->lcd.drawText(50, 50, "Your score:", RGB(26, 47, 197), RGB(160, 182, 219), 2);
         this->screen->lcd.drawInteger(230, 50, this->gameEngine->getPlayer1Score(), DEC, RGB(26, 47, 197), RGB(160, 182, 219), 2);
     }
+    // else If player has life left they'll receive the "YOU WIN" screen
     else
     {
         this->screen->drawHeader(F("YOU WIN!"));

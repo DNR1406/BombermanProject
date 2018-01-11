@@ -207,6 +207,10 @@ void GameEngine::deleteBomb(Bomb **bombs, uint8_t bombPlace, PlayerMovement *pla
 
 void GameEngine::checkPlayerDamage(Bomb **bombs, uint8_t bombPlace, PlayerMovement *player)
 {
+
+    // Checks if the player is in the reach of the bomb
+    // Also checks if there isn't a wall inbetween the bomb and the player. The player shouldn't get damage in that situation
+
     uint8_t damage;
     if (player->x == bombs[bombPlace]->returnXlocation() + 1 && player->y == bombs[bombPlace]->returnYlocation())
     {
@@ -250,6 +254,8 @@ void GameEngine::checkPlayerDamage(Bomb **bombs, uint8_t bombPlace, PlayerMoveme
         damage = 0;
     }
 
+    // If the player recieved damage, there will be 13 taken off the final score
+    // And the player will lose 1 life
     if (damage)
     {
         if (player->getScore() - 13 < 0)
@@ -267,12 +273,6 @@ void GameEngine::checkPlayerDamage(Bomb **bombs, uint8_t bombPlace, PlayerMoveme
     }
 }
 
-void GameEngine::readDataFromEEPROM()
-{
-    //Niet gebruikt?
-    // byte value = EEPROM.read(50);
-}
-
 void GameEngine::deleteScoreFromEEPROM(){
     EEPROM.write(50,1);
     EEPROM.write(51,1);
@@ -281,6 +281,9 @@ void GameEngine::deleteScoreFromEEPROM(){
 
 void GameEngine::writeScoreToEEPROM(int score)
 {
+
+    // The score will be set into the EEPROM depending on if it's higher 
+    // or lower than any of the scores
 
     if (score > EEPROM.read(50))
     {

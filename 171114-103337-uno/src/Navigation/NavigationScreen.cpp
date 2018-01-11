@@ -28,9 +28,6 @@ void NavigationScreen::startScreen()
   // Calibration
   lcd.touchRead();
 
-  // Calibration data in EEPROM?
-  // lcd.touchStartCal();
-
   if (lcd.touchZ() || readCalData())
   {
     // Write data to EEPROM
@@ -108,10 +105,14 @@ void NavigationScreen::deleteBrightness()
 
 void NavigationScreen::setBrightness(uint8_t val)
 {
+  // If the value of "val" will be less than 10, it'll be set back to 10
+  // This way, the screen always has some light, and can never been turn off exidentally
   if (val < 10)
   {
     val = 10;
   }
+
+  // The brightness can't be higher than 100, or a overflow will happen
   else if (val > 100)
   {
     val = 100;
@@ -128,27 +129,29 @@ uint8_t NavigationScreen::checkTouchscreen()
   // If any press
   if (lcd.touchZ())
   {
-    // Read X and Y touch
+    // Read X and Y touch and put them in integers for easy accesable
     int x = lcd.touchX();
     int y = lcd.touchY();
 
-    // Check if the button area from Start is touched
+    // check is the highest button is touched
     if ((x > 95 && x < 215) && (y > 100 && y < 130))
     {
       return 1;
     }
 
-    // Check if the button area from Option is touched
+    // Check if the middle button is touched
     else if ((x > 95 && x < 215) && (y > 140 && y < 170))
     {
       return 2;
     }
 
-    // Check if the button area from Credits is touched
+    // Check if the lowest button is touched
     else if ((x > 95 && x < 215) && (y > 180 && y < 210))
     {
       return 3;
     }
+
+    // Check if the "home"  or "back"  button on the top left side is touched
     else if ((x > 0 && x < 50) && (y > 0 && y < 50))
     {
       return 4;
@@ -157,7 +160,8 @@ uint8_t NavigationScreen::checkTouchscreen()
   return 0;
 }
 
-// Other
+// WriteCalData is meant for putting the Calibration data into the EEPROM.
+// In theory this should only been done once.
 void NavigationScreen::writeCalData()
 {
   uint16_t i, addr = 0;
@@ -174,6 +178,7 @@ void NavigationScreen::writeCalData()
   return;
 }
 
+// Read if there's Calibration data present in the EEPROM
 uint8_t NavigationScreen::readCalData()
 {
   uint16_t i, addr = 0;
@@ -197,6 +202,11 @@ uint8_t NavigationScreen::readCalData()
 void NavigationScreen::readHighscoreFromEEPROM()
 {
   lcd.drawText(60, 50, "Player 1:", RGB(0, 0, 0), RGB(160, 182, 219), 2);
+
+  // Reads out address 50, 51 and 52 from EEPROM. 
+  // This is the place the highscores are saved.
+  // They're already saved here on order. So no need to check again.
+
   lcd.drawInteger(205, 50, EEPROM.read(50) - 1, DEC, RGB(0, 0, 0), RGB(160, 182, 219), 2);
   lcd.drawInteger(205, 70, EEPROM.read(51) - 1, DEC, RGB(0, 0, 0), RGB(160, 182, 219), 2);
   lcd.drawInteger(205, 90, EEPROM.read(52) - 1, DEC, RGB(0, 0, 0), RGB(160, 182, 219), 2);
