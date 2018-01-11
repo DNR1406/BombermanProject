@@ -151,6 +151,8 @@ void Navigation::startOptionsScreen()
         };
     }
 }
+
+// Void to draw highscors 
 void Navigation::drawHighscoreScreen()
 {
     this->screen->drawHeader(F("HIGHSCORE"));
@@ -159,6 +161,7 @@ void Navigation::drawHighscoreScreen()
     this->screen->readHighscoreFromEEPROM();
 }
 
+// Void to start highscores screen
 void Navigation::startHighScoreScreen()
 {
     this->drawHighscoreScreen();
@@ -190,6 +193,7 @@ void Navigation::drawCreditsScreen()
     this->screen->drawCredits();
 }
 
+// Delete creditsscreen
 void Navigation::deleteCreditsScreen()
 {
     // Delete buttons
@@ -198,6 +202,8 @@ void Navigation::deleteCreditsScreen()
     this->screen->deleteCredits();
 }
 
+
+// Delete highscore screen
 void Navigation::deleteHighScoreScreen()
 {
     this->screen->deleteHeader(F("HIGHSCORE   "));
@@ -206,6 +212,7 @@ void Navigation::deleteHighScoreScreen()
     this->screen->deleteHighscoreButtons();
 }
 
+// Void to start creditsscreen
 void Navigation::startCreditScreen()
 {
     // Draw credit screen
@@ -381,6 +388,7 @@ void Navigation::startPlayerSelectScreen()
     }
 }
 
+// After player selecteted which player he is, it is deleted
 void Navigation::deletePlayerSelectScreen()
 {
     this->screen->deleteBackButton();
@@ -389,7 +397,7 @@ void Navigation::deletePlayerSelectScreen()
     this->screen->deleteButton(2);
 }
 
-// Other
+// Get analog value from pin 1..
 int Navigation::getAnalogVal()
 {
     uint16_t result;
@@ -397,28 +405,19 @@ int Navigation::getAnalogVal()
     ADCSRA |= (1 << ADSC);
     // Wait
     while (ADCSRA & (1 << ADSC))
-    {
-    }
+;
     result = ADC;
     return result;
 }
 
-// Functions for stuff that is not finished
-void Navigation::drawNotFinishedYet()
-{
-    this->screen->drawHeader(F("Not finished yet..."));
-}
 
-void Navigation::deleteNotFinishedYet()
-{
-    this->screen->deleteHeader(F(""));
-}
-
+// Void to draw waiting on oponend
 void Navigation::drawWaitingOnOponnentScreen()
 {
     this->screen->drawHeader(F("Waiting...     "));
 }
 
+// After game is finished, you lose/you win
 void Navigation::splashScreen()
 {
     this->screen->lcd.fillRect(0, 0, 320, 240, RGB(160, 182, 219));
@@ -437,12 +436,13 @@ void Navigation::splashScreen()
         this->screen->lcd.drawInteger(230, 50, this->gameEngine->getPlayer1Score(), DEC, RGB(26, 47, 197), RGB(160, 182, 219), 2);
     }
     
+    //Wait till screen is pressed
     uint8_t pressed = 0;
     while (pressed != 4)
     {
-
         pressed = this->screen->checkTouchscreen();
     }
+    //Delete header and buttons
     this->screen->deleteBackButton();
     this->screen->deleteHeader(F("           "));
     this->screen->lcd.fillRect(50, 50, 270, 20, RGB(160, 182, 219));

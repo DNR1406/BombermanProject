@@ -25,22 +25,24 @@ uint8_t Bomb::checkDetonation(uint8_t barrels[9][9])
     }
     else
     {
+        // time for bomb
         uint32_t bombTime = ((this->lastKnownTime + 35000) - counterTimer2);
-
-       
 
         if (bombTime > 5000)
         {
+            // Chanchte wick annimation
             updateWick(this->lastXlocation, this->lastYlocation, bombTime);
         }
         else
         {
+            // Draw explosion
             explodeBomb(this->lastXlocation, this->lastYlocation, bombTime, barrels);
         }
+        // Return 1/0 if time is over
         return ((this->lastKnownTime + 35000) < counterTimer2);
     }
 }
-
+// Getters, setters
 void Bomb::setXlocation(uint8_t x)
 {
     this->lastXlocation = x;
@@ -76,6 +78,7 @@ void Bomb::setTime(uint32_t time)
     this->lastKnownTime = time;
 }
 
+// check if new bomb can be placed
 uint8_t Bomb::readyForNew(uint8_t x, uint8_t y)
 {
     return (this->lastXlocation == 15 && this->lastYlocation == 15 && this->exploded == 1);

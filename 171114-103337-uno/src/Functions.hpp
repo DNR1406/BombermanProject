@@ -1,3 +1,7 @@
+
+#ifndef Functions_H
+#define Functions_H
+
 void init_begin();
 
 //function for in/output
@@ -16,3 +20,5 @@ void init_interuptPin2();
 
 //pos 100 micro
 void init_timer2();
+
+#endif

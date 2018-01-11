@@ -48,8 +48,6 @@ private:
 
   // Other
   int getAnalogVal();
-  void drawNotFinishedYet();
-  void deleteNotFinishedYet();
   void drawWaitingOnOponnentScreen();
 
   // Splashscreen

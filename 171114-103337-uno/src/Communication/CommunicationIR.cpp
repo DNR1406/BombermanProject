@@ -8,6 +8,7 @@
 #include "../GameEngine.hpp"
 #include "CommunicationIR.hpp"
 
+
 // Counter for communication
 volatile uint8_t communicationTimer2;
 
@@ -289,6 +290,7 @@ void fillOutGoingBuffer(uint8_t *buffer, uint8_t x, uint8_t y, uint8_t bomb, uin
         buffer[36] = 1;
     }
 
+    // If newdataSend bit is set, it fills it in the buffer
     if (newDataSend)
     {
         buffer[39] = 1;
@@ -300,6 +302,7 @@ void fillOutGoingBuffer(uint8_t *buffer, uint8_t x, uint8_t y, uint8_t bomb, uin
         buffer[39] = 1;
     }
 
+    // If newDataBit is set, newDataCounterSend remembers how many times it is send, after the 8e time they are set to zero
     if (newDataCounterSend == 8)
     {
         newDataSend = 0;

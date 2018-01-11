@@ -101,11 +101,13 @@ void NavigationScreen::drawBrightness()
   lcd.drawText(20, 130, "to go back.", RGB(0, 0, 0), RGB(160, 182, 219), 1);
 }
 
+// Delete brightnesscreen
 void NavigationScreen::deleteBrightness()
 {
   lcd.fillRect(20, 100, 300, 40, RGB(160, 182, 219));
 }
 
+// Set birhgtness
 void NavigationScreen::setBrightness(uint8_t val)
 {
   if (val < 10)
@@ -194,6 +196,8 @@ uint8_t NavigationScreen::readCalData()
   return 1;
 }
 
+
+// Void to draw highscores on screen
 void NavigationScreen::readHighscoreFromEEPROM()
 {
   lcd.drawText(60, 50, "Player 1:", RGB(0, 0, 0), RGB(160, 182, 219), 2);
@@ -202,6 +206,7 @@ void NavigationScreen::readHighscoreFromEEPROM()
   lcd.drawInteger(205, 90, EEPROM.read(52) - 1, DEC, RGB(0, 0, 0), RGB(160, 182, 219), 2);
 }
 
+// Delete highscore button
 void NavigationScreen::deleteHighscoreButtons()
 {
    lcd.fillRect(30,50,290,130,RGB(160,182,219));
