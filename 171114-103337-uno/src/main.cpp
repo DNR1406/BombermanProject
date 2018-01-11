@@ -3,8 +3,10 @@
 
 int main()
 {
+    // init function
     init_begin();
 
+    // Start navigation
     Navigation *navigation = new Navigation();
     navigation->startStartScreen();
 

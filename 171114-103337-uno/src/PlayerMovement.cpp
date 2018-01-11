@@ -16,10 +16,10 @@ PlayerMovement::PlayerMovement(uint8_t x, uint8_t y, uint8_t player)
 }
 
 // Clears current player location
-void PlayerMovement::clearPlayer()
+void PlayerMovement::clearPlayer(uint8_t x, uint8_t y)
 {
-    deletePlayer(this->x, this->y);
-}
+    deletePlayer(x, y);
+} 
 
 //Draws nethis->xt player location
 void PlayerMovement::draw(uint8_t player, uint8_t side)
@@ -28,51 +28,30 @@ void PlayerMovement::draw(uint8_t player, uint8_t side)
 }
 
 //PLayer moves to the left
-void PlayerMovement::left(uint8_t bombPlaced, uint8_t playerOverWalk, uint8_t player)
+void PlayerMovement::left()
 {
-    if (!bombPlaced)
-    {
-        clearPlayer();
-    }
-    this->x--;
 
-    if (!playerOverWalk)
-    {
-        draw(player, 4);
-    }
+    this->x--;
 }
 
 //zelfde functie als left, alleen voor right
-void PlayerMovement::right(uint8_t bombPlaced, uint8_t playerOverWalk, uint8_t player)
+void PlayerMovement::right()
 {
-    if (!bombPlaced)
-    {
-        clearPlayer();
-    }
+
     this->x++;
-    draw(player, 2);
 }
 
 //zelfde functie als left, alleen voor down
-void PlayerMovement::down(uint8_t bombPlaced, uint8_t playerOverWalk, uint8_t player)
+void PlayerMovement::down()
 {
-    if (!bombPlaced)
-    {
-        clearPlayer();
-    }
+
     this->y++;
-    draw(player, 3);
 }
 
 //zelfde functie als left, alleen voor up
-void PlayerMovement::up(uint8_t bombPlaced, uint8_t playerOverWalk, uint8_t player)
+void PlayerMovement::up()
 {
-    if (!bombPlaced)
-    {
-        clearPlayer();
-    }
     this->y--;
-    draw(player, 1);
 }
 
 uint8_t PlayerMovement::getXLocation()

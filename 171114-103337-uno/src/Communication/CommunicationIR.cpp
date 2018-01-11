@@ -8,6 +8,7 @@
 #include "../GameEngine.hpp"
 #include "CommunicationIR.hpp"
 
+
 // Counter for communication
 volatile uint8_t communicationTimer2;
 
@@ -44,6 +45,8 @@ volatile uint8_t confirmed;
 volatile uint8_t confirm;
 // If you are sending newData or you sended your data already
 volatile uint8_t newData;
+volatile uint8_t newDataSend;
+volatile uint8_t newDataCounterSend;
 
 // Variables for x and y from players
 uint8_t xPlayer1, yPlayer1, xPlayer2, yPlayer2;
@@ -82,7 +85,7 @@ void startCommunication(uint8_t frequenty)
 // Function to send map to player 2
 uint8_t sendMap(uint8_t seed, uint8_t level)
 {
-    fillOutGoingBuffer(buffer, 0, 0, 0, seed, level, 0, 1);
+    fillOutGoingBuffer(buffer, 0, 0, 0, seed, level, 1);
 
     // Wait till value is confirmed
     confirmed = 0;
@@ -90,7 +93,9 @@ uint8_t sendMap(uint8_t seed, uint8_t level)
         ;
 
     // Send new data to opponent
-    fillOutGoingBuffer(buffer, 0, 0, 0, seed, level, 1, 1);
+    newDataSend = 1;
+
+    fillOutGoingBuffer(buffer, 0, 0, 0, seed, level, 1);
 
     // Set to
     confirmed = 0;
@@ -106,7 +111,7 @@ void getMap(uint8_t *seed, uint8_t *level)
         ;
 
     confirm = 1;
-    fillOutGoingBuffer(buffer, 0, 0, 0, 0, 0, 0, 2);
+    fillOutGoingBuffer(buffer, 0, 0, 0, 0, 0, 2);
 
     // Confirm the message
     while (confirm)
@@ -125,7 +130,7 @@ void setPlayer1(uint8_t x, uint8_t y)
     xPlayer1 = x;
     yPlayer1 = y;
 
-    fillOutGoingBuffer(buffer, xPlayer1, yPlayer1, 0, 0, 0, 0, 0);
+    fillOutGoingBuffer(buffer, xPlayer1, yPlayer1, 0, 0, 0, 0);
 }
 
 // Function to get x and y from player 2
@@ -140,27 +145,30 @@ void getPlayer2(uint8_t *x, uint8_t *y)
 }
 
 // Function to set bomb
-void setBombPlayer2(uint8_t x, uint8_t y)
+uint8_t setBombPlayer2(uint8_t x, uint8_t y)
 {
     // Send bomb( 1 after x and y means you have placed a bomb)
-    fillOutGoingBuffer(buffer, x, y, 1, 0, 0, 0, 0);
+    fillOutGoingBuffer(buffer, x, y, 1, 0, 0, 0);
 
     // Wait till message is confirmed to make sure you didn't miss a bomb
     confirmed = 0;
-    while (!confirmed)
+    uint32_t timeOver = counterTimer2 + 10000;
+    while (!confirmed && (counterTimer2 < timeOver))
         ;
 
+    if (!confirmed)
+    {
+        newDataSend = 0;
+        return 0;
+    }
     // After message is confirmed, you make a note that you are sending new data( the 1 on the second place from the right)
-    fillOutGoingBuffer(buffer, x, y, 0, 0, 0, 1, 0);
-
-    // Wait 54000 micro senconds to make sure the data is received
-    uint32_t now = counterTimer2;
-    while (counterTimer2 < (now + 400))
-        ;
+    newDataSend = 1;
 
     // Set to
     confirmed = 0;
     amountIncomming = 0;
+
+    return 1;
 }
 
 // Function to get Bomb from player 2
@@ -171,33 +179,39 @@ void getBombsPlayer2(Bomb **bombs)
     {
         // Confirm you received the message, wait till newData bit is set
         confirm = 1;
-        fillOutGoingBuffer(buffer, xPlayer1, yPlayer2, 0, 0, 0, 0, 0);
-        while (confirm)
+        fillOutGoingBuffer(buffer, xPlayer1, yPlayer2, 0, 0, 0, 0);
+
+        uint32_t timeOver = counterTimer2 + 5000;
+        while (confirm && (counterTimer2 < timeOver))
             ;
 
-        // Check if bomb is already placed
-        for (uint8_t i = 0; i < BOMBS; i++)
+
+        if (!confirmed)
         {
-            if ((bombs[i]->returnXlocation() == xPlayer2) && (bombs[i]->returnYlocation() == yPlayer2))
+            // Check if bomb is already placed
+            for (uint8_t i = 0; i < BOMBS; i++)
             {
-                bomb = 0;
-                return;
+                if ((bombs[i]->returnXlocation() == xPlayer2) && (bombs[i]->returnYlocation() == yPlayer2))
+                {
+                    bomb = 0;
+                    return;
+                }
             }
-        }
 
-        // Ceck where is place to add the bomb
-        for (uint8_t i = 0; i < BOMBS; i++)
-        {
-            if ((bombs[i]->readyForNew(xPlayer2, yPlayer2)))
+            // Ceck where is place to add the bomb
+            for (uint8_t i = 0; i < BOMBS; i++)
             {
-                bombs[i]->setXlocation(xPlayer2);
-                bombs[i]->setYlocation(yPlayer2);
-                bombs[i]->setTime(counterTimer2);
-                bombs[i]->setExploded(0);
+                if ((bombs[i]->readyForNew(xPlayer2, yPlayer2)))
+                {
+                    bombs[i]->setXlocation(xPlayer2);
+                    bombs[i]->setYlocation(yPlayer2);
+                    bombs[i]->setTime(counterTimer2);
+                    bombs[i]->setExploded(0);
 
-                bomb = 0;
+                    bomb = 0;
 
-                return;
+                    return;
+                }
             }
         }
     }
@@ -229,7 +243,7 @@ void stopReceiving()
 }
 
 // Function to fill the outgoing buffer
-void fillOutGoingBuffer(uint8_t *buffer, uint8_t x, uint8_t y, uint8_t bomb, uint8_t seed, uint8_t level, uint8_t newData, uint8_t function)
+void fillOutGoingBuffer(uint8_t *buffer, uint8_t x, uint8_t y, uint8_t bomb, uint8_t seed, uint8_t level, uint8_t function)
 {
     // Wait till whole buffer is send
     while (bitToSend != 0)
@@ -276,18 +290,27 @@ void fillOutGoingBuffer(uint8_t *buffer, uint8_t x, uint8_t y, uint8_t bomb, uin
         buffer[36] = 1;
     }
 
-    if (newData)
+    // If newdataSend bit is set, it fills it in the buffer
+    if (newDataSend)
     {
         buffer[39] = 1;
         buffer[40] = 1;
+        newDataCounterSend++;
     }
     else
     {
         buffer[39] = 1;
     }
 
+    // If newDataBit is set, newDataCounterSend remembers how many times it is send, after the 8e time they are set to zero
+    if (newDataCounterSend == 8)
+    {
+        newDataSend = 0;
+        newDataCounterSend = 0;
+    }
+
     // Fill parity bit of all values in buffer
-    if ((x + y + bomb + seed + level + confirm + newData) % 2)
+    if ((x + y + bomb + seed + level + confirm + newDataSend) % 2)
     {
         buffer[42] = 1;
         buffer[43] = 1;

@@ -42,5 +42,7 @@ extern volatile uint8_t confirmed;
 extern volatile uint8_t confirm;
 // If you are sending newData or you sended your data already
 extern volatile uint8_t newData;
+extern volatile uint8_t newDataSend;
+extern volatile uint8_t newDataCounterSend;
 
 #endif

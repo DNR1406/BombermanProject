@@ -14,7 +14,6 @@
 // Other includes
 #include <EEPROM.h>
 #include <avr/interrupt.h>
-#include <Arduino.h>
 
 GameEngine::GameEngine()
 {
@@ -67,7 +66,6 @@ void GameEngine::startGame(int amount, uint8_t frequenty)
     // Declare the barrels and draw them on the screen
     this->playMap->declareBarrels(amount, seed);
 
-
     this->player1 = new PlayerMovement(0, 0, 1);
     this->player2 = new PlayerMovement(8, 8, 2);
 
@@ -82,7 +80,6 @@ void GameEngine::startGame(int amount, uint8_t frequenty)
 }
 void GameEngine::endGameScreenSplashScreen()
 {
-
 }
 // startGame function
 void GameEngine::startGame(uint8_t frequenty)
@@ -203,6 +200,14 @@ void GameEngine::deleteBomb(Bomb **bombs, uint8_t bombPlace, PlayerMovement *pla
     bombs[bombPlace]->setTime(0);
     bombs[bombPlace]->setXlocation(15);
     bombs[bombPlace]->setYlocation(15);
+    this->player1->draw(1, 3);
+    this->player2->draw(2, 3);
+
+    for (uint8_t bombPlace = 0; bombPlace < BOMBS; bombPlace++)
+    {
+        this->playMap->placeBomb(this->bombsPlayer1[bombPlace]->returnXlocation(), this->bombsPlayer1[bombPlace]->returnYlocation());
+        this->playMap->placeBomb(this->bombsPlayer2[bombPlace]->returnXlocation(), this->bombsPlayer2[bombPlace]->returnYlocation());
+    }
 }
 
 void GameEngine::checkPlayerDamage(Bomb **bombs, uint8_t bombPlace, PlayerMovement *player)
@@ -314,11 +319,6 @@ uint8_t GameEngine::addBomb(uint8_t x, uint8_t y)
         }
     }
 
-#ifndef SINGLEPLAYER
-    // Send bomb to opponent
-    setBombPlayer2(x, y);
-#endif
-
     for (uint8_t i = 0; i < BOMBS; i++)
     {
         if ((this->bombsPlayer1[i]->readyForNew(x, y)))
@@ -397,74 +397,104 @@ void GameEngine::updatePlayer1()
     if (nunchuk->zButton)
     {
 
-        bombPlace = this->addBomb(this->player1->x, this->player1->y);
-
-        if (bombPlace)
+        if (setBombPlayer2(this->player1->x, this->player1->y))
         {
-            bombPlace--;
-            // Make sure player can't walk over bomb
-            this->playMap->barrels[this->bombsPlayer1[bombPlace]->returnXlocation()][this->bombsPlayer1[bombPlace]->returnYlocation()] = 5;
 
-            // Draw the bomb on the screen
-            this->playMap->placeBomb(this->bombsPlayer1[bombPlace]->returnXlocation(), this->bombsPlayer1[bombPlace]->returnYlocation());
+            bombPlace = this->addBomb(this->player1->x, this->player1->y);
 
-            bombPlace++;
+            if (bombPlace)
+            {
+                bombPlace--;
+                // Make sure player can't walk over bomb
+                this->playMap->barrels[this->bombsPlayer1[bombPlace]->returnXlocation()][this->bombsPlayer1[bombPlace]->returnYlocation()] = 5;
+
+                // Draw the bomb on the screen
+                this->playMap->placeBomb(this->bombsPlayer1[bombPlace]->returnXlocation(), this->bombsPlayer1[bombPlace]->returnYlocation());
+            }
         }
+
+        bombPlace = 1;
+    }
+    else
+    {
+        bombPlace = 0;
     }
 
     if (this->playMap->barrels[this->player1->x][this->player1->y] == 5)
     {
         bombPlace = 1;
     }
-
-    if (this->player1->x == this->player2->x && this->player1->y == this->player2->y)
-    {
-        playerOverWalk = 1;
-    }
     else
     {
-        playerOverWalk = 0;
+        bombPlace = 0;
     }
+
+    uint8_t side = 0;
 
     // Move player upwards
     if (nunchuk->analogY > 155 && this->player1->upMove)
     {
-        this->player1->up(bombPlace, playerOverWalk, 1);
-        bombPlace = 0;
-        playerOverWalk = 0;
+        side = 1;
     }
     //Move player downwards
     else if (nunchuk->analogY < 100 && this->player1->downMove)
     {
-        this->player1->down(bombPlace, playerOverWalk, 1);
-        bombPlace = 0;
-        playerOverWalk = 0;
+        side = 3;
     }
     //Move player to the right
     else if (nunchuk->analogX > 155 && this->player1->rightMove)
     {
-        this->player1->right(bombPlace, playerOverWalk, 1);
-        bombPlace = 0;
-        playerOverWalk = 0;
+        side = 2;
     }
     //Move player to the left
     else if (nunchuk->analogX < 100 && this->player1->leftMove)
     {
-        this->player1->left(bombPlace, playerOverWalk, 1);
-        bombPlace = 0;
-        playerOverWalk = 0;
+        side = 4;
+    }
+
+    if ((this->player1->getXLocation() != this->player2->getXLocation() || this->player1->getYLocation() != this->player2->getYLocation()) && (side))
+    {
+        this->player1->clearPlayer(this->player1->getXLocation(), this->player1->getYLocation());
+    }
+
+    switch (side)
+    {
+    case 1:
+        this->player1->up();
+        break;
+    case 2:
+        this->player1->right();
+        break;
+    case 3:
+        this->player1->down();
+        break;
+    case 4:
+        this->player1->left();
+        break;
+    }
+
+    if ((this->player1->getXLocation() != this->player2->getXLocation() || this->player1->getYLocation() != this->player2->getYLocation()) && (side))
+    {
+        this->player1->draw(1, side);
+    }
+
+    if (side)
+    {
+        for (uint8_t bombPlace = 0; bombPlace < BOMBS; bombPlace++)
+        {
+            this->playMap->placeBomb(this->bombsPlayer1[bombPlace]->returnXlocation(), this->bombsPlayer1[bombPlace]->returnYlocation());
+            this->playMap->placeBomb(this->bombsPlayer2[bombPlace]->returnXlocation(), this->bombsPlayer2[bombPlace]->returnYlocation());
+        }
     }
 }
 // Get data of opponent
 void GameEngine::updatePlayer2()
 {
-    // Delete player
-    this->player2->clearPlayer();
 
     // Get new data
     getPlayer2(&this->player2->x, &this->player2->y);
 
-    
+    sidePlayer2 = 0;
 
     if (this->oldXPlayer2 > this->player2->x)
     {
@@ -482,10 +512,17 @@ void GameEngine::updatePlayer2()
     {
         sidePlayer2 = 1;
     }
-
-
     // Draw player 2
-    this->player2->draw(2, sidePlayer2);
+    if (sidePlayer2)
+    {
+        // Delete player
+        this->player2->clearPlayer(this->oldXPlayer2, this->oldYPlayer2);
+
+        // if (this->player2->x != this->player1->x && this->player2->y != this->player1->y)
+        // {
+        this->player2->draw(2, sidePlayer2);
+        // }
+    }
 
     this->oldXPlayer2 = this->player2->x;
     this->oldYPlayer2 = this->player2->y;
@@ -493,19 +530,23 @@ void GameEngine::updatePlayer2()
     // Get bombs from opponent, put them in this->bombsPlayer2
     getBombsPlayer2(this->bombsPlayer2);
 
-    for(uint8_t bombPlace = 0; bombPlace < BOMBS; bombPlace ++) {
+    for (uint8_t bombPlace = 0; bombPlace < BOMBS; bombPlace++)
+    {
         this->playMap->barrels[this->bombsPlayer2[bombPlace]->returnXlocation()][this->bombsPlayer2[bombPlace]->returnYlocation()] = 5;
     }
 }
 
-uint8_t GameEngine::getPlayerLifes() {
+uint8_t GameEngine::getPlayerLifes()
+{
     return this->player1->lifes;
 }
- 
-uint8_t GameEngine::getPlayer2Lifes() {
+
+uint8_t GameEngine::getPlayer2Lifes()
+{
     return this->player2->lifes;
 }
 
-uint8_t GameEngine::getPlayer1Score() {
-    return this->player1->score;
-} 
+uint8_t GameEngine::getPlayer1Score()
+{
+    return this->player1->getScore();
+}

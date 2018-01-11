@@ -20,7 +20,7 @@ void setPlayer1(uint8_t x, uint8_t y);
 void getPlayer2(uint8_t *x, uint8_t *y);
 
 // Function to set bomb
-void setBombPlayer2(uint8_t x, uint8_t y);
+uint8_t setBombPlayer2(uint8_t x, uint8_t y);
 
 // Function to get Bomb from player 2
 void getBombsPlayer2(Bomb **bombs);
@@ -38,7 +38,7 @@ void startReceiving();
 void stopReceiving();
 
 // Function to fill the outgoing buffer
-void fillOutGoingBuffer(uint8_t *buffer, uint8_t x, uint8_t y, uint8_t bomb, uint8_t seed, uint8_t level, uint8_t newData, uint8_t function);
+void fillOutGoingBuffer(uint8_t *buffer, uint8_t x, uint8_t y, uint8_t bomb, uint8_t seed, uint8_t level, uint8_t function);
 
 // Function to fill part of the buffer, x, y an bomb, function is used by fillOutGoingBuffer
 void fillBufferFunction0(uint8_t x, uint8_t y, uint8_t bomb);

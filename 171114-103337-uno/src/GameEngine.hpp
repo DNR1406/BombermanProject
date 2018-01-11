@@ -2,8 +2,8 @@
 #include <MI0283QT9.h>
 
 
-#define BOMBS 3
-#define SINGLEPLAYER 1
+#define BOMBS 2
+// #define SINGLEPLAYER 1
 
 class ArduinoNunchuk;
 class Bomb;

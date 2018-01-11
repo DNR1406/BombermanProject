@@ -4,6 +4,7 @@
 #ifndef Drawings_H
 #define Drawings_H
 
+// Different colors for in images
 #define ___GREENB1 0b10001000
 #define ___GREENB2 0b10011010
 #define ______NONE 0b00000000
@@ -24,6 +25,7 @@
 #define ___YELLOW2 0b10111000
 #define ___YELLOW3 0b10111100
 
+// Different voids to draw
 void drawBombAdSCreen(uint16_t x, uint16_t y);
 void deleteBombFromScreen(uint16_t x, uint16_t y, uint8_t barrels[9][9]);
 void updateWick(uint16_t x, uint16_t y, uint32_t bombTime);

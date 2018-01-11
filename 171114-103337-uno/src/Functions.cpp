@@ -7,6 +7,7 @@
 #include "Functions.hpp"
 #include "Globals.hpp"
 
+// Void to startup
 void init_begin()
 {
     init();
@@ -46,6 +47,7 @@ void init_single_Sample()
     ADCSRA |= (1 << ADEN);
 }
 
+// Timer fo 36 khz
 void timer1_36K()
 {
     //set to
@@ -61,6 +63,7 @@ void timer1_36K()
     TCCR1B |= (1 << CS11);
 }
 
+// Timer for 38 khz haha prank
 void timer1_56k()
 {
     //set to
