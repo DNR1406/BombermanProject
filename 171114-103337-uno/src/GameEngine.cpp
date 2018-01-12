@@ -1,6 +1,5 @@
 // Own includes
 #include "Map.hpp"
-#include "Screen.hpp"
 #include "PlayerMovement.hpp"
 #include "Globals.hpp"
 #include "ArduinoNunchuk.hpp"
@@ -18,7 +17,6 @@
 GameEngine::GameEngine()
 {
     this->playMap = new Map();
-    this->screen = new Screen();
     this->end = new NavigationScreen(1);
     this->nunchuk = new ArduinoNunchuk();
 

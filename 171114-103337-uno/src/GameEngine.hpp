@@ -9,7 +9,6 @@ class ArduinoNunchuk;
 class Bomb;
 class Map; 
 class NavigationScreen;
-class Screen;
 class PlayerMovement;
 class CommunicationIR;
 
@@ -42,7 +41,6 @@ private:
   MI0283QT9 lcd;
   ArduinoNunchuk *nunchuk;
   Map *playMap;
-  Screen *screen; 
   NavigationScreen *end;
   PlayerMovement *player1;
   PlayerMovement *player2;
