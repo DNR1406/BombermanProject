@@ -30,25 +30,22 @@ void PlayerMovement::draw(uint8_t player, uint8_t side)
 //PLayer moves to the left
 void PlayerMovement::left()
 {
-
     this->x--;
 }
 
-//zelfde functie als left, alleen voor right
+//Player moves to the right
 void PlayerMovement::right()
 {
-
     this->x++;
 }
 
-//zelfde functie als left, alleen voor down
+//Player moves down
 void PlayerMovement::down()
 {
-
     this->y++;
 }
 
-//zelfde functie als left, alleen voor up
+//Player moves up
 void PlayerMovement::up()
 {
     this->y--;
